@@ -1,6 +1,6 @@
 {
   "name": "domutils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "utilities for working with htmlparser2's dom",
   "main": "index.js",
   "directories": {
@@ -18,7 +18,7 @@
     "htmlparser2"
   ],
   "dependencies": {
-    "domelementtype": "0"
+    "domelementtype": "1"
   },
   "devDependencies": {
     "htmlparser2": "2.3",
