@@ -43,9 +43,7 @@ function findAll(test, arr){
 	}, arr.filter(test));
 }
 
-var isTag = DomUtils.isTag = function(elem){
-	return elem.type === ElementType.Tag || elem.type === ElementType.Script || elem.type === ElementType.Style;
-};
+var isTag = DomUtils.isTag = ElementType.isTag;
 
 function filter(test, element, recurse, limit){
 	if(!Array.isArray(element)) element = [element];
@@ -70,15 +68,15 @@ DomUtils.testElement = function(options, element){
 	for(var key in options){
 		if(!options.hasOwnProperty(key));
 		else if(key === "tag_name"){
-		    if(!isTag(element) || !options.tag_name(element.name)){
+			if(!isTag(element) || !options.tag_name(element.name)){
 				return false;
-		    }
+			}
 		} else if(key === "tag_type"){
-		    if(!options.tag_type(element.type)) return false;
+			if(!options.tag_type(element.type)) return false;
 		} else if(key === "tag_contains"){
-		    if(isTag(element) || !options.tag_contains(element.data)){
+			if(isTag(element) || !options.tag_contains(element.data)){
 				return false;
-		    }
+			}
 		} else if(!element.attribs || !options[key](element.attribs[key])){
 			return false;
 		}
@@ -88,7 +86,7 @@ DomUtils.testElement = function(options, element){
 
 var Checks = {
 	tag_name: function(name){
-		if(typeof name === "function"){ 
+		if(typeof name === "function"){
 			return function(elem){ return isTag(elem) && name(elem.name); };
 		} else if(name === "*"){
 			return isTag;
