@@ -43,9 +43,7 @@ function findAll(test, arr){
 	}, arr.filter(test));
 }
 
-var isTag = DomUtils.isTag = function(elem){
-	return elem.type === ElementType.Tag || elem.type === ElementType.Script || elem.type === ElementType.Style;
-};
+var isTag = DomUtils.isTag = ElementType.isTag;
 
 function filter(test, element, recurse, limit){
 	if(!Array.isArray(element)) element = [element];
