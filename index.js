@@ -194,6 +194,24 @@ var booleanAttribs = {
 	"/": true //TODO when is this required?
 };
 
+var emptyTags = {
+	__proto__: null,
+	area: true,
+	base: true,
+	basefont: true,
+	br: true,
+	col: true,
+	frame: true,
+	hr: true,
+	img: true,
+	input: true,
+	isindex: true,
+	link: true,
+	meta: true,
+	param: true,
+	embed: true
+};
+
 DomUtils.getOuterHTML = function(elem){
 	var type = elem.type;
 
@@ -218,7 +236,12 @@ DomUtils.getOuterHTML = function(elem){
 			}
 		}
 	}
-	return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
+
+	if (emptyTags[elem.name] && elem.children.length === 0) {
+		return ret + "/>";
+	} else {
+		return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
+	}
 };
 
 DomUtils.getText = function getText(elem){
