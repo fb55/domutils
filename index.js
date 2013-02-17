@@ -237,8 +237,8 @@ DomUtils.getOuterHTML = function(elem){
 		}
 	}
 
-	if (emptyTags[elem.name] && elem.children.length === 0) {
-		return ret + "/>";
+	if (elem.name in emptyTags && elem.children.length === 0) {
+		return ret + " />";
 	} else {
 		return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
 	}
