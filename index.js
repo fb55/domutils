@@ -237,10 +237,10 @@ DomUtils.getOuterHTML = function(elem){
 		}
 	}
 
-	if (!emptyTags[elem.name]) {
-		return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
-	} else {
+	if (emptyTags[elem.name] && elem.children.length === 0) {
 		return ret + "/>";
+	} else {
+		return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
 	}
 };
 
