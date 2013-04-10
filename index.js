@@ -218,7 +218,7 @@ DomUtils.getOuterHTML = function(elem){
 	if(type === ElementType.Text) return elem.data;
 	if(type === ElementType.Comment) return "<!--" + elem.data + "-->";
 	if(type === ElementType.Directive) return "<" + elem.data + ">";
-	if(type === ElementType.CDATA) return "<!CDATA " + elem.data + "]]>";
+	if(type === ElementType.CDATA) return "<!CDATA " + DomUtils.getInnerHTML(elem) + "]]>";
 
 	var ret = "<" + elem.name;
 	if("attribs" in elem){
