@@ -48,7 +48,7 @@ var isTag = DomUtils.isTag = ElementType.isTag;
 function filter(test, element, recurse, limit){
 	if(!Array.isArray(element)) element = [element];
 
-	if(typeof limit !== "number" || limit === Infinity){
+	if(typeof limit !== "number" || !isFinite(limit)){
 		if(recurse === false){
 			return element.filter(test);
 		} else {
