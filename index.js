@@ -245,7 +245,8 @@ DomUtils.getOuterHTML = function(elem){
 };
 
 DomUtils.getText = function getText(elem){
-	if(isTag(elem) || elem.type === ElementType.CDATA) return elem.children.map(getText).join("");
+	if(Array.isArray(elem)) return elem.map(getText).join("");
+	if(isTag(elem) || elem.type === ElementType.CDATA) return getText(elem.children);
 	if(elem.type === ElementType.Text) return elem.data;
 	return "";
 };
