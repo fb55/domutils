@@ -1,6 +1,35 @@
 var ElementType = require("domelementtype"),
     DomUtils = module.exports;
 
+var isTag = DomUtils.isTag = ElementType.isTag;
+
+function getChildren(elem){
+	return elem.children;
+}
+function getParent(elem){
+	return elem.parent;
+}
+function getSiblings(elem){
+	var parent = getParent(elem);
+	return parent ? getChildren(parent) : [elem];
+}
+function getAttributeValue(elem, name){
+	return elem.attribs[name];
+}
+function hasAttrib(elem, name){
+	return name in elem.attribs;
+}
+function getName(elem){
+	return elem.name;
+}
+
+DomUtils.getChildren = getChildren;
+DomUtils.getParent = getParent;
+DomUtils.getAttributeValue = getAttributeValue;
+DomUtils.hasAttrib = hasAttrib;
+DomUtils.getName = getName;
+DomUtils.getSiblings = getSiblings;
+
 function find(test, arr, recurse, limit){
 	var result = [], childs;
 
@@ -10,7 +39,7 @@ function find(test, arr, recurse, limit){
 			if(--limit <= 0) break;
 		}
 
-		childs = arr[i].children;
+		childs = getChildren(arr[i]);
 		if(recurse && childs && childs.length > 0){
 			childs = find(test, childs, recurse, limit);
 			result = result.concat(childs);
@@ -22,28 +51,41 @@ function find(test, arr, recurse, limit){
 	return result;
 }
 
-function findOne(test, arr, recurse){
+function findOneChild(test, arr){
 	for(var i = 0, l = arr.length; i < l; i++){
 		if(test(arr[i])) return arr[i];
-		if(recurse && arr[i].children && arr[i].children.length > 0){
-			var elem = findOne(test, arr[i].children, true);
-			if(elem) return elem;
-		}
 	}
+
 	return null;
 }
 
-function findAll(test, arr){
-	return arr.reduce(function(arr, elem){
-		if(elem.children && elem.children.length > 0){
-			return arr.concat(findAll(test, elem.children));
-		} else {
-			return arr;
+function findOne(test, arr){
+	var elem = null;
+
+	for(var i = 0, l = arr.length; i < l && !elem; i++){
+		if(test(arr[i])){
+			elem = arr[i];
+		} else if(arr[i].children && arr[i].children.length > 0){
+			elem = findOne(test, arr[i].children);
 		}
-	}, arr.filter(test));
+	}
+
+	return elem;
 }
 
-var isTag = DomUtils.isTag = ElementType.isTag;
+DomUtils.findOne = findOne;
+
+function findAll(test, elems){
+	var result = [];
+	for(var i = 0, j = elems.length; i < j; i++){
+		if(!isTag(elems[i])) continue;
+		if(test(elems[i])) result.push(elems[i]);
+		if(getChildren(elems[i])) result = result.concat(findAll(test, getChildren(elems[i])));
+	}
+	return result;
+}
+
+DomUtils.findAll = findAll;
 
 function filter(test, element, recurse, limit){
 	if(!Array.isArray(element)) element = [element];
@@ -55,7 +97,11 @@ function filter(test, element, recurse, limit){
 			return findAll(test, element);
 		}
 	} else if(limit === 1){
-		element = findOne(test, element, recurse !== false);
+		if(recurse === false){
+			element = findOneChild(test, element);
+		} else {
+			element = findOne(test, element);
+		}
 		return element ? [element] : [];
 	} else {
 		return find(test, element, recurse !== false, limit);
@@ -68,15 +114,15 @@ DomUtils.testElement = function(options, element){
 	for(var key in options){
 		if(!options.hasOwnProperty(key));
 		else if(key === "tag_name"){
-		    if(!isTag(element) || !options.tag_name(element.name)){
+			if(!isTag(element) || !options.tag_name(element.name)){
 				return false;
-		    }
+			}
 		} else if(key === "tag_type"){
-		    if(!options.tag_type(element.type)) return false;
+			if(!options.tag_type(element.type)) return false;
 		} else if(key === "tag_contains"){
-		    if(isTag(element) || !options.tag_contains(element.data)){
+			if(isTag(element) || !options.tag_contains(element.data)){
 				return false;
-		    }
+			}
 		} else if(!element.attribs || !options[key](element.attribs[key])){
 			return false;
 		}
@@ -155,7 +201,24 @@ DomUtils.removeElement = function(elem){
 	if(elem.next) elem.next.prev = elem.prev;
 
 	if(elem.parent){
-		elem.parent.children.splice(elem.parent.children.lastIndexOf(elem), 1);
+		var childs = elem.parent.children;
+		childs.splice(childs.lastIndexOf(elem), 1);
+	}
+};
+
+DomUtils.replaceElement = function(elem, replacement){
+	if(elem.prev){
+		elem.prev.next = replacement;
+		replacement.prev = elem.prev;
+	}
+	if(elem.next){
+		elem.next.prev = replacement;
+		replacement.next = elem.next;
+	}
+	if(elem.parent){
+		var childs = elem.parent.children;
+		childs.splice(childs.lastIndexOf(elem), 1, replacement);
+		replacement.parent = elem.parent;
 	}
 };
 
