@@ -14,7 +14,7 @@ function getSiblings(elem){
 	return parent ? getChildren(parent) : [elem];
 }
 function getAttributeValue(elem, name){
-	return elem.attribs[name];
+	return elem.attribs && elem.attribs[name];
 }
 function hasAttrib(elem, name){
 	return name in elem.attribs;
@@ -80,7 +80,9 @@ function findAll(test, elems){
 	for(var i = 0, j = elems.length; i < j; i++){
 		if(!isTag(elems[i])) continue;
 		if(test(elems[i])) result.push(elems[i]);
-		if(getChildren(elems[i])) result = result.concat(findAll(test, getChildren(elems[i])));
+
+		var childs = getChildren(elems[i]);
+		if(childs.length) result = result.concat(findAll(test, childs));
 	}
 	return result;
 }
