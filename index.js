@@ -78,11 +78,12 @@ DomUtils.findOne = findOne;
 function findAll(test, elems){
 	var result = [];
 	for(var i = 0, j = elems.length; i < j; i++){
-		if(!isTag(elems[i])) continue;
 		if(test(elems[i])) result.push(elems[i]);
 
 		var childs = getChildren(elems[i]);
-		if(childs.length) result = result.concat(findAll(test, childs));
+		if(childs && childs.length){
+			result = result.concat(findAll(test, childs));
+		}
 	}
 	return result;
 }
