@@ -17,7 +17,7 @@ function getAttributeValue(elem, name){
 	return elem.attribs && elem.attribs[name];
 }
 function hasAttrib(elem, name){
-	return name in elem.attribs;
+	return hasOwnProperty.call(elem.attribs, name);
 }
 function getName(elem){
 	return elem.name;
