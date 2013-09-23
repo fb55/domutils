@@ -1,6 +1,12 @@
 var ElementType = require("domelementtype"),
     DomUtils = module.exports;
 
+[require("./stringify.js")].forEach(function(ext){
+	Object.keys(ext).forEach(function(key){
+		DomUtils[key] = ext[key];
+	});
+});
+
 var isTag = DomUtils.isTag = ElementType.isTag;
 
 function getChildren(elem){
@@ -151,7 +157,7 @@ var Checks = {
 		}
 	},
 	tag_contains: function(data){
-		if(typeof type === "function"){
+		if(typeof data === "function"){
 			return function(elem){ return !isTag(elem) && data(elem.data); };
 		} else {
 			return function(elem){ return !isTag(elem) && elem.data === data; };
@@ -167,21 +173,20 @@ function getAttribCheck(attrib, value){
 	}
 }
 
-DomUtils.getElements = function(options, element, recurse, limit){
-	var funcs = [];
-	for(var key in options){
-		if(options.hasOwnProperty(key)){
-			if(key in Checks) funcs.push(Checks[key](options[key]));
-			else funcs.push(getAttribCheck(key, options[key]));
-		}
-	}
+function combineFuncs(a, b){
+	return function(elem){
+		return a(elem) || b(elem);
+	};
+}
 
-	if(funcs.length === 0) return [];
-	if(funcs.length === 1) return filter(funcs[0], element, recurse, limit);
-	return filter(
-		function(elem){
-			return funcs.some(function(func){ return func(elem); });
-		},
+DomUtils.getElements = function(options, element, recurse, limit){
+	var funcs = Object.keys(options).map(function(key){
+		var value = options[key];
+		return key in Checks ? Checks[key](value) : getAttribCheck(key, value);
+	});
+
+	return funcs.length === 0 ? [] : filter(
+		funcs.reduce(combineFuncs),
 		element, recurse, limit
 	);
 };
@@ -210,109 +215,64 @@ DomUtils.removeElement = function(elem){
 };
 
 DomUtils.replaceElement = function(elem, replacement){
-	if(elem.prev){
-		elem.prev.next = replacement;
-		replacement.prev = elem.prev;
+	var prev = replacement.prev = elem.prev;
+	if(prev){
+		prev.next = replacement;
 	}
-	if(elem.next){
-		elem.next.prev = replacement;
-		replacement.next = elem.next;
+
+	var next = replacement.next = elem.next;
+	if(next){
+		next.prev = replacement;
 	}
-	if(elem.parent){
-		var childs = elem.parent.children;
-		childs.splice(childs.lastIndexOf(elem), 1, replacement);
-		replacement.parent = elem.parent;
+
+	var parent = replacement.parent = elem.parent;
+	if(parent){
+		var childs = parent.children;
+		childs[childs.lastIndexOf(elem)] = replacement;
 	}
 };
 
-DomUtils.getInnerHTML = function(elem){
-	if(!elem.children) return "";
+DomUtils.appendChild = function(elem, child){
+	child.parent = elem;
 
-	var childs = elem.children,
-		childNum = childs.length,
-		ret = "";
-
-	for(var i = 0; i < childNum; i++){
-		ret += DomUtils.getOuterHTML(childs[i]);
+	if(elem.children.push(child) !== 1){
+		var sibling = elem.children[elem.children.length - 2];
+		sibling.next = child;
+		child.prev = sibling;
+		child.next = null;
 	}
-
-	return ret;
 };
 
-//boolean attributes without a value (taken from MatthewMueller/cheerio)
-var booleanAttribs = {
-	__proto__: null,
-	async: true,
-	autofocus: true,
-	autoplay: true,
-	checked: true,
-	controls: true,
-	defer: true,
-	disabled: true,
-	hidden: true,
-	loop: true,
-	multiple: true,
-	open: true,
-	readonly: true,
-	required: true,
-	scoped: true,
-	selected: true,
-	"/": true //TODO when is this required?
-};
+DomUtils.append = function(elem, next){
+	var parent = elem.parent,
+	    currNext = elem.next;
 
-var emptyTags = {
-	__proto__: null,
-	area: true,
-	base: true,
-	basefont: true,
-	br: true,
-	col: true,
-	frame: true,
-	hr: true,
-	img: true,
-	input: true,
-	isindex: true,
-	link: true,
-	meta: true,
-	param: true,
-	embed: true
-};
+	next.next = currNext;
+	next.prev = elem;
+	elem.next = next;
 
-DomUtils.getOuterHTML = function(elem){
-	var type = elem.type;
-
-	if(type === ElementType.Text) return elem.data;
-	if(type === ElementType.Comment) return "<!--" + elem.data + "-->";
-	if(type === ElementType.Directive) return "<" + elem.data + ">";
-	if(type === ElementType.CDATA) return "<!CDATA " + DomUtils.getInnerHTML(elem) + "]]>";
-
-	var ret = "<" + elem.name;
-	if("attribs" in elem){
-		for(var attr in elem.attribs){
-			if(elem.attribs.hasOwnProperty(attr)){
-				ret += " " + attr;
-				var value = elem.attribs[attr];
-				if(!value){
-					if( !(attr in booleanAttribs) ){
-						ret += '=""';
-					}
-				} else {
-					ret += '="' + value + '"';
-				}
-			}
+	if(currNext){
+		currNext.prev = next;
+		if(parent){
+			var childs = parent.children;
+			childs.splice(childs.lastIndexOf(currNext), 0, next);
 		}
-	}
-
-	if (elem.name in emptyTags && elem.children.length === 0) {
-		return ret + " />";
-	} else {
-		return ret + ">" + DomUtils.getInnerHTML(elem) + "</" + elem.name + ">";
+	} else if(parent){
+		parent.children.push(next);
 	}
 };
 
-DomUtils.getText = function getText(elem){
-	if(Array.isArray(elem)) return elem.map(getText).join("");
-	if(isTag(elem) || elem.type === ElementType.CDATA) return getText(elem.children);
-	if(elem.type === ElementType.Text) return elem.data;
-	return "";
+DomUtils.prepend = function(elem, prev){
+	var parent = elem.parent;
+	if(parent){
+		var childs = parent.children;
+		childs.splice(childs.lastIndexOf(elem), 0, prev);
+	}
+
+	if(elem.prev){
+		elem.prev.next = prev;
+	}
+	prev.prev = elem.prev;
+	prev.next = elem;
+	elem.prev = prev;
 };
