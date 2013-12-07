@@ -21,7 +21,7 @@
     "domelementtype": "1"
   },
   "devDependencies": {
-    "htmlparser2": "2.3",
+    "htmlparser2": "~3.3.0",
     "domhandler": "2"
   },
   "author": "Felix Boehm <me@feedic.com>"
