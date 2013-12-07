@@ -57,6 +57,8 @@ function runTests(test){
  "./02-dom_utils.js"
 ].map(require).forEach(runTests);
 
+require("./03-remove-subsets")(assert);
+
 //log the results
 (function check(){
 	if(runCount !== 0) return process.nextTick(check);
