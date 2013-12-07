@@ -276,3 +276,5 @@ DomUtils.prepend = function(elem, prev){
 	prev.next = elem;
 	elem.prev = prev;
 };
+
+DomUtils.removeSubsets = require('./lib/remove-subsets');
