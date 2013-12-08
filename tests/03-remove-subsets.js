@@ -1,5 +1,5 @@
-var htmlparser = require('htmlparser2');
-var removeSubsets = require('..').removeSubsets;
+var htmlparser = require("htmlparser2");
+var removeSubsets = require("..").removeSubsets;
 function makeDom(markup) {
 	var handler = new htmlparser.DomHandler(),
 		parser = new htmlparser.Parser(handler);

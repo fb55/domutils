@@ -141,7 +141,7 @@ DomUtils.testElement = function(options, element){
 
 var Checks = {
 	tag_name: function(name){
-		if(typeof name === "function"){ 
+		if(typeof name === "function"){
 			return function(elem){ return isTag(elem) && name(elem.name); };
 		} else if(name === "*"){
 			return isTag;
@@ -245,7 +245,7 @@ DomUtils.appendChild = function(elem, child){
 
 DomUtils.append = function(elem, next){
 	var parent = elem.parent,
-	    currNext = elem.next;
+		currNext = elem.next;
 
 	next.next = currNext;
 	next.prev = elem;
@@ -277,4 +277,4 @@ DomUtils.prepend = function(elem, prev){
 	elem.prev = prev;
 };
 
-DomUtils.removeSubsets = require('./lib/remove-subsets');
+DomUtils.removeSubsets = require("./lib/remove-subsets");

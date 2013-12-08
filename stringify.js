@@ -69,10 +69,10 @@ function getOuterHTML(elem){
 				var value = elem.attribs[attr];
 				if(value == null){
 					if( !(attr in booleanAttribs) ){
-						ret += '=""';
+						ret += "=\"\"";
 					}
 				} else {
-					ret += '="' + value + '"';
+					ret += "=\"" + value + "\"";
 				}
 			}
 		}
