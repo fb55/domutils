@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/00-runtests.js && jshint *.js tests/**/*.js lib/*.js"
+    "test": "node tests/00-runtests.js && jshint index.js tests/**/*.js lib/*.js"
   },
   "repository": {
     "type": "git",
