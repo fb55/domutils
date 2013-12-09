@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha test/tests && jshint index.js test/**/*.js lib/*.js"
+    "test": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js"
   },
   "repository": {
     "type": "git",

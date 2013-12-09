@@ -6,4 +6,4 @@ exports.makeDom = function(markup) {
 	parser.write(markup);
 	parser.done();
 	return handler.dom;
-}
+};
