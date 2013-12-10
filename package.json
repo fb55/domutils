@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/00-runtests.js"
+    "test": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,23 @@
   },
   "devDependencies": {
     "htmlparser2": "~3.3.0",
-    "domhandler": "2"
+    "domhandler": "2",
+    "jshint": "~2.3.0",
+    "mocha": "~1.15.1"
   },
-  "author": "Felix Boehm <me@feedic.com>"
+  "author": "Felix Boehm <me@feedic.com>",
+  "jshintConfig": {
+    "proto": true,
+    "unused": true,
+    "eqnull": true,
+    "undef": true,
+    "quotmark": "double",
+    "eqeqeq": true,
+    "trailing": true,
+    "node": true,
+    "globals": {
+      "describe": true,
+      "it": true
+    }
+  }
 }
