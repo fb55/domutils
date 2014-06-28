@@ -18,6 +18,7 @@
     "htmlparser2"
   ],
   "dependencies": {
+    "dom-serializer": "0",
     "domelementtype": "1"
   },
   "devDependencies": {
