@@ -8,7 +8,7 @@ describe("traversal", function() {
 
     it("doesn't throw on text nodes", function() {
       var dom = makeDom("textnode");
-      assert.doesNotThrow(function () {
+      assert.doesNotThrow(function() {
         hasAttrib(dom[0], "some-attrib");
       });
     });
