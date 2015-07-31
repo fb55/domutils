@@ -28,6 +28,7 @@
     "mocha": "~1.15.1"
   },
   "author": "Felix Boehm <me@feedic.com>",
+  "license": "BSD-2-Clause",
   "jshintConfig": {
     "proto": true,
     "unused": true,
