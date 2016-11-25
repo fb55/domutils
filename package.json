@@ -25,7 +25,7 @@
     "htmlparser2": "~3.9.2",
     "domhandler": "2",
     "jshint": "~2.9.4",
-    "mocha": "~3.1.2"
+    "mocha": "~3.2.0"
   },
   "author": "Felix Boehm <me@feedic.com>",
   "license": "BSD-2-Clause",
