@@ -1,6 +1,6 @@
 {
   "name": "domutils",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "utilities for working with htmlparser2's dom",
   "main": "index.js",
   "directories": {
