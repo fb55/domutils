@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "domhandler": "2",
-    "htmlparser2": "~3.9.2",
+    "htmlparser2": "~3.10.0",
     "jshint": "~2.9.4",
     "mocha": "~5.2.0"
   },
