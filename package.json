@@ -24,7 +24,7 @@
   "devDependencies": {
     "domhandler": "2",
     "htmlparser2": "~3.10.0",
-    "jshint": "~2.9.4",
+    "jshint": "~2.10.2",
     "mocha": "~6.1.4"
   },
   "author": "Felix Boehm <me@feedic.com>",
