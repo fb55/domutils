@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "dom-serializer": "0",
-    "domelementtype": "1"
+    "domelementtype": "2"
   },
   "devDependencies": {
     "domhandler": "2",
