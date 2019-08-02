@@ -1,47 +1,52 @@
 {
-  "name": "domutils",
-  "version": "1.7.0",
-  "description": "utilities for working with htmlparser2's dom",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/FB55/domutils.git"
-  },
-  "keywords": [
-    "dom",
-    "htmlparser2"
-  ],
-  "dependencies": {
-    "dom-serializer": "0",
-    "domelementtype": "1"
-  },
-  "devDependencies": {
-    "domhandler": "2",
-    "htmlparser2": "~3.10.0",
-    "jshint": "~2.10.2",
-    "mocha": "~6.2.0"
-  },
-  "author": "Felix Boehm <me@feedic.com>",
-  "license": "BSD-2-Clause",
-  "jshintConfig": {
-    "proto": true,
-    "unused": true,
-    "eqnull": true,
-    "undef": true,
-    "quotmark": "double",
-    "eqeqeq": true,
-    "trailing": true,
-    "node": true,
-    "globals": {
-      "describe": true,
-      "it": true,
-      "beforeEach": true
+    "name": "domutils",
+    "version": "1.7.0",
+    "description": "Utilities for working with htmlparser2's dom",
+    "main": "lib/index.js",
+    "files": [
+        "lib/**/*"
+    ],
+    "scripts": {
+        "test": "jest --coverage && npm run lint",
+        "coverage": "cat coverage/lcov.info | coveralls",
+        "lint": "eslint src/**/*.ts",
+        "format": "prettier --write '**/*.{ts,md,json}'",
+        "build": "tsc",
+        "prepare": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/fb55/domutils.git"
+    },
+    "keywords": [
+        "dom",
+        "htmlparser2"
+    ],
+    "dependencies": {
+        "dom-serializer": "^0.2.1",
+        "domelementtype": "^2.0.1",
+        "domhandler": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^24.0.16",
+        "@types/node": "^12.6.8",
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0",
+        "eslint": "^6.1.0",
+        "eslint-config-prettier": "^6.0.0",
+        "htmlparser2": "~3.10.0",
+        "jest": "^24.8.0",
+        "prettier": "^1.18.2",
+        "ts-jest": "^24.0.2",
+        "typescript": "^3.5.3"
+    },
+    "author": "Felix Boehm <me@feedic.com>",
+    "license": "BSD-2-Clause",
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node"
+    },
+    "prettier": {
+        "tabWidth": 4
     }
-  }
 }

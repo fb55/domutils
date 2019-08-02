@@ -1,6 +1,10 @@
-sudo: true
 language: node_js
 node_js:
-  - 8
-  - 10
+  - lts/*
 
+sudo: false
+
+matrix:
+  fast_finish: true
+
+script: npm run coveralls
