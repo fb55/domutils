@@ -25,7 +25,7 @@ export function hasAttrib(elem: Element, name: string): boolean {
 /***
  * Returns the name property of an element
  *
- * @argument elem The element to get the name for
+ * @param elem The element to get the name for
  */
 export function getName(elem: Element): string {
     return elem.name;

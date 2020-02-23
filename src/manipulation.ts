@@ -3,7 +3,7 @@ import { Node, Element } from "domhandler";
 /***
  * Remove an element from the dom
  *
- * @argument elem The element to be removed
+ * @param elem The element to be removed
  */
 export function removeElement(elem: Node) {
     if (elem.prev) elem.prev.next = elem.next;
@@ -18,8 +18,8 @@ export function removeElement(elem: Node) {
 /***
  * Replace an element in the dom
  *
- * @argument elem The element to be replaced
- * @argument replacement The element to be added
+ * @param elem The element to be replaced
+ * @param replacement The element to be added
  */
 export function replaceElement(elem: Node, replacement: Node) {
     const prev = (replacement.prev = elem.prev);
@@ -42,8 +42,8 @@ export function replaceElement(elem: Node, replacement: Node) {
 /***
  * Append a child to an element
  *
- * @argument elem The element to append to
- * @argument child The element to be added as a child
+ * @param elem The element to append to
+ * @param child The element to be added as a child
  */
 export function appendChild(elem: Element, child: Node) {
     child.parent = elem;
@@ -59,8 +59,8 @@ export function appendChild(elem: Element, child: Node) {
 /***
  * Append an element after another
  *
- * @argument elem The element to append to
- * @argument next The element be added
+ * @param elem The element to append to
+ * @param next The element be added
  */
 export function append(elem: Node, next: Node) {
     const parent = elem.parent,
@@ -85,8 +85,8 @@ export function append(elem: Node, next: Node) {
 /***
  * Prepend an element before another
  *
- * @argument elem The element to append to
- * @argument prev The element be added
+ * @param elem The element to append to
+ * @param prev The element be added
  */
 export function prepend(elem: Node, prev: Node) {
     const parent = elem.parent;

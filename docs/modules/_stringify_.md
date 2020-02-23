@@ -16,7 +16,7 @@
 
 ▸ **getInnerHTML**(`node`: Node, `options?`: DomSerializerOptions): *string*
 
-*Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/6bff23a/src/stringify.ts#L12)*
+*Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/6b847f6/src/stringify.ts#L12)*
 
 **Parameters:**
 
@@ -33,7 +33,7 @@ ___
 
 ▸ **getOuterHTML**(`node`: Node | Node[], `options?`: DomSerializerOptions): *string*
 
-*Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/6bff23a/src/stringify.ts#L5)*
+*Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/6b847f6/src/stringify.ts#L5)*
 
 **Parameters:**
 
@@ -50,7 +50,7 @@ ___
 
 ▸ **getText**(`node`: Node | Node[]): *string*
 
-*Defined in [stringify.ts:21](https://github.com/fb55/domutils/blob/6bff23a/src/stringify.ts#L21)*
+*Defined in [stringify.ts:21](https://github.com/fb55/domutils/blob/6b847f6/src/stringify.ts#L21)*
 
 **Parameters:**
 

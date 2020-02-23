@@ -19,7 +19,7 @@
 
 ▸ **existsOne**(`test`: function, `elems`: Node[]): *boolean*
 
-*Defined in [querying.ts:72](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L72)*
+*Defined in [querying.ts:72](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L72)*
 
 **Parameters:**
 
@@ -43,7 +43,7 @@ ___
 
 ▸ **filter**(`test`: function, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [querying.ts:4](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L4)*
+*Defined in [querying.ts:4](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L4)*
 
 **Parameters:**
 
@@ -71,7 +71,7 @@ ___
 
 ▸ **find**(`test`: function, `elems`: Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [querying.ts:14](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L14)*
+*Defined in [querying.ts:14](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L14)*
 
 **Parameters:**
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **findAll**(`test`: function, `rootElems`: Node[]): *Element[]*
 
-*Defined in [querying.ts:91](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L91)*
+*Defined in [querying.ts:91](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L91)*
 
 **Parameters:**
 
@@ -123,7 +123,7 @@ ___
 
 ▸ **findOne**(`test`: function, `elems`: Node[], `recurse`: boolean): *Element | null*
 
-*Defined in [querying.ts:51](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L51)*
+*Defined in [querying.ts:51](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L51)*
 
 **Parameters:**
 
@@ -149,7 +149,7 @@ ___
 
 ▸ **findOneChild**(`test`: function, `elems`: Node[]): *Node | null*
 
-*Defined in [querying.ts:40](https://github.com/fb55/domutils/blob/6bff23a/src/querying.ts#L40)*
+*Defined in [querying.ts:40](https://github.com/fb55/domutils/blob/6b847f6/src/querying.ts#L40)*
 
 **Parameters:**
 

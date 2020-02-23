@@ -20,7 +20,7 @@
 
 ▸ **compareDocumentPosition**(`nodeA`: Node, `nodeB`: Node): *number*
 
-*Defined in [helpers.ts:70](https://github.com/fb55/domutils/blob/6bff23a/src/helpers.ts#L70)*
+*Defined in [helpers.ts:70](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L70)*
 
 Compare the position of one node against another node in any other document.
 The return value is a bitmask with the following values:
@@ -39,16 +39,12 @@ document order:
 Source:
 http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
 
-**`argument`** nodaA The first node to use in the comparison
-
-**`argument`** nodeB The second node to use in the comparison
-
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`nodeA` | Node |
-`nodeB` | Node |
+Name | Type | Description |
+------ | ------ | ------ |
+`nodeA` | Node | - |
+`nodeB` | Node | The second node to use in the comparison  |
 
 **Returns:** *number*
 
@@ -63,7 +59,7 @@ ___
 
 ▸ **removeSubsets**(`nodes`: Node[]): *Node[]*
 
-*Defined in [helpers.ts:9](https://github.com/fb55/domutils/blob/6bff23a/src/helpers.ts#L9)*
+*Defined in [helpers.ts:9](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L9)*
 
 Given an array of nodes, remove any member that is contained by another.
 
@@ -71,7 +67,7 @@ Given an array of nodes, remove any member that is contained by another.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`nodes` | Node[] | — Nodes to filter.  |
+`nodes` | Node[] | Nodes to filter.  |
 
 **Returns:** *Node[]*
 
@@ -81,19 +77,17 @@ ___
 
 ▸ **uniqueSort**(`nodes`: Node[]): *Node[]*
 
-*Defined in [helpers.ts:124](https://github.com/fb55/domutils/blob/6bff23a/src/helpers.ts#L124)*
+*Defined in [helpers.ts:124](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L124)*
 
 Sort an array of nodes based on their relative position in the document and
 remove any duplicate nodes. If the array contains nodes that do not belong
 to the same document, sort order is unspecified.
 
-**`argument`** nodes Array of DOM nodes
-
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`nodes` | Node[] |
+Name | Type | Description |
+------ | ------ | ------ |
+`nodes` | Node[] | Array of DOM nodes |
 
 **Returns:** *Node[]*
 

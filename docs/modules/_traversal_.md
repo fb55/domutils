@@ -19,7 +19,7 @@
 
 ▸ **getAttributeValue**(`elem`: Element, `name`: string): *string*
 
-*Defined in [traversal.ts:17](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L17)*
+*Defined in [traversal.ts:17](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L17)*
 
 **Parameters:**
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **getChildren**(`elem`: Node): *Node[] | null*
 
-*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L3)*
+*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L3)*
 
 **Parameters:**
 
@@ -52,17 +52,15 @@ ___
 
 ▸ **getName**(`elem`: Element): *string*
 
-*Defined in [traversal.ts:30](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L30)*
+*Defined in [traversal.ts:30](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L30)*
 
 Returns the name property of an element
 
-**`argument`** elem The element to get the name for
-
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`elem` | Element |
+Name | Type | Description |
+------ | ------ | ------ |
+`elem` | Element | The element to get the name for  |
 
 **Returns:** *string*
 
@@ -72,7 +70,7 @@ ___
 
 ▸ **getParent**(`elem`: Node): *Node | null*
 
-*Defined in [traversal.ts:8](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L8)*
+*Defined in [traversal.ts:8](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L8)*
 
 **Parameters:**
 
@@ -88,7 +86,7 @@ ___
 
 ▸ **getSiblings**(`elem`: Node): *Node[] | null*
 
-*Defined in [traversal.ts:12](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L12)*
+*Defined in [traversal.ts:12](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L12)*
 
 **Parameters:**
 
@@ -104,7 +102,7 @@ ___
 
 ▸ **hasAttrib**(`elem`: Element, `name`: string): *boolean*
 
-*Defined in [traversal.ts:21](https://github.com/fb55/domutils/blob/6bff23a/src/traversal.ts#L21)*
+*Defined in [traversal.ts:21](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L21)*
 
 **Parameters:**
 

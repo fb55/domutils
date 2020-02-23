@@ -4,7 +4,7 @@ import { hasChildren } from "./tagtypes";
 /**
  * Given an array of nodes, remove any member that is contained by another.
  *
- * @param nodes — Nodes to filter.
+ * @param nodes Nodes to filter.
  */
 export function removeSubsets(nodes: Node[]): Node[] {
     let idx = nodes.length;
@@ -59,8 +59,8 @@ export const enum DocumentPosition {
  *
  * Source:
  * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
- * @argument nodaA The first node to use in the comparison
- * @argument nodeB The second node to use in the comparison
+ * @param nodaA The first node to use in the comparison
+ * @param nodeB The second node to use in the comparison
  *
  * @return A bitmask describing the input nodes' relative position.
  *
@@ -118,7 +118,7 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
  * remove any duplicate nodes. If the array contains nodes that do not belong
  * to the same document, sort order is unspecified.
  *
- * @argument nodes Array of DOM nodes
+ * @param nodes Array of DOM nodes
  * @returns collection of unique nodes, sorted in document order
  */
 export function uniqueSort(nodes: Node[]): Node[] {
