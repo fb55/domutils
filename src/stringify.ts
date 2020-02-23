@@ -2,10 +2,12 @@ import { Node } from "domhandler";
 import { isTag, isCDATA, isText, hasChildren } from "./tagtypes";
 import renderHTML, { DomSerializerOptions } from "dom-serializer";
 
-export const getOuterHTML: (
+export function getOuterHTML(
     node: Node | Node[],
     options?: DomSerializerOptions
-) => string = renderHTML;
+): string {
+    return renderHTML(node, options);
+}
 
 export function getInnerHTML(
     node: Node,
