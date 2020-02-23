@@ -12,7 +12,8 @@
         "lint": "eslint --ext=js,ts src",
         "format": "prettier --write '**/*.{ts,md,json}'",
         "build": "tsc",
-        "prepare": "npm run build"
+        "update-docs": "typedoc --out docs --exclude src/index.ts --readme none --excludeNotExported --excludePrivate --excludeProtected --excludeExternals --hideGenerator",
+        "prepare": "npm run build && npm run update-docs"
     },
     "repository": {
         "type": "git",
@@ -39,6 +40,8 @@
         "jest": "^24.8.0",
         "prettier": "^1.18.2",
         "ts-jest": "^24.0.2",
+        "typedoc": "^0.16.10",
+        "typedoc-plugin-markdown": "^2.2.16",
         "typescript": "^3.5.3"
     },
     "author": "Felix Boehm <me@feedic.com>",
