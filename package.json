@@ -30,7 +30,7 @@
         "domhandler": "^3.0.0"
     },
     "devDependencies": {
-        "@types/jest": "^24.0.16",
+        "@types/jest": "^25.1.4",
         "@types/node": "^13.9.1",
         "@typescript-eslint/eslint-plugin": "^1.13.0",
         "@typescript-eslint/parser": "^1.13.0",
