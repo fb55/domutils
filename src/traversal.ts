@@ -14,11 +14,15 @@ export function getSiblings(elem: Node): Node[] | null {
 }
 
 export function getAttributeValue(elem: Element, name: string): string {
-    return elem.attribs && elem.attribs[name];
+    return elem.attribs?.[name];
 }
 
 export function hasAttrib(elem: Element, name: string): boolean {
-    return !!getAttributeValue(elem, name);
+    return (
+        !!elem.attribs &&
+        Object.prototype.hasOwnProperty.call(elem.attribs, name) &&
+        elem.attribs[name] != null
+    );
 }
 
 /***
