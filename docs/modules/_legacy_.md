@@ -18,7 +18,7 @@
 
 ▸ **getElementById**(`id`: string | function, `element`: Node | Node[], `recurse`: boolean): *Element | null*
 
-*Defined in [legacy.ts:91](https://github.com/fb55/domutils/blob/75e160c/src/legacy.ts#L91)*
+*Defined in [legacy.ts:91](https://github.com/fb55/domutils/blob/a6b5551/src/legacy.ts#L91)*
 
 **Parameters:**
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **getElements**(`options`: TestElementOpts, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [legacy.ts:81](https://github.com/fb55/domutils/blob/75e160c/src/legacy.ts#L81)*
+*Defined in [legacy.ts:81](https://github.com/fb55/domutils/blob/a6b5551/src/legacy.ts#L81)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ ___
 
 ▸ **getElementsByTagName**(`name`: string | function, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Element[]*
 
-*Defined in [legacy.ts:104](https://github.com/fb55/domutils/blob/75e160c/src/legacy.ts#L104)*
+*Defined in [legacy.ts:104](https://github.com/fb55/domutils/blob/a6b5551/src/legacy.ts#L104)*
 
 **Parameters:**
 
@@ -74,7 +74,7 @@ ___
 
 ▸ **getElementsByTagType**(`type`: ElementType | function, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [legacy.ts:113](https://github.com/fb55/domutils/blob/75e160c/src/legacy.ts#L113)*
+*Defined in [legacy.ts:113](https://github.com/fb55/domutils/blob/a6b5551/src/legacy.ts#L113)*
 
 **Parameters:**
 
@@ -93,7 +93,7 @@ ___
 
 ▸ **testElement**(`options`: TestElementOpts, `element`: Node): *boolean*
 
-*Defined in [legacy.ts:76](https://github.com/fb55/domutils/blob/75e160c/src/legacy.ts#L76)*
+*Defined in [legacy.ts:76](https://github.com/fb55/domutils/blob/a6b5551/src/legacy.ts#L76)*
 
 **Parameters:**
 

@@ -14,7 +14,7 @@
         "format": "prettier --write '**/*.{ts,md,json}'",
         "build": "tsc",
         "update-docs": "typedoc --out docs --exclude src/index.ts --readme none --excludeNotExported --excludePrivate --excludeProtected --excludeExternals --hideGenerator",
-        "prepare": "npm run build && npm run update-docs"
+        "prepare": "npm run build"
     },
     "repository": {
         "type": "git",

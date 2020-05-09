@@ -19,7 +19,7 @@
 
 ▸ **getAttributeValue**(`elem`: Element, `name`: string): *string*
 
-*Defined in [traversal.ts:16](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L16)*
+*Defined in [traversal.ts:16](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L16)*
 
 **Parameters:**
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **getChildren**(`elem`: Node | Element): *Node[] | null*
 
-*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L3)*
+*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L3)*
 
 **Parameters:**
 
@@ -52,7 +52,7 @@ ___
 
 ▸ **getName**(`elem`: Element): *string*
 
-*Defined in [traversal.ts:29](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L29)*
+*Defined in [traversal.ts:33](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L33)*
 
 Returns the name property of an element
 
@@ -70,7 +70,7 @@ ___
 
 ▸ **getParent**(`elem`: Node): *Node | null*
 
-*Defined in [traversal.ts:7](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L7)*
+*Defined in [traversal.ts:7](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L7)*
 
 **Parameters:**
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **getSiblings**(`elem`: Node): *Node[] | null*
 
-*Defined in [traversal.ts:11](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L11)*
+*Defined in [traversal.ts:11](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L11)*
 
 **Parameters:**
 
@@ -102,7 +102,7 @@ ___
 
 ▸ **hasAttrib**(`elem`: Element, `name`: string): *boolean*
 
-*Defined in [traversal.ts:20](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L20)*
+*Defined in [traversal.ts:20](https://github.com/fb55/domutils/blob/a6b5551/src/traversal.ts#L20)*
 
 **Parameters:**
 
