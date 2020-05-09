@@ -5,7 +5,7 @@ import { Element } from "domhandler";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {
-        const removeSubsets = helpers.removeSubsets;
+        const { removeSubsets } = helpers;
         const dom = makeDom(
             "<div><p><span></span></p><p></p></div>"
         )[0] as Element;
@@ -33,7 +33,7 @@ describe("helpers", () => {
     });
 
     describe("compareDocumentPosition", () => {
-        const compareDocumentPosition = helpers.compareDocumentPosition;
+        const { compareDocumentPosition } = helpers;
         const markup = "<div><p><span></span></p><a></a></div>";
         const dom = makeDom(markup)[0] as Element;
         const p = dom.children[0] as Element;
@@ -64,8 +64,11 @@ describe("helpers", () => {
     });
 
     describe("uniqueSort", () => {
-        const uniqueSort = helpers.uniqueSort;
-        let dom: Element, p: Element, span: Element, a: Element;
+        const { uniqueSort } = helpers;
+        let dom: Element;
+        let p: Element;
+        let span: Element;
+        let a: Element;
 
         beforeEach(() => {
             [dom] = makeDom(

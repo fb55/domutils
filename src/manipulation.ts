@@ -63,8 +63,8 @@ export function appendChild(elem: Element, child: Node) {
  * @param next The element be added
  */
 export function append(elem: Node, next: Node) {
-    const parent = elem.parent,
-        currNext = elem.next;
+    const { parent } = elem;
+    const currNext = elem.next;
 
     next.next = currNext;
     next.prev = elem;
@@ -89,7 +89,7 @@ export function append(elem: Node, next: Node) {
  * @param prev The element be added
  */
 export function prepend(elem: Node, prev: Node) {
-    const parent = elem.parent;
+    const { parent } = elem;
     if (parent) {
         const childs = parent.children;
         childs.splice(childs.lastIndexOf(elem), 0, prev);
