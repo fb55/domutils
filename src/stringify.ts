@@ -14,7 +14,7 @@ export function getInnerHTML(
     options?: DomSerializerOptions
 ): string {
     return hasChildren(node)
-        ? node.children.map(node => getOuterHTML(node, options)).join("")
+        ? node.children.map((node) => getOuterHTML(node, options)).join("")
         : "";
 }
 

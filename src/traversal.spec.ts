@@ -5,12 +5,10 @@ import * as DomUtils from ".";
 describe("traversal", () => {
     describe("hasAttrib", () => {
         test("doesn't throw on text nodes", () => {
-            const dom = makeDom("textnode");
-            const [firstNode] = dom;
+            const [firstNode] = makeDom("textnode");
 
             assert.doesNotThrow(() =>
-                // @ts-ignore
-                DomUtils.hasAttrib(firstNode, "some-attrib")
+                DomUtils.hasAttrib(firstNode as never, "some-attrib")
             );
         });
     });

@@ -8,7 +8,7 @@ import { Node, Element } from "domhandler";
 const expected = {
     idAsdf: fixture[1] as Element,
     tag2: [] as Node[],
-    typeScript: [] as Node[]
+    typeScript: [] as Node[],
 };
 for (let idx = 0; idx < 20; ++idx) {
     const node = fixture[idx * 2 + 1] as Element;
@@ -92,8 +92,7 @@ describe("legacy", () => {
             ));
         test("returns empty array for unknown tag types", () =>
             assert.deepEqual(
-                // @ts-ignore
-                DomUtils.getElementsByTagType("video", fixture, true),
+                DomUtils.getElementsByTagType("video" as never, fixture, true),
                 []
             ));
     });

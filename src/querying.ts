@@ -1,26 +1,41 @@
 import { Node, Element } from "domhandler";
 import { isTag, hasChildren } from "./tagtypes";
 
+/**
+ * Search a node and its children for nodes passing a test function.
+ *
+ * @param test Function to test nodes on.
+ * @param element Element to search. Will be included in the result set if it matches.
+ * @param recurse Also consider child nodes.
+ * @param limit Maximum number of nodes to return.
+ */
 export function filter(
     test: (elem: Node) => boolean,
-    element: Node | Node[],
-    recurse: boolean = true,
-    limit: number = Infinity
+    node: Node | Node[],
+    recurse = true,
+    limit = Infinity
 ): Node[] {
-    if (!Array.isArray(element)) element = [element];
-    return find(test, element, recurse, limit);
+    if (!Array.isArray(node)) node = [node];
+    return find(test, node, recurse, limit);
 }
 
+/**
+ * Like `filter`, but only works on an array of nodes.
+ *
+ * @param test Function to test nodes on.
+ * @param nodes Array of nodes to search.
+ * @param recurse Also consider child nodes.
+ * @param limit Maximum number of nodes to return.
+ */
 export function find(
     test: (elem: Node) => boolean,
-    elems: Node[],
+    nodes: Node[],
     recurse: boolean,
     limit: number
 ): Node[] {
-    let result: Node[] = [];
+    const result: Node[] = [];
 
-    for (let i = 0; i < elems.length; i++) {
-        const elem = elems[i];
+    for (const elem of nodes) {
         if (test(elem)) {
             result.push(elem);
             if (--limit <= 0) break;
@@ -28,7 +43,7 @@ export function find(
 
         if (recurse && hasChildren(elem) && elem.children.length > 0) {
             const children = find(test, elem.children, recurse, limit);
-            result = result.concat(children);
+            result.push(...children);
             limit -= children.length;
             if (limit <= 0) break;
         }
@@ -37,26 +52,35 @@ export function find(
     return result;
 }
 
+/**
+ * Finds the first element inside of an array that matches a test function.
+ *
+ * @param test Function to test nodes on.
+ * @param nodes Array of nodes to search.
+ */
 export function findOneChild(
     test: (elem: Node) => boolean,
-    elems: Node[]
-): Node | null {
-    for (let i = 0; i < elems.length; i++) {
-        if (test(elems[i])) return elems[i];
-    }
-
-    return null;
+    nodes: Node[]
+): Node | undefined {
+    return nodes.find(test);
 }
 
+/**
+ * Finds one element in a tree that passes a test.
+ *
+ * @param test Function to test nodes on.
+ * @param nodes Array of nodes to search.
+ * @param recurse Also consider child nodes.
+ */
 export function findOne(
     test: (elem: Element) => boolean,
-    elems: Node[],
-    recurse: boolean = true
+    nodes: Node[],
+    recurse = true
 ): Element | null {
     let elem = null;
 
-    for (let i = 0; i < elems.length && !elem; i++) {
-        const checked = elems[i];
+    for (let i = 0; i < nodes.length && !elem; i++) {
+        const checked = nodes[i];
         if (!isTag(checked)) {
             continue;
         } else if (test(checked)) {
@@ -69,36 +93,44 @@ export function findOne(
     return elem;
 }
 
+/**
+ * Returns whether a tree of nodes contains at least one node passing a test.
+ *
+ * @param test Function to test nodes on.
+ * @param nodes Array of nodes to search.
+ */
 export function existsOne(
     test: (elem: Element) => boolean,
-    elems: Node[]
+    nodes: Node[]
 ): boolean {
-    for (let i = 0; i < elems.length; i++) {
-        const checked = elems[i];
-        if (
+    return nodes.some(
+        (checked) =>
             isTag(checked) &&
             (test(checked) ||
                 (checked.children.length > 0 &&
                     existsOne(test, checked.children)))
-        ) {
-            return true;
-        }
-    }
-
-    return false;
+    );
 }
 
+/**
+ * Search and array of nodes and its children for nodes passing a test function.
+ *
+ * Same as `find`, only with less options, leading to reduced complexity.
+ *
+ * @param test Function to test nodes on.
+ * @param nodes Array of nodes to search.
+ */
 export function findAll(
     test: (elem: Element) => boolean,
-    rootElems: Node[]
+    nodes: Node[]
 ): Element[] {
     const result: Element[] = [];
-    const stack = rootElems.slice();
-    while (stack.length) {
-        const elem = stack.shift();
-        if (!elem || !isTag(elem)) continue;
-        if (elem.children && elem.children.length > 0) {
-            stack.unshift(...elem.children);
+    const stack = nodes.filter(isTag);
+    let elem;
+    while ((elem = stack.shift())) {
+        const children = elem.children?.filter(isTag);
+        if (children && children.length > 0) {
+            stack.unshift(...children);
         }
         if (test(elem)) result.push(elem);
     }

@@ -18,7 +18,7 @@
 
 • **CONTAINED_BY**: = 16
 
-*Defined in [helpers.ts:42](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L42)*
+*Defined in [helpers.ts:42](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L42)*
 
 ___
 
@@ -26,7 +26,7 @@ ___
 
 • **CONTAINS**: = 8
 
-*Defined in [helpers.ts:41](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L41)*
+*Defined in [helpers.ts:41](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L41)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **DISCONNECTED**: = 1
 
-*Defined in [helpers.ts:38](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L38)*
+*Defined in [helpers.ts:38](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L38)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **FOLLOWING**: = 4
 
-*Defined in [helpers.ts:40](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L40)*
+*Defined in [helpers.ts:40](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L40)*
 
 ___
 
@@ -50,4 +50,4 @@ ___
 
 • **PRECEDING**: = 2
 
-*Defined in [helpers.ts:39](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L39)*
+*Defined in [helpers.ts:39](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L39)*

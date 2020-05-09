@@ -43,13 +43,13 @@ const Checks = {
         } else {
             return (elem: Node) => isTextNode(elem) && elem.data === data;
         }
-    }
+    },
 };
 /* eslint-enable @typescript-eslint/camelcase */
 
 function getAttribCheck(
     attrib: string,
-    value: string | ((value: string) => boolean)
+    value: undefined | string | ((value: string) => boolean)
 ): TestType {
     if (typeof value === "function") {
         return (elem: Node) => isTag(elem) && value(elem.attribs[attrib]);
@@ -63,10 +63,11 @@ function combineFuncs(a: TestType, b: TestType): TestType {
 }
 
 function compileTest(options: TestElementOpts): TestType | null {
-    const funcs = Object.keys(options).map(key => {
+    const funcs = Object.keys(options).map((key) => {
         const value = options[key];
-        // @ts-ignore
-        return key in Checks ? Checks[key](value) : getAttribCheck(key, value);
+        return key in Checks
+            ? (Checks as Record<string, Function>)[key](value)
+            : getAttribCheck(key, value);
     });
 
     return funcs.length === 0 ? null : funcs.reduce(combineFuncs);
@@ -81,7 +82,7 @@ export function getElements(
     options: TestElementOpts,
     element: Node | Node[],
     recurse: boolean,
-    limit: number = Infinity
+    limit = Infinity
 ): Node[] {
     const test = compileTest(options);
     return test ? filter(test, element, recurse, limit) : [];
@@ -90,21 +91,21 @@ export function getElements(
 export function getElementById(
     id: string | ((id: string) => boolean),
     element: Node | Node[],
-    recurse: boolean = true
+    recurse = true
 ): Element | null {
     if (!Array.isArray(element)) element = [element];
     return findOne(
         getAttribCheck("id", id),
         element,
         recurse
-    ) as (Element | null);
+    ) as Element | null;
 }
 
 export function getElementsByTagName(
     name: string | ((name: string) => boolean),
     element: Node | Node[],
     recurse: boolean,
-    limit: number = Infinity
+    limit = Infinity
 ): Element[] {
     return filter(Checks.tag_name(name), element, recurse, limit) as Element[];
 }
@@ -112,8 +113,8 @@ export function getElementsByTagName(
 export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
     element: Node | Node[],
-    recurse: boolean = true,
-    limit: number = Infinity
+    recurse = true,
+    limit = Infinity
 ): Node[] {
     return filter(Checks.tag_type(type), element, recurse, limit);
 }

@@ -1,6 +1,6 @@
 [domutils](../README.md) › ["traversal"](_traversal_.md)
 
-# External module: "traversal"
+# Module: "traversal"
 
 ## Index
 
@@ -19,7 +19,7 @@
 
 ▸ **getAttributeValue**(`elem`: Element, `name`: string): *string*
 
-*Defined in [traversal.ts:17](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L17)*
+*Defined in [traversal.ts:16](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L16)*
 
 **Parameters:**
 
@@ -34,15 +34,15 @@ ___
 
 ###  getChildren
 
-▸ **getChildren**(`elem`: Node): *Node[] | null*
+▸ **getChildren**(`elem`: Node | Element): *Node[] | null*
 
-*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L3)*
+*Defined in [traversal.ts:3](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L3)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`elem` | Node |
+`elem` | Node &#124; Element |
 
 **Returns:** *Node[] | null*
 
@@ -52,7 +52,7 @@ ___
 
 ▸ **getName**(`elem`: Element): *string*
 
-*Defined in [traversal.ts:30](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L30)*
+*Defined in [traversal.ts:29](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L29)*
 
 Returns the name property of an element
 
@@ -70,7 +70,7 @@ ___
 
 ▸ **getParent**(`elem`: Node): *Node | null*
 
-*Defined in [traversal.ts:8](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L8)*
+*Defined in [traversal.ts:7](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L7)*
 
 **Parameters:**
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **getSiblings**(`elem`: Node): *Node[] | null*
 
-*Defined in [traversal.ts:12](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L12)*
+*Defined in [traversal.ts:11](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L11)*
 
 **Parameters:**
 
@@ -102,7 +102,7 @@ ___
 
 ▸ **hasAttrib**(`elem`: Element, `name`: string): *boolean*
 
-*Defined in [traversal.ts:21](https://github.com/fb55/domutils/blob/6b847f6/src/traversal.ts#L21)*
+*Defined in [traversal.ts:20](https://github.com/fb55/domutils/blob/75e160c/src/traversal.ts#L20)*
 
 **Parameters:**
 

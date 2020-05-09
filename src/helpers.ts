@@ -39,7 +39,7 @@ export const enum DocumentPosition {
     PRECEDING = 2,
     FOLLOWING = 4,
     CONTAINS = 8,
-    CONTAINED_BY = 16
+    CONTAINED_BY = 16,
 }
 
 /***

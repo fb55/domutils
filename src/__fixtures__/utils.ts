@@ -1,5 +1,4 @@
 import DomHandler, { Node } from "domhandler";
-// @ts-ignore
 import { Parser } from "htmlparser2";
 
 export function makeDom(markup: string): Node[] {

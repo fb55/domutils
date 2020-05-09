@@ -1,6 +1,6 @@
 [domutils](../README.md) › ["manipulation"](_manipulation_.md)
 
-# External module: "manipulation"
+# Module: "manipulation"
 
 ## Index
 
@@ -18,7 +18,7 @@
 
 ▸ **append**(`elem`: Node, `next`: Node): *void*
 
-*Defined in [manipulation.ts:65](https://github.com/fb55/domutils/blob/6b847f6/src/manipulation.ts#L65)*
+*Defined in [manipulation.ts:65](https://github.com/fb55/domutils/blob/75e160c/src/manipulation.ts#L65)*
 
 Append an element after another
 
@@ -37,7 +37,7 @@ ___
 
 ▸ **appendChild**(`elem`: Element, `child`: Node): *void*
 
-*Defined in [manipulation.ts:48](https://github.com/fb55/domutils/blob/6b847f6/src/manipulation.ts#L48)*
+*Defined in [manipulation.ts:48](https://github.com/fb55/domutils/blob/75e160c/src/manipulation.ts#L48)*
 
 Append a child to an element
 
@@ -56,7 +56,7 @@ ___
 
 ▸ **prepend**(`elem`: Node, `prev`: Node): *void*
 
-*Defined in [manipulation.ts:91](https://github.com/fb55/domutils/blob/6b847f6/src/manipulation.ts#L91)*
+*Defined in [manipulation.ts:91](https://github.com/fb55/domutils/blob/75e160c/src/manipulation.ts#L91)*
 
 Prepend an element before another
 
@@ -75,7 +75,7 @@ ___
 
 ▸ **removeElement**(`elem`: Node): *void*
 
-*Defined in [manipulation.ts:8](https://github.com/fb55/domutils/blob/6b847f6/src/manipulation.ts#L8)*
+*Defined in [manipulation.ts:8](https://github.com/fb55/domutils/blob/75e160c/src/manipulation.ts#L8)*
 
 Remove an element from the dom
 
@@ -93,7 +93,7 @@ ___
 
 ▸ **replaceElement**(`elem`: Node, `replacement`: Node): *void*
 
-*Defined in [manipulation.ts:24](https://github.com/fb55/domutils/blob/6b847f6/src/manipulation.ts#L24)*
+*Defined in [manipulation.ts:24](https://github.com/fb55/domutils/blob/75e160c/src/manipulation.ts#L24)*
 
 Replace an element in the dom
 

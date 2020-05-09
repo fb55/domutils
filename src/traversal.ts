@@ -1,8 +1,7 @@
 import { Node, Element } from "domhandler";
 
-export function getChildren(elem: Node): Node[] | null {
-    // @ts-ignore
-    return elem.children || null;
+export function getChildren(elem: Node | Element): Node[] | null {
+    return (elem as { children?: Node[] }).children || null;
 }
 
 export function getParent(elem: Node): Node | null {

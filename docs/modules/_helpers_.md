@@ -1,6 +1,6 @@
 [domutils](../README.md) › ["helpers"](_helpers_.md)
 
-# External module: "helpers"
+# Module: "helpers"
 
 ## Index
 
@@ -20,7 +20,7 @@
 
 ▸ **compareDocumentPosition**(`nodeA`: Node, `nodeB`: Node): *number*
 
-*Defined in [helpers.ts:70](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L70)*
+*Defined in [helpers.ts:70](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L70)*
 
 Compare the position of one node against another node in any other document.
 The return value is a bitmask with the following values:
@@ -59,7 +59,7 @@ ___
 
 ▸ **removeSubsets**(`nodes`: Node[]): *Node[]*
 
-*Defined in [helpers.ts:9](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L9)*
+*Defined in [helpers.ts:9](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L9)*
 
 Given an array of nodes, remove any member that is contained by another.
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **uniqueSort**(`nodes`: Node[]): *Node[]*
 
-*Defined in [helpers.ts:124](https://github.com/fb55/domutils/blob/6b847f6/src/helpers.ts#L124)*
+*Defined in [helpers.ts:124](https://github.com/fb55/domutils/blob/75e160c/src/helpers.ts#L124)*
 
 Sort an array of nodes based on their relative position in the document and
 remove any duplicate nodes. If the array contains nodes that do not belong

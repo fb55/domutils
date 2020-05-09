@@ -6,7 +6,7 @@ export function isTag(node: Node): node is Element {
 }
 
 export function isCDATA(node: Node): node is NodeWithChildren {
-    return ElementType.CDATA === node.type;
+    return node.type === ElementType.CDATA;
 }
 
 export function isText(node: Node): node is DataNode {

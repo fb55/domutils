@@ -4,7 +4,7 @@
 
 ## Index
 
-### External modules
+### Modules
 
 * ["helpers"](modules/_helpers_.md)
 * ["legacy"](modules/_legacy_.md)
