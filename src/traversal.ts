@@ -33,3 +33,9 @@ export function hasAttrib(elem: Element, name: string): boolean {
 export function getName(elem: Element): string {
     return elem.name;
 }
+
+export function nextElementSibling(elem: Node) {
+    let node = elem.next;
+    while (node !== null && node.type !== "tag") node = node.next;
+    return node;
+}
