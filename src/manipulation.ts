@@ -46,6 +46,8 @@ export function replaceElement(elem: Node, replacement: Node) {
  * @param child The element to be added as a child
  */
 export function appendChild(elem: Element, child: Node) {
+    removeElement(child);
+
     child.parent = elem;
 
     if (elem.children.push(child) !== 1) {
@@ -63,6 +65,8 @@ export function appendChild(elem: Element, child: Node) {
  * @param next The element be added
  */
 export function append(elem: Node, next: Node) {
+    removeElement(next);
+
     const { parent } = elem;
     const currNext = elem.next;
 
