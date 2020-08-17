@@ -1,6 +1,6 @@
 {
     "name": "domutils",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Utilities for working with htmlparser2's dom",
     "sideEffects": false,
     "main": "lib/index.js",
