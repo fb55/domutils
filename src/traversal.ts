@@ -1,4 +1,4 @@
-import { Node, Element } from "domhandler";
+import type { Node, Element } from "domhandler";
 
 export function getChildren(elem: Node | Element): Node[] | null {
     return (elem as { children?: Node[] }).children || null;
@@ -25,7 +25,7 @@ export function hasAttrib(elem: Element, name: string): boolean {
     );
 }
 
-/***
+/**
  * Returns the name property of an element
  *
  * @param elem The element to get the name for

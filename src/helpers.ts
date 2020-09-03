@@ -1,4 +1,4 @@
-import { Node } from "domhandler";
+import type { Node } from "domhandler";
 import { hasChildren } from "./tagtypes";
 
 /**
@@ -9,21 +9,25 @@ import { hasChildren } from "./tagtypes";
 export function removeSubsets(nodes: Node[]): Node[] {
     let idx = nodes.length;
 
-    // Check if each node (or one of its ancestors) is already contained in the
-    // array.
+    /*
+     * Check if each node (or one of its ancestors) is already contained in the
+     * array.
+     */
     while (--idx >= 0) {
         const node = nodes[idx];
 
-        // Remove the node if it is not unique.
-        // We are going through the array from the end, so we only
-        // have to check nodes that preceed the node under consideration in the array.
+        /*
+         * Remove the node if it is not unique.
+         * We are going through the array from the end, so we only
+         * have to check nodes that preceed the node under consideration in the array.
+         */
         if (idx > 0 && nodes.lastIndexOf(node, idx - 1) >= 0) {
             nodes.splice(idx, 1);
             continue;
         }
 
         for (let ancestor = node.parent; ancestor; ancestor = ancestor.parent) {
-            if (nodes.indexOf(ancestor) > -1) {
+            if (nodes.includes(ancestor)) {
                 nodes.splice(idx, 1);
                 break;
             }
@@ -42,7 +46,7 @@ export const enum DocumentPosition {
     CONTAINED_BY = 16,
 }
 
-/***
+/**
  * Compare the position of one node against another node in any other document.
  * The return value is a bitmask with the following values:
  *
@@ -105,15 +109,14 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
             return DocumentPosition.FOLLOWING | DocumentPosition.CONTAINED_BY;
         }
         return DocumentPosition.FOLLOWING;
-    } else {
-        if (sharedParent === nodeA) {
-            return DocumentPosition.PRECEDING | DocumentPosition.CONTAINS;
-        }
-        return DocumentPosition.PRECEDING;
     }
+    if (sharedParent === nodeA) {
+        return DocumentPosition.PRECEDING | DocumentPosition.CONTAINS;
+    }
+    return DocumentPosition.PRECEDING;
 }
 
-/***
+/**
  * Sort an array of nodes based on their relative position in the document and
  * remove any duplicate nodes. If the array contains nodes that do not belong
  * to the same document, sort order is unspecified.

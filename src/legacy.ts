@@ -26,23 +26,20 @@ const Checks = {
             return (elem: Node) => isTag(elem) && name(elem.name);
         } else if (name === "*") {
             return isTag;
-        } else {
-            return (elem: Node) => isTag(elem) && elem.name === name;
         }
+        return (elem: Node) => isTag(elem) && elem.name === name;
     },
     tag_type(type: ElementType | ((type: ElementType) => boolean)): TestType {
         if (typeof type === "function") {
             return (elem: Node) => type(elem.type);
-        } else {
-            return (elem: Node) => elem.type === type;
         }
+        return (elem: Node) => elem.type === type;
     },
     tag_contains(data: string | ((data?: string) => boolean)): TestType {
         if (typeof data === "function") {
             return (elem: Node) => isTextNode(elem) && data(elem.data);
-        } else {
-            return (elem: Node) => isTextNode(elem) && elem.data === data;
         }
+        return (elem: Node) => isTextNode(elem) && elem.data === data;
     },
 };
 /* eslint-enable @typescript-eslint/camelcase */
@@ -53,9 +50,8 @@ function getAttribCheck(
 ): TestType {
     if (typeof value === "function") {
         return (elem: Node) => isTag(elem) && value(elem.attribs[attrib]);
-    } else {
-        return (elem: Node) => isTag(elem) && elem.attribs[attrib] === value;
     }
+    return (elem: Node) => isTag(elem) && elem.attribs[attrib] === value;
 }
 
 function combineFuncs(a: TestType, b: TestType): TestType {

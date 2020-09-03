@@ -1,4 +1,4 @@
-import { Node, Element } from "domhandler";
+import type { Node, Element } from "domhandler";
 import { isTag, hasChildren } from "./tagtypes";
 
 /**

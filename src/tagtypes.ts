@@ -1,4 +1,4 @@
-import { Node, Element, NodeWithChildren, DataNode } from "domhandler";
+import type { Node, Element, NodeWithChildren, DataNode } from "domhandler";
 import { ElementType, isTag as isTagRaw } from "domelementtype";
 
 export function isTag(node: Node): node is Element {

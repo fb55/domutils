@@ -11,7 +11,7 @@
     "scripts": {
         "test": "jest --coverage && npm run lint",
         "coverage": "cat coverage/lcov.info | coveralls",
-        "lint": "eslint --ext=js,ts src",
+        "lint": "eslint src",
         "format": "prettier --write '**/*.{ts,md,json}'",
         "build": "tsc",
         "update-docs": "typedoc --out docs --exclude src/index.ts --readme none --excludeNotExported --excludePrivate --excludeProtected --excludeExternals --hideGenerator",
