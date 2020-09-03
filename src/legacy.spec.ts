@@ -1,117 +1,87 @@
-import * as DomUtils from "./";
 import fixture from "./__fixtures__/fixture";
-import * as assert from "assert";
 import { ElementType } from "domelementtype";
-import { Node, Element } from "domhandler";
-
-// Set up expected structures
-const expected = {
-    idAsdf: fixture[1] as Element,
-    tag2: [] as Node[],
-    typeScript: [] as Node[],
-};
-for (let idx = 0; idx < 20; ++idx) {
-    const node = fixture[idx * 2 + 1] as Element;
-    expected.tag2.push(node.children[5]);
-    expected.typeScript.push(node.children[1]);
-}
+import {
+    getElements,
+    getElementById,
+    getElementsByTagName,
+    getElementsByTagType,
+} from "./legacy";
+import type { Node, Element } from "domhandler";
 
 describe("legacy", () => {
+    // Set up expected structures
+    const expected = {
+        idAsdf: fixture[1] as Element,
+        tag2: [] as Node[],
+        typeScript: [] as Node[],
+    };
+
+    beforeAll(() => {
+        for (let idx = 0; idx < 20; ++idx) {
+            const node = fixture[idx * 2 + 1] as Element;
+            expected.tag2.push(node.children[5]);
+            expected.typeScript.push(node.children[1]);
+        }
+    });
     describe("getElements", () => {
         /* eslint-disable @typescript-eslint/camelcase */
 
-        test("returns the node with the specified ID", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ id: "asdf" }, fixture, true, 1),
-                [expected.idAsdf]
+        it("returns the node with the specified ID", () =>
+            expect(getElements({ id: "asdf" }, fixture, true, 1)).toEqual([
+                expected.idAsdf,
+            ]));
+        it("returns empty array for unknown IDs", () =>
+            expect(getElements({ id: "asdfs" }, fixture, true)).toHaveLength(
+                0
             ));
-        test("returns empty array for unknown IDs", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ id: "asdfs" }, fixture, true),
-                []
-            ));
-        test("returns the nodes with the specified tag name", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ tag_name: "tag2" }, fixture, true),
+        it("returns the nodes with the specified tag name", () =>
+            expect(getElements({ tag_name: "tag2" }, fixture, true)).toEqual(
                 expected.tag2
             ));
-        test("returns empty array for unknown tag names", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ tag_name: "asdfs" }, fixture, true),
-                []
-            ));
-        test("returns the nodes with the specified tag type", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ tag_type: "script" }, fixture, true),
+        it("returns empty array for unknown tag names", () =>
+            expect(
+                getElements({ tag_name: "asdfs" }, fixture, true)
+            ).toHaveLength(0));
+        it("returns the nodes with the specified tag type", () =>
+            expect(getElements({ tag_type: "script" }, fixture, true)).toEqual(
                 expected.typeScript
             ));
-        test("returns empty array for unknown tag types", () =>
-            assert.deepEqual(
-                DomUtils.getElements({ tag_type: "video" }, fixture, true),
-                []
-            ));
+        it("returns empty array for unknown tag types", () =>
+            expect(
+                getElements({ tag_type: "video" }, fixture, true)
+            ).toHaveLength(0));
 
         /* eslint-enable @typescript-eslint/camelcase */
     });
 
     describe("getElementById", () => {
-        test("returns the specified node", () =>
-            assert.equal(
-                expected.idAsdf,
-                DomUtils.getElementById("asdf", fixture, true)
+        it("returns the specified node", () =>
+            expect(getElementById("asdf", fixture, true)).toBe(
+                expected.idAsdf
             ));
-        test("returns `null` for unknown IDs", () =>
-            assert.equal(
-                null,
-                DomUtils.getElementById("asdfs", fixture, true)
-            ));
+        it("returns `null` for unknown IDs", () =>
+            expect(getElementById("asdfs", fixture, true)).toBeNull());
     });
 
     describe("getElementsByTagName", () => {
-        test("returns the specified nodes", () =>
-            assert.deepEqual(
-                DomUtils.getElementsByTagName("tag2", fixture, true),
+        it("returns the specified nodes", () =>
+            expect(getElementsByTagName("tag2", fixture, true)).toEqual(
                 expected.tag2
             ));
-        test("returns empty array for unknown tag names", () =>
-            assert.deepEqual(
-                DomUtils.getElementsByTagName("tag23", fixture, true),
-                []
+        it("returns empty array for unknown tag names", () =>
+            expect(getElementsByTagName("tag23", fixture, true)).toHaveLength(
+                0
             ));
     });
 
     describe("getElementsByTagType", () => {
-        test("returns the specified nodes", () =>
-            assert.deepEqual(
-                DomUtils.getElementsByTagType(
-                    ElementType.Script,
-                    fixture,
-                    true
-                ),
-                expected.typeScript
-            ));
-        test("returns empty array for unknown tag types", () =>
-            assert.deepEqual(
-                DomUtils.getElementsByTagType("video" as never, fixture, true),
-                []
-            ));
+        it("returns the specified nodes", () =>
+            expect(
+                getElementsByTagType(ElementType.Script, fixture, true)
+            ).toEqual(expected.typeScript));
+        it("returns empty array for unknown tag types", () =>
+            expect(
+                getElementsByTagType("video" as never, fixture, true)
+            ).toHaveLength(0));
     });
-
-    /*
-    describe("getOuterHTML", () => {
-        test("Correctly renders the outer HTML", () =>
-            assert.equal(
-                DomUtils.getOuterHTML(fixture[1]),
-                '<tag1 id="asdf"> <script>text</script> <!-- comment --> <tag2> text </tag2></tag1>'
-            ));
-    });
-
-    describe("getInnerHTML", () => {
-        test("Correctly renders the inner HTML", () =>
-            assert.equal(
-                DomUtils.getInnerHTML(fixture[1]),
-                " <script>text</script> <!-- comment --> <tag2> text </tag2>"
-            ));
-    });
-    */
 });
