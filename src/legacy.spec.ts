@@ -24,8 +24,6 @@ describe("legacy", () => {
         }
     });
     describe("getElements", () => {
-        /* eslint-disable @typescript-eslint/camelcase */
-
         it("returns the node with the specified ID", () =>
             expect(getElements({ id: "asdf" }, fixture, true, 1)).toEqual([
                 expected.idAsdf,
@@ -50,8 +48,6 @@ describe("legacy", () => {
             expect(
                 getElements({ tag_type: "video" }, fixture, true)
             ).toHaveLength(0));
-
-        /* eslint-enable @typescript-eslint/camelcase */
     });
 
     describe("getElementById", () => {

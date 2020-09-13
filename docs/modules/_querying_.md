@@ -19,7 +19,7 @@
 
 ▸ **existsOne**(`test`: function, `nodes`: Node[]): *boolean*
 
-*Defined in [querying.ts:102](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L102)*
+*Defined in [querying.ts:102](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L102)*
 
 Returns whether a tree of nodes contains at least one node passing a test.
 
@@ -49,7 +49,7 @@ ___
 
 ▸ **filter**(`test`: function, `node`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [querying.ts:12](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L12)*
+*Defined in [querying.ts:12](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L12)*
 
 Search a node and its children for nodes passing a test function.
 
@@ -85,7 +85,7 @@ ___
 
 ▸ **find**(`test`: function, `nodes`: Node[], `recurse`: boolean, `limit`: number): *Node[]*
 
-*Defined in [querying.ts:30](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L30)*
+*Defined in [querying.ts:30](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L30)*
 
 Like `filter`, but only works on an array of nodes.
 
@@ -123,7 +123,7 @@ ___
 
 ▸ **findAll**(`test`: function, `nodes`: Node[]): *Element[]*
 
-*Defined in [querying.ts:123](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L123)*
+*Defined in [querying.ts:123](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L123)*
 
 Search and array of nodes and its children for nodes passing a test function.
 
@@ -155,7 +155,7 @@ ___
 
 ▸ **findOne**(`test`: function, `nodes`: Node[], `recurse`: boolean): *Element | null*
 
-*Defined in [querying.ts:75](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L75)*
+*Defined in [querying.ts:75](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L75)*
 
 Finds one element in a tree that passes a test.
 
@@ -189,7 +189,7 @@ ___
 
 ▸ **findOneChild**(`test`: function, `nodes`: Node[]): *Node | undefined*
 
-*Defined in [querying.ts:61](https://github.com/fb55/domutils/blob/a6b5551/src/querying.ts#L61)*
+*Defined in [querying.ts:61](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L61)*
 
 Finds the first element inside of an array that matches a test function.
 

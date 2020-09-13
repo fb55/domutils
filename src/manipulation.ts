@@ -5,7 +5,7 @@ import type { Node, Element } from "domhandler";
  *
  * @param elem The element to be removed
  */
-export function removeElement(elem: Node) {
+export function removeElement(elem: Node): void {
     if (elem.prev) elem.prev.next = elem.next;
     if (elem.next) elem.next.prev = elem.prev;
 
@@ -21,7 +21,7 @@ export function removeElement(elem: Node) {
  * @param elem The element to be replaced
  * @param replacement The element to be added
  */
-export function replaceElement(elem: Node, replacement: Node) {
+export function replaceElement(elem: Node, replacement: Node): void {
     const prev = (replacement.prev = elem.prev);
     if (prev) {
         prev.next = replacement;
@@ -45,7 +45,7 @@ export function replaceElement(elem: Node, replacement: Node) {
  * @param elem The element to append to
  * @param child The element to be added as a child
  */
-export function appendChild(elem: Element, child: Node) {
+export function appendChild(elem: Element, child: Node): void {
     removeElement(child);
 
     child.parent = elem;
@@ -64,7 +64,7 @@ export function appendChild(elem: Element, child: Node) {
  * @param elem The element to append to
  * @param next The element be added
  */
-export function append(elem: Node, next: Node) {
+export function append(elem: Node, next: Node): void {
     removeElement(next);
 
     const { parent } = elem;
@@ -92,7 +92,7 @@ export function append(elem: Node, next: Node) {
  * @param elem The element to append to
  * @param prev The element be added
  */
-export function prepend(elem: Node, prev: Node) {
+export function prepend(elem: Node, prev: Node): void {
     const { parent } = elem;
     if (parent) {
         const childs = parent.children;

@@ -34,7 +34,7 @@ export function getName(elem: Element): string {
     return elem.name;
 }
 
-export function nextElementSibling(elem: Node) {
+export function nextElementSibling(elem: Node): Node | null {
     let node = elem.next;
     while (node !== null && node.type !== "tag") node = node.next;
     return node;

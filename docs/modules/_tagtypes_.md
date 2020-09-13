@@ -18,7 +18,7 @@
 
 ▸ **hasChildren**(`node`: Node): *node is NodeWithChildren*
 
-*Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/a6b5551/src/tagtypes.ts#L20)*
+*Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L20)*
 
 **Parameters:**
 
@@ -34,7 +34,7 @@ ___
 
 ▸ **isCDATA**(`node`: Node): *node is NodeWithChildren*
 
-*Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/a6b5551/src/tagtypes.ts#L8)*
+*Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L8)*
 
 **Parameters:**
 
@@ -50,7 +50,7 @@ ___
 
 ▸ **isComment**(`node`: Node): *node is DataNode*
 
-*Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/a6b5551/src/tagtypes.ts#L16)*
+*Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L16)*
 
 **Parameters:**
 
@@ -66,7 +66,7 @@ ___
 
 ▸ **isTag**(`node`: Node): *node is Element*
 
-*Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/a6b5551/src/tagtypes.ts#L4)*
+*Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L4)*
 
 **Parameters:**
 
@@ -82,7 +82,7 @@ ___
 
 ▸ **isText**(`node`: Node): *node is DataNode*
 
-*Defined in [tagtypes.ts:12](https://github.com/fb55/domutils/blob/a6b5551/src/tagtypes.ts#L12)*
+*Defined in [tagtypes.ts:12](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L12)*
 
 **Parameters:**
 

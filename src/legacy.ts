@@ -19,7 +19,6 @@ function isTextNode(node: Node): node is DataNode {
     return node.type === ElementType.Text;
 }
 
-/* eslint-disable @typescript-eslint/camelcase */
 const Checks = {
     tag_name(name: string | ((name: string) => boolean)): TestType {
         if (typeof name === "function") {
@@ -42,7 +41,6 @@ const Checks = {
         return (elem: Node) => isTextNode(elem) && elem.data === data;
     },
 };
-/* eslint-enable @typescript-eslint/camelcase */
 
 function getAttribCheck(
     attrib: string,
@@ -58,11 +56,15 @@ function combineFuncs(a: TestType, b: TestType): TestType {
     return (elem: Node) => a(elem) || b(elem);
 }
 
+type CheckType = (
+    value: string | undefined | ((str: string) => boolean)
+) => TestType;
+
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
         return key in Checks
-            ? (Checks as Record<string, Function>)[key](value)
+            ? (Checks as Record<string, CheckType>)[key](value)
             : getAttribCheck(key, value);
     });
 
