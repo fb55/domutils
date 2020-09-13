@@ -36,10 +36,6 @@
                 "project": "./tsconfig.eslint.json"
             },
             "rules": {
-                "@typescript-eslint/prefer-for-of": 0,
-                "@typescript-eslint/member-ordering": 0,
-                "@typescript-eslint/explicit-function-return-type": 0,
-                "@typescript-eslint/no-unused-vars": 0,
                 "@typescript-eslint/no-use-before-define": [
                     2,
                     { "functions": false }
