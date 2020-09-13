@@ -90,8 +90,9 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
         current = current.parent;
     }
 
+    const maxIdx = Math.min(aParents.length, bParents.length);
     let idx = 0;
-    while (aParents[idx] === bParents[idx]) {
+    while (idx < maxIdx && aParents[idx] === bParents[idx]) {
         idx++;
     }
 

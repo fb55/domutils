@@ -54,6 +54,19 @@ describe("helpers", () => {
 
         it("reports when the nodes are identical", () =>
             expect(compareDocumentPosition(span, span)).toBe(0));
+
+        it("does not end up in infinite loop (#109)", () => {
+            const dom = parseDOM(
+                "<div><span>1</span><span>2</span></div>"
+            )[0] as Element;
+
+            expect(
+                compareDocumentPosition(
+                    dom.children[0],
+                    (dom.children[0] as Element).children[0]
+                )
+            ).toBe(10);
+        });
     });
 
     describe("uniqueSort", () => {
