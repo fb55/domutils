@@ -1,14 +1,14 @@
-import { makeDom } from "./__fixtures__/utils";
+import { parseDOM } from "htmlparser2";
 import { append, appendChild } from "./manipulation";
 import type { Element } from "domhandler";
 
 describe("manipulation", () => {
     describe("append", () => {
         it("should not be duplicated when called twice", () => {
-            const dom = makeDom(
+            const dom = parseDOM(
                 "<div><p><img/></p><p><img/></p></div>"
             )[0] as Element;
-            const child = makeDom("<span></span>")[0] as Element;
+            const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];
             append(parents[0].children[0], child);
             append(parents[1].children[0], child);
@@ -18,8 +18,8 @@ describe("manipulation", () => {
     });
     describe("appendChild", () => {
         it("should not be duplicated when called twice", () => {
-            const dom = makeDom("<div><p></p><p></p></div>")[0] as Element;
-            const child = makeDom("<span></span>")[0] as Element;
+            const dom = parseDOM("<div><p></p><p></p></div>")[0] as Element;
+            const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];
             appendChild(parents[0], child);
             appendChild(parents[1], child);

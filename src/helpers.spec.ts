@@ -1,10 +1,10 @@
-import { makeDom } from "./__fixtures__/utils";
+import { parseDOM } from "htmlparser2";
 import { removeSubsets, compareDocumentPosition, uniqueSort } from "./helpers";
 import type { Element } from "domhandler";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {
-        const dom = makeDom(
+        const dom = parseDOM(
             "<div><p><span></span></p><p></p></div>"
         )[0] as Element;
 
@@ -28,7 +28,7 @@ describe("helpers", () => {
 
     describe("compareDocumentPosition", () => {
         const markup = "<div><p><span></span></p><a></a></div>";
-        const dom = makeDom(markup)[0] as Element;
+        const dom = parseDOM(markup)[0] as Element;
         const p = dom.children[0] as Element;
         const span = p.children[0];
         const a = dom.children[1];
@@ -46,7 +46,7 @@ describe("helpers", () => {
             expect(compareDocumentPosition(span, p)).toBe(20));
 
         it("reports when the nodes belong to separate documents", () => {
-            const otherDom = makeDom(markup)[0] as Element;
+            const otherDom = parseDOM(markup)[0] as Element;
             const other = (otherDom.children[0] as Element).children[0];
 
             expect(compareDocumentPosition(span, other)).toBe(1);
@@ -63,7 +63,7 @@ describe("helpers", () => {
         let a: Element;
 
         beforeEach(() => {
-            [dom] = makeDom(
+            [dom] = parseDOM(
                 "<div><p><span></span></p><a></a></div>"
             ) as Element[];
             [p, a] = dom.children as Element[];
