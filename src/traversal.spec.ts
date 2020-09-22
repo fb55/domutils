@@ -11,6 +11,14 @@ describe("traversal", () => {
                 hasAttrib(firstNode as never, "some-attrib")
             ).not.toThrow();
         });
+
+        it("returns `false` for Object prototype properties", () => {
+            const dom = parseDOM(
+                "<div><h1></h1>test<p></p></div>"
+            )[0] as Element;
+
+            expect(hasAttrib(dom, "constructor")).toBeFalsy();
+        });
     });
 
     describe("nextElementSibling", () => {

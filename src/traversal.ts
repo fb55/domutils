@@ -33,7 +33,10 @@ export function getAttributeValue(
  * @param name Attribute name to look for.
  */
 export function hasAttrib(elem: Element, name: string): boolean {
-    return elem.attribs?.[name] != null;
+    return (
+        elem.attribs?.[name] != null &&
+        Object.prototype.hasOwnProperty.call(elem.attribs, name)
+    );
 }
 
 /**
