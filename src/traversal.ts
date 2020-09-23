@@ -75,7 +75,7 @@ export function getName(elem: Element): string {
 }
 
 export function nextElementSibling(elem: Node): Node | null {
-    let node = elem.next;
-    while (node !== null && node.type !== "tag") node = node.next;
-    return node;
+    let { next } = elem;
+    while (next !== null && !isTag(next)) ({ next } = next);
+    return next;
 }

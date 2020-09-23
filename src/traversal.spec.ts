@@ -51,5 +51,14 @@ describe("traversal", () => {
 
             expect(nextElementSibling(firstNode)).toBeNull();
         });
+        it("does not ignore script tags", () => {
+            const dom = parseDOM(
+                "<div><p></p><script></script><p></div>"
+            )[0] as Element;
+            const firstNode = dom.children[0];
+
+            const next = nextElementSibling(firstNode) as Element;
+            expect(next.tagName).toBe("script");
+        });
     });
 });
