@@ -1,4 +1,6 @@
-[domutils](../README.md) › ["manipulation"](_manipulation_.md)
+**domutils**
+
+> [Globals](../README.md) / "manipulation"
 
 # Module: "manipulation"
 
@@ -6,102 +8,102 @@
 
 ### Functions
 
-* [append](_manipulation_.md#append)
-* [appendChild](_manipulation_.md#appendchild)
-* [prepend](_manipulation_.md#prepend)
-* [removeElement](_manipulation_.md#removeelement)
-* [replaceElement](_manipulation_.md#replaceelement)
+-   [append](_manipulation_.md#append)
+-   [appendChild](_manipulation_.md#appendchild)
+-   [prepend](_manipulation_.md#prepend)
+-   [removeElement](_manipulation_.md#removeelement)
+-   [replaceElement](_manipulation_.md#replaceelement)
 
 ## Functions
 
-###  append
+### append
 
-▸ **append**(`elem`: Node, `next`: Node): *void*
+▸ **append**(`elem`: Node, `next`: Node): void
 
-*Defined in [manipulation.ts:67](https://github.com/fb55/domutils/blob/ed0c566/src/manipulation.ts#L67)*
+_Defined in [manipulation.ts:67](https://github.com/fb55/domutils/blob/69eb044/src/manipulation.ts#L67)_
 
 Append an element after another
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`elem` | Node | The element to append to |
-`next` | Node | The element be added  |
+| Name   | Type | Description              |
+| ------ | ---- | ------------------------ |
+| `elem` | Node | The element to append to |
+| `next` | Node | The element be added     |
 
-**Returns:** *void*
+**Returns:** void
 
-___
+---
 
-###  appendChild
+### appendChild
 
-▸ **appendChild**(`elem`: Element, `child`: Node): *void*
+▸ **appendChild**(`elem`: Element, `child`: Node): void
 
-*Defined in [manipulation.ts:48](https://github.com/fb55/domutils/blob/ed0c566/src/manipulation.ts#L48)*
+_Defined in [manipulation.ts:48](https://github.com/fb55/domutils/blob/69eb044/src/manipulation.ts#L48)_
 
 Append a child to an element
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`elem` | Element | The element to append to |
-`child` | Node | The element to be added as a child  |
+| Name    | Type    | Description                        |
+| ------- | ------- | ---------------------------------- |
+| `elem`  | Element | The element to append to           |
+| `child` | Node    | The element to be added as a child |
 
-**Returns:** *void*
+**Returns:** void
 
-___
+---
 
-###  prepend
+### prepend
 
-▸ **prepend**(`elem`: Node, `prev`: Node): *void*
+▸ **prepend**(`elem`: Node, `prev`: Node): void
 
-*Defined in [manipulation.ts:95](https://github.com/fb55/domutils/blob/ed0c566/src/manipulation.ts#L95)*
+_Defined in [manipulation.ts:95](https://github.com/fb55/domutils/blob/69eb044/src/manipulation.ts#L95)_
 
 Prepend an element before another
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`elem` | Node | The element to append to |
-`prev` | Node | The element be added  |
+| Name   | Type | Description              |
+| ------ | ---- | ------------------------ |
+| `elem` | Node | The element to append to |
+| `prev` | Node | The element be added     |
 
-**Returns:** *void*
+**Returns:** void
 
-___
+---
 
-###  removeElement
+### removeElement
 
-▸ **removeElement**(`elem`: Node): *void*
+▸ **removeElement**(`elem`: Node): void
 
-*Defined in [manipulation.ts:8](https://github.com/fb55/domutils/blob/ed0c566/src/manipulation.ts#L8)*
+_Defined in [manipulation.ts:8](https://github.com/fb55/domutils/blob/69eb044/src/manipulation.ts#L8)_
 
 Remove an element from the dom
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`elem` | Node | The element to be removed  |
+| Name   | Type | Description               |
+| ------ | ---- | ------------------------- |
+| `elem` | Node | The element to be removed |
 
-**Returns:** *void*
+**Returns:** void
 
-___
+---
 
-###  replaceElement
+### replaceElement
 
-▸ **replaceElement**(`elem`: Node, `replacement`: Node): *void*
+▸ **replaceElement**(`elem`: Node, `replacement`: Node): void
 
-*Defined in [manipulation.ts:24](https://github.com/fb55/domutils/blob/ed0c566/src/manipulation.ts#L24)*
+_Defined in [manipulation.ts:24](https://github.com/fb55/domutils/blob/69eb044/src/manipulation.ts#L24)_
 
 Replace an element in the dom
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`elem` | Node | The element to be replaced |
-`replacement` | Node | The element to be added  |
+| Name          | Type | Description                |
+| ------------- | ---- | -------------------------- |
+| `elem`        | Node | The element to be replaced |
+| `replacement` | Node | The element to be added    |
 
-**Returns:** *void*
+**Returns:** void

@@ -1,4 +1,6 @@
-[domutils](../README.md) › ["legacy"](_legacy_.md)
+**domutils**
+
+> [Globals](../README.md) / "legacy"
 
 # Module: "legacy"
 
@@ -6,100 +8,100 @@
 
 ### Functions
 
-* [getElementById](_legacy_.md#getelementbyid)
-* [getElements](_legacy_.md#getelements)
-* [getElementsByTagName](_legacy_.md#getelementsbytagname)
-* [getElementsByTagType](_legacy_.md#getelementsbytagtype)
-* [testElement](_legacy_.md#testelement)
+-   [getElementById](_legacy_.md#getelementbyid)
+-   [getElements](_legacy_.md#getelements)
+-   [getElementsByTagName](_legacy_.md#getelementsbytagname)
+-   [getElementsByTagType](_legacy_.md#getelementsbytagtype)
+-   [testElement](_legacy_.md#testelement)
 
 ## Functions
 
-###  getElementById
+### getElementById
 
-▸ **getElementById**(`id`: string | function, `element`: Node | Node[], `recurse`: boolean): *Element | null*
+▸ **getElementById**(`id`: string \| (id: string) => boolean, `element`: Node \| Node[], `recurse`: boolean): Element \| null
 
-*Defined in [legacy.ts:89](https://github.com/fb55/domutils/blob/ed0c566/src/legacy.ts#L89)*
+_Defined in [legacy.ts:89](https://github.com/fb55/domutils/blob/69eb044/src/legacy.ts#L89)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Default |
------- | ------ | ------ |
-`id` | string &#124; function | - |
-`element` | Node &#124; Node[] | - |
-`recurse` | boolean | true |
+| Name      | Type                              | Default value |
+| --------- | --------------------------------- | ------------- |
+| `id`      | string \| (id: string) => boolean | -             |
+| `element` | Node \| Node[]                    | -             |
+| `recurse` | boolean                           | true          |
 
-**Returns:** *Element | null*
+**Returns:** Element \| null
 
-___
+---
 
-###  getElements
+### getElements
 
-▸ **getElements**(`options`: TestElementOpts, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
+▸ **getElements**(`options`: TestElementOpts, `element`: Node \| Node[], `recurse`: boolean, `limit`: number): Node[]
 
-*Defined in [legacy.ts:79](https://github.com/fb55/domutils/blob/ed0c566/src/legacy.ts#L79)*
+_Defined in [legacy.ts:79](https://github.com/fb55/domutils/blob/69eb044/src/legacy.ts#L79)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Default |
------- | ------ | ------ |
-`options` | TestElementOpts | - |
-`element` | Node &#124; Node[] | - |
-`recurse` | boolean | - |
-`limit` | number | Infinity |
+| Name      | Type            | Default value |
+| --------- | --------------- | ------------- |
+| `options` | TestElementOpts | -             |
+| `element` | Node \| Node[]  | -             |
+| `recurse` | boolean         | -             |
+| `limit`   | number          | Infinity      |
 
-**Returns:** *Node[]*
+**Returns:** Node[]
 
-___
+---
 
-###  getElementsByTagName
+### getElementsByTagName
 
-▸ **getElementsByTagName**(`name`: string | function, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Element[]*
+▸ **getElementsByTagName**(`name`: string \| (name: string) => boolean, `element`: Node \| Node[], `recurse`: boolean, `limit`: number): Element[]
 
-*Defined in [legacy.ts:102](https://github.com/fb55/domutils/blob/ed0c566/src/legacy.ts#L102)*
+_Defined in [legacy.ts:102](https://github.com/fb55/domutils/blob/69eb044/src/legacy.ts#L102)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Default |
------- | ------ | ------ |
-`name` | string &#124; function | - |
-`element` | Node &#124; Node[] | - |
-`recurse` | boolean | - |
-`limit` | number | Infinity |
+| Name      | Type                                | Default value |
+| --------- | ----------------------------------- | ------------- |
+| `name`    | string \| (name: string) => boolean | -             |
+| `element` | Node \| Node[]                      | -             |
+| `recurse` | boolean                             | -             |
+| `limit`   | number                              | Infinity      |
 
-**Returns:** *Element[]*
+**Returns:** Element[]
 
-___
+---
 
-###  getElementsByTagType
+### getElementsByTagType
 
-▸ **getElementsByTagType**(`type`: ElementType | function, `element`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
+▸ **getElementsByTagType**(`type`: ElementType \| (type: ElementType) => boolean, `element`: Node \| Node[], `recurse`: boolean, `limit`: number): Node[]
 
-*Defined in [legacy.ts:111](https://github.com/fb55/domutils/blob/ed0c566/src/legacy.ts#L111)*
+_Defined in [legacy.ts:111](https://github.com/fb55/domutils/blob/69eb044/src/legacy.ts#L111)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type | Default |
------- | ------ | ------ |
-`type` | ElementType &#124; function | - |
-`element` | Node &#124; Node[] | - |
-`recurse` | boolean | true |
-`limit` | number | Infinity |
+| Name      | Type                                          | Default value |
+| --------- | --------------------------------------------- | ------------- |
+| `type`    | ElementType \| (type: ElementType) => boolean | -             |
+| `element` | Node \| Node[]                                | -             |
+| `recurse` | boolean                                       | true          |
+| `limit`   | number                                        | Infinity      |
 
-**Returns:** *Node[]*
+**Returns:** Node[]
 
-___
+---
 
-###  testElement
+### testElement
 
-▸ **testElement**(`options`: TestElementOpts, `element`: Node): *boolean*
+▸ **testElement**(`options`: TestElementOpts, `element`: Node): boolean
 
-*Defined in [legacy.ts:74](https://github.com/fb55/domutils/blob/ed0c566/src/legacy.ts#L74)*
+_Defined in [legacy.ts:74](https://github.com/fb55/domutils/blob/69eb044/src/legacy.ts#L74)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`options` | TestElementOpts |
-`element` | Node |
+| Name      | Type            |
+| --------- | --------------- |
+| `options` | TestElementOpts |
+| `element` | Node            |
 
-**Returns:** *boolean*
+**Returns:** boolean

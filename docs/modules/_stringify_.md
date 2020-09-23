@@ -1,4 +1,6 @@
-[domutils](../README.md) › ["stringify"](_stringify_.md)
+**domutils**
+
+> [Globals](../README.md) / "stringify"
 
 # Module: "stringify"
 
@@ -6,56 +8,56 @@
 
 ### Functions
 
-* [getInnerHTML](_stringify_.md#getinnerhtml)
-* [getOuterHTML](_stringify_.md#getouterhtml)
-* [getText](_stringify_.md#gettext)
+-   [getInnerHTML](_stringify_.md#getinnerhtml)
+-   [getOuterHTML](_stringify_.md#getouterhtml)
+-   [getText](_stringify_.md#gettext)
 
 ## Functions
 
-###  getInnerHTML
+### getInnerHTML
 
-▸ **getInnerHTML**(`node`: Node, `options?`: DomSerializerOptions): *string*
+▸ **getInnerHTML**(`node`: Node, `options?`: DomSerializerOptions): string
 
-*Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/ed0c566/src/stringify.ts#L12)*
+_Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L12)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
-`options?` | DomSerializerOptions |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `node`     | Node                 |
+| `options?` | DomSerializerOptions |
 
-**Returns:** *string*
+**Returns:** string
 
-___
+---
 
-###  getOuterHTML
+### getOuterHTML
 
-▸ **getOuterHTML**(`node`: Node | Node[], `options?`: DomSerializerOptions): *string*
+▸ **getOuterHTML**(`node`: Node \| Node[], `options?`: DomSerializerOptions): string
 
-*Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/ed0c566/src/stringify.ts#L5)*
+_Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L5)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node &#124; Node[] |
-`options?` | DomSerializerOptions |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `node`     | Node \| Node[]       |
+| `options?` | DomSerializerOptions |
 
-**Returns:** *string*
+**Returns:** string
 
-___
+---
 
-###  getText
+### getText
 
-▸ **getText**(`node`: Node | Node[]): *string*
+▸ **getText**(`node`: Node \| Node[]): string
 
-*Defined in [stringify.ts:21](https://github.com/fb55/domutils/blob/ed0c566/src/stringify.ts#L21)*
+_Defined in [stringify.ts:21](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L21)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node &#124; Node[] |
+| Name   | Type           |
+| ------ | -------------- |
+| `node` | Node \| Node[] |
 
-**Returns:** *string*
+**Returns:** string

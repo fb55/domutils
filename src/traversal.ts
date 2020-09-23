@@ -1,16 +1,41 @@
-import type { Node, Element } from "domhandler";
+import type { Node, Element, NodeWithChildren } from "domhandler";
+import { isTag } from "./tagtypes";
 
-export function getChildren(elem: Node | Element): Node[] | null {
-    return (elem as { children?: Node[] }).children ?? null;
+const emptyArray: Node[] = [];
+export function getChildren(elem: Node): Node[] {
+    return (elem as { children?: Node[] }).children ?? emptyArray;
 }
 
-export function getParent(elem: Node): Node | null {
+export function getParent(elem: Element): Element | null;
+export function getParent(elem: Node): NodeWithChildren | null;
+export function getParent(elem: Node): NodeWithChildren | null {
     return elem.parent || null;
 }
 
-export function getSiblings(elem: Node): Node[] | null {
+/**
+ * Gets an elements siblings, including the element itself.
+ *
+ * Attempts to get the children through the element's parent first.
+ * If we don't have a parent (the element is a root node),
+ * we walk the element's `prev` & `next` to get all remaining nodes.
+ *
+ * @param elem Element to get the siblings of.
+ */
+export function getSiblings(elem: Node): Node[] {
     const parent = getParent(elem);
-    return parent != null ? getChildren(parent) : [elem];
+    if (parent != null) return getChildren(parent);
+
+    const siblings = [elem];
+    let { prev, next } = elem;
+    while (prev != null) {
+        siblings.unshift(prev);
+        ({ prev } = prev);
+    }
+    while (next != null) {
+        siblings.push(next);
+        ({ next } = next);
+    }
+    return siblings;
 }
 
 /**
@@ -34,8 +59,9 @@ export function getAttributeValue(
  */
 export function hasAttrib(elem: Element, name: string): boolean {
     return (
-        elem.attribs?.[name] != null &&
-        Object.prototype.hasOwnProperty.call(elem.attribs, name)
+        elem.attribs != null &&
+        Object.prototype.hasOwnProperty.call(elem.attribs, name) &&
+        elem.attribs[name] != null
     );
 }
 

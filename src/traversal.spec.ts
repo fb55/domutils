@@ -1,8 +1,22 @@
 import { parseDOM } from "htmlparser2";
 import type { Element } from "domhandler";
-import { hasAttrib, nextElementSibling } from "./traversal";
+import { getSiblings, hasAttrib, nextElementSibling } from "./traversal";
 
 describe("traversal", () => {
+    describe("getSiblings", () => {
+        it("returns an element's siblings", () => {
+            const dom = parseDOM("<div><h1></h1><p><p><p></div>")[0] as Element;
+
+            expect(getSiblings(dom.children[1])).toHaveLength(4);
+        });
+
+        it("returns a root element's siblings", () => {
+            const dom = parseDOM("<h1></h1><p><p><p>") as Element[];
+
+            expect(getSiblings(dom[2])).toHaveLength(4);
+        });
+    });
+
     describe("hasAttrib", () => {
         it("doesn't throw on text nodes", () => {
             const [firstNode] = parseDOM("textnode");

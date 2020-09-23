@@ -1,4 +1,6 @@
-[domutils](../README.md) › ["querying"](_querying_.md)
+**domutils**
+
+> [Globals](../README.md) / "querying"
 
 # Module: "querying"
 
@@ -6,209 +8,130 @@
 
 ### Functions
 
-* [existsOne](_querying_.md#existsone)
-* [filter](_querying_.md#filter)
-* [find](_querying_.md#find)
-* [findAll](_querying_.md#findall)
-* [findOne](_querying_.md#findone)
-* [findOneChild](_querying_.md#findonechild)
+-   [existsOne](_querying_.md#existsone)
+-   [filter](_querying_.md#filter)
+-   [find](_querying_.md#find)
+-   [findAll](_querying_.md#findall)
+-   [findOne](_querying_.md#findone)
+-   [findOneChild](_querying_.md#findonechild)
 
 ## Functions
 
-###  existsOne
+### existsOne
 
-▸ **existsOne**(`test`: function, `nodes`: Node[]): *boolean*
+▸ **existsOne**(`test`: (elem: Element) => boolean, `nodes`: Node[]): boolean
 
-*Defined in [querying.ts:102](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L102)*
+_Defined in [querying.ts:102](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L102)_
 
 Returns whether a tree of nodes contains at least one node passing a test.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name    | Type                       | Description                |
+| ------- | -------------------------- | -------------------------- |
+| `test`  | (elem: Element) => boolean | Function to test nodes on. |
+| `nodes` | Node[]                     | Array of nodes to search.  |
 
-Function to test nodes on.
+**Returns:** boolean
 
-▸ (`elem`: Element): *boolean*
+---
 
-**Parameters:**
+### filter
 
-Name | Type |
------- | ------ |
-`elem` | Element |
+▸ **filter**(`test`: (elem: Node) => boolean, `node`: Node \| Node[], `recurse`: boolean, `limit`: number): Node[]
 
-▪ **nodes**: *Node[]*
-
-Array of nodes to search.
-
-**Returns:** *boolean*
-
-___
-
-###  filter
-
-▸ **filter**(`test`: function, `node`: Node | Node[], `recurse`: boolean, `limit`: number): *Node[]*
-
-*Defined in [querying.ts:12](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L12)*
+_Defined in [querying.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L12)_
 
 Search a node and its children for nodes passing a test function.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name      | Type                    | Default value | Description                        |
+| --------- | ----------------------- | ------------- | ---------------------------------- |
+| `test`    | (elem: Node) => boolean | -             | Function to test nodes on.         |
+| `node`    | Node \| Node[]          | -             | -                                  |
+| `recurse` | boolean                 | true          | Also consider child nodes.         |
+| `limit`   | number                  | Infinity      | Maximum number of nodes to return. |
 
-Function to test nodes on.
+**Returns:** Node[]
 
-▸ (`elem`: Node): *boolean*
+---
 
-**Parameters:**
+### find
 
-Name | Type |
------- | ------ |
-`elem` | Node |
+▸ **find**(`test`: (elem: Node) => boolean, `nodes`: Node[], `recurse`: boolean, `limit`: number): Node[]
 
-▪ **node**: *Node | Node[]*
-
-▪`Default value`  **recurse**: *boolean*= true
-
-Also consider child nodes.
-
-▪`Default value`  **limit**: *number*= Infinity
-
-Maximum number of nodes to return.
-
-**Returns:** *Node[]*
-
-___
-
-###  find
-
-▸ **find**(`test`: function, `nodes`: Node[], `recurse`: boolean, `limit`: number): *Node[]*
-
-*Defined in [querying.ts:30](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L30)*
+_Defined in [querying.ts:30](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L30)_
 
 Like `filter`, but only works on an array of nodes.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name      | Type                    | Description                        |
+| --------- | ----------------------- | ---------------------------------- |
+| `test`    | (elem: Node) => boolean | Function to test nodes on.         |
+| `nodes`   | Node[]                  | Array of nodes to search.          |
+| `recurse` | boolean                 | Also consider child nodes.         |
+| `limit`   | number                  | Maximum number of nodes to return. |
 
-Function to test nodes on.
+**Returns:** Node[]
 
-▸ (`elem`: Node): *boolean*
+---
 
-**Parameters:**
+### findAll
 
-Name | Type |
------- | ------ |
-`elem` | Node |
+▸ **findAll**(`test`: (elem: Element) => boolean, `nodes`: Node[]): Element[]
 
-▪ **nodes**: *Node[]*
-
-Array of nodes to search.
-
-▪ **recurse**: *boolean*
-
-Also consider child nodes.
-
-▪ **limit**: *number*
-
-Maximum number of nodes to return.
-
-**Returns:** *Node[]*
-
-___
-
-###  findAll
-
-▸ **findAll**(`test`: function, `nodes`: Node[]): *Element[]*
-
-*Defined in [querying.ts:123](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L123)*
+_Defined in [querying.ts:123](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L123)_
 
 Search and array of nodes and its children for nodes passing a test function.
 
 Same as `find`, only with less options, leading to reduced complexity.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name    | Type                       | Description                |
+| ------- | -------------------------- | -------------------------- |
+| `test`  | (elem: Element) => boolean | Function to test nodes on. |
+| `nodes` | Node[]                     | Array of nodes to search.  |
 
-Function to test nodes on.
+**Returns:** Element[]
 
-▸ (`elem`: Element): *boolean*
+---
 
-**Parameters:**
+### findOne
 
-Name | Type |
------- | ------ |
-`elem` | Element |
+▸ **findOne**(`test`: (elem: Element) => boolean, `nodes`: Node[], `recurse`: boolean): Element \| null
 
-▪ **nodes**: *Node[]*
-
-Array of nodes to search.
-
-**Returns:** *Element[]*
-
-___
-
-###  findOne
-
-▸ **findOne**(`test`: function, `nodes`: Node[], `recurse`: boolean): *Element | null*
-
-*Defined in [querying.ts:75](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L75)*
+_Defined in [querying.ts:75](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L75)_
 
 Finds one element in a tree that passes a test.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name      | Type                       | Default value | Description                |
+| --------- | -------------------------- | ------------- | -------------------------- |
+| `test`    | (elem: Element) => boolean | -             | Function to test nodes on. |
+| `nodes`   | Node[]                     | -             | Array of nodes to search.  |
+| `recurse` | boolean                    | true          | Also consider child nodes. |
 
-Function to test nodes on.
+**Returns:** Element \| null
 
-▸ (`elem`: Element): *boolean*
+---
 
-**Parameters:**
+### findOneChild
 
-Name | Type |
------- | ------ |
-`elem` | Element |
+▸ **findOneChild**(`test`: (elem: Node) => boolean, `nodes`: Node[]): Node \| undefined
 
-▪ **nodes**: *Node[]*
-
-Array of nodes to search.
-
-▪`Default value`  **recurse**: *boolean*= true
-
-Also consider child nodes.
-
-**Returns:** *Element | null*
-
-___
-
-###  findOneChild
-
-▸ **findOneChild**(`test`: function, `nodes`: Node[]): *Node | undefined*
-
-*Defined in [querying.ts:61](https://github.com/fb55/domutils/blob/ed0c566/src/querying.ts#L61)*
+_Defined in [querying.ts:61](https://github.com/fb55/domutils/blob/69eb044/src/querying.ts#L61)_
 
 Finds the first element inside of an array that matches a test function.
 
-**Parameters:**
+#### Parameters:
 
-▪ **test**: *function*
+| Name    | Type                    | Description                |
+| ------- | ----------------------- | -------------------------- |
+| `test`  | (elem: Node) => boolean | Function to test nodes on. |
+| `nodes` | Node[]                  | Array of nodes to search.  |
 
-Function to test nodes on.
-
-▸ (`elem`: Node): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`elem` | Node |
-
-▪ **nodes**: *Node[]*
-
-Array of nodes to search.
-
-**Returns:** *Node | undefined*
+**Returns:** Node \| undefined

@@ -1,4 +1,6 @@
-[domutils](../README.md) › ["tagtypes"](_tagtypes_.md)
+**domutils**
+
+> [Globals](../README.md) / "tagtypes"
 
 # Module: "tagtypes"
 
@@ -6,88 +8,88 @@
 
 ### Functions
 
-* [hasChildren](_tagtypes_.md#haschildren)
-* [isCDATA](_tagtypes_.md#iscdata)
-* [isComment](_tagtypes_.md#iscomment)
-* [isTag](_tagtypes_.md#istag)
-* [isText](_tagtypes_.md#istext)
+-   [hasChildren](_tagtypes_.md#haschildren)
+-   [isCDATA](_tagtypes_.md#iscdata)
+-   [isComment](_tagtypes_.md#iscomment)
+-   [isTag](_tagtypes_.md#istag)
+-   [isText](_tagtypes_.md#istext)
 
 ## Functions
 
-###  hasChildren
+### hasChildren
 
-▸ **hasChildren**(`node`: Node): *node is NodeWithChildren*
+▸ **hasChildren**(`node`: Node): node is NodeWithChildren
 
-*Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L20)*
+_Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L20)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
+| Name   | Type |
+| ------ | ---- |
+| `node` | Node |
 
-**Returns:** *node is NodeWithChildren*
+**Returns:** node is NodeWithChildren
 
-___
+---
 
-###  isCDATA
+### isCDATA
 
-▸ **isCDATA**(`node`: Node): *node is NodeWithChildren*
+▸ **isCDATA**(`node`: Node): node is NodeWithChildren
 
-*Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L8)*
+_Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L8)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
+| Name   | Type |
+| ------ | ---- |
+| `node` | Node |
 
-**Returns:** *node is NodeWithChildren*
+**Returns:** node is NodeWithChildren
 
-___
+---
 
-###  isComment
+### isComment
 
-▸ **isComment**(`node`: Node): *node is DataNode*
+▸ **isComment**(`node`: Node): node is DataNode
 
-*Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L16)*
+_Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L16)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
+| Name   | Type |
+| ------ | ---- |
+| `node` | Node |
 
-**Returns:** *node is DataNode*
+**Returns:** node is DataNode
 
-___
+---
 
-###  isTag
+### isTag
 
-▸ **isTag**(`node`: Node): *node is Element*
+▸ **isTag**(`node`: Node): node is Element
 
-*Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L4)*
+_Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L4)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
+| Name   | Type |
+| ------ | ---- |
+| `node` | Node |
 
-**Returns:** *node is Element*
+**Returns:** node is Element
 
-___
+---
 
-###  isText
+### isText
 
-▸ **isText**(`node`: Node): *node is DataNode*
+▸ **isText**(`node`: Node): node is DataNode
 
-*Defined in [tagtypes.ts:12](https://github.com/fb55/domutils/blob/ed0c566/src/tagtypes.ts#L12)*
+_Defined in [tagtypes.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L12)_
 
-**Parameters:**
+#### Parameters:
 
-Name | Type |
------- | ------ |
-`node` | Node |
+| Name   | Type |
+| ------ | ---- |
+| `node` | Node |
 
-**Returns:** *node is DataNode*
+**Returns:** node is DataNode
