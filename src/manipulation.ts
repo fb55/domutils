@@ -40,29 +40,31 @@ export function replaceElement(elem: Node, replacement: Node): void {
 }
 
 /**
- * Append a child to an element
+ * Append a child to an element.
  *
- * @param elem The element to append to
- * @param child The element to be added as a child
+ * @param elem The element to append to.
+ * @param child The element to be added as a child.
  */
 export function appendChild(elem: Element, child: Node): void {
     removeElement(child);
 
+    child.next = null;
     child.parent = elem;
 
-    if (elem.children.push(child) !== 1) {
+    if (elem.children.push(child) > 1) {
         const sibling = elem.children[elem.children.length - 2];
         sibling.next = child;
         child.prev = sibling;
-        child.next = null;
+    } else {
+        child.prev = null;
     }
 }
 
 /**
- * Append an element after another
+ * Append an element after another.
  *
- * @param elem The element to append to
- * @param next The element be added
+ * @param elem The element to append after.
+ * @param next The element be added.
  */
 export function append(elem: Node, next: Node): void {
     removeElement(next);
@@ -87,16 +89,39 @@ export function append(elem: Node, next: Node): void {
 }
 
 /**
- * Prepend an element before another
+ * Prepend a child to an element.
  *
- * @param elem The element to append to
- * @param prev The element be added
+ * @param elem The element to prepend before.
+ * @param child The element to be added as a child.
+ */
+export function prependChild(elem: Element, child: Node): void {
+    removeElement(child);
+
+    child.parent = elem;
+    child.prev = null;
+
+    if (elem.children.unshift(child) !== 1) {
+        const sibling = elem.children[1];
+        sibling.prev = child;
+        child.next = sibling;
+    } else {
+        child.next = null;
+    }
+}
+
+/**
+ * Prepend an element before another.
+ *
+ * @param elem The element to prepend before.
+ * @param prev The element be added.
  */
 export function prepend(elem: Node, prev: Node): void {
+    removeElement(prev);
+
     const { parent } = elem;
     if (parent) {
         const childs = parent.children;
-        childs.splice(childs.lastIndexOf(elem), 0, prev);
+        childs.splice(childs.indexOf(elem), 0, prev);
     }
 
     if (elem.prev) {
