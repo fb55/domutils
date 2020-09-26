@@ -102,7 +102,7 @@ export function getElementById(
 export function getElementsByTagName(
     name: string | ((name: string) => boolean),
     element: Node | Node[],
-    recurse: boolean,
+    recurse = true,
     limit = Infinity
 ): Element[] {
     return filter(Checks.tag_name(name), element, recurse, limit) as Element[];
