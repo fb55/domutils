@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": ["eslint:recommended", "plugin:jsdoc/recommended", "prettier"],
     "env": {
         "node": true,
         "es6": true
@@ -49,7 +49,10 @@
                 "@typescript-eslint/prefer-string-starts-ends-with": 2,
                 "@typescript-eslint/prefer-readonly": 2,
                 "@typescript-eslint/prefer-includes": 2,
-                "@typescript-eslint/switch-exhaustiveness-check": 2
+                "@typescript-eslint/switch-exhaustiveness-check": 2,
+
+                "jsdoc/require-param-type": 0,
+                "jsdoc/require-returns-type": 0
             }
         }
     ]

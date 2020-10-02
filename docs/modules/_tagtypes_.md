@@ -1,4 +1,4 @@
-**domutils**
+**[domutils](../README.md)**
 
 > [Globals](../README.md) / "tagtypes"
 
@@ -20,15 +20,17 @@
 
 ▸ **hasChildren**(`node`: Node): node is NodeWithChildren
 
-_Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L20)_
+_Defined in [tagtypes.ts:40](https://github.com/fb55/domutils/blob/3813e44/src/tagtypes.ts#L40)_
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `node` | Node |
+| Name   | Type | Description    |
+| ------ | ---- | -------------- |
+| `node` | Node | Node to check. |
 
 **Returns:** node is NodeWithChildren
+
+`true` if the node is a `NodeWithChildren` (has children), `false` otherwise.
 
 ---
 
@@ -36,15 +38,17 @@ _Defined in [tagtypes.ts:20](https://github.com/fb55/domutils/blob/69eb044/src/t
 
 ▸ **isCDATA**(`node`: Node): node is NodeWithChildren
 
-_Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L8)_
+_Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/3813e44/src/tagtypes.ts#L16)_
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `node` | Node |
+| Name   | Type | Description    |
+| ------ | ---- | -------------- |
+| `node` | Node | Node to check. |
 
 **Returns:** node is NodeWithChildren
+
+`true` if the node is a `NodeWithChildren`, `false` otherwise.
 
 ---
 
@@ -52,15 +56,17 @@ _Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/69eb044/src/ta
 
 ▸ **isComment**(`node`: Node): node is DataNode
 
-_Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L16)_
+_Defined in [tagtypes.ts:32](https://github.com/fb55/domutils/blob/3813e44/src/tagtypes.ts#L32)_
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `node` | Node |
+| Name   | Type | Description    |
+| ------ | ---- | -------------- |
+| `node` | Node | Node to check. |
 
 **Returns:** node is DataNode
+
+`true` if the node is a `DataNode`, `false` otherwise.
 
 ---
 
@@ -68,15 +74,17 @@ _Defined in [tagtypes.ts:16](https://github.com/fb55/domutils/blob/69eb044/src/t
 
 ▸ **isTag**(`node`: Node): node is Element
 
-_Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L4)_
+_Defined in [tagtypes.ts:8](https://github.com/fb55/domutils/blob/3813e44/src/tagtypes.ts#L8)_
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `node` | Node |
+| Name   | Type | Description    |
+| ------ | ---- | -------------- |
+| `node` | Node | Node to check. |
 
 **Returns:** node is Element
+
+`true` if the node is a `Element`, `false` otherwise.
 
 ---
 
@@ -84,12 +92,14 @@ _Defined in [tagtypes.ts:4](https://github.com/fb55/domutils/blob/69eb044/src/ta
 
 ▸ **isText**(`node`: Node): node is DataNode
 
-_Defined in [tagtypes.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/tagtypes.ts#L12)_
+_Defined in [tagtypes.ts:24](https://github.com/fb55/domutils/blob/3813e44/src/tagtypes.ts#L24)_
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `node` | Node |
+| Name   | Type | Description    |
+| ------ | ---- | -------------- |
+| `node` | Node | Node to check. |
 
 **Returns:** node is DataNode
+
+`true` if the node is a `DataNode`, `false` otherwise.

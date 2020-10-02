@@ -5,9 +5,10 @@ import { isTag, hasChildren } from "./tagtypes";
  * Search a node and its children for nodes passing a test function.
  *
  * @param test Function to test nodes on.
- * @param element Element to search. Will be included in the result set if it matches.
+ * @param node Node to search. Will be included in the result set if it matches.
  * @param recurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
+ * @returns All nodes passing `test`.
  */
 export function filter(
     test: (elem: Node) => boolean,
@@ -20,12 +21,13 @@ export function filter(
 }
 
 /**
- * Like `filter`, but only works on an array of nodes.
+ * Search an array of node and its children for nodes passing a test function.
  *
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @param recurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
+ * @returns All nodes passing `test`.
  */
 export function find(
     test: (elem: Node) => boolean,
@@ -57,6 +59,7 @@ export function find(
  *
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
+ * @returns The first node in the array that passes `test`.
  */
 export function findOneChild(
     test: (elem: Node) => boolean,
@@ -71,6 +74,7 @@ export function findOneChild(
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @param recurse Also consider child nodes.
+ * @returns The first child node that passes `test`.
  */
 export function findOne(
     test: (elem: Element) => boolean,
@@ -94,10 +98,9 @@ export function findOne(
 }
 
 /**
- * Returns whether a tree of nodes contains at least one node passing a test.
- *
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
+ * @returns Whether a tree of nodes contains at least one node passing a test.
  */
 export function existsOne(
     test: (elem: Element) => boolean,
@@ -119,6 +122,7 @@ export function existsOne(
  *
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
+ * @returns All nodes passing `test`.
  */
 export function findAll(
     test: (elem: Element) => boolean,

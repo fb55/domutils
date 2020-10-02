@@ -5,6 +5,7 @@ import { hasChildren } from "./tagtypes";
  * Given an array of nodes, remove any member that is contained by another.
  *
  * @param nodes Nodes to filter.
+ * @returns Remaining nodes that aren't subtrees of each other.
  */
 export function removeSubsets(nodes: Node[]): Node[] {
     let idx = nodes.length;
@@ -50,7 +51,7 @@ export const enum DocumentPosition {
  * Compare the position of one node against another node in any other document.
  * The return value is a bitmask with the following values:
  *
- * document order:
+ * Document order:
  * > There is an ordering, document order, defined on all the nodes in the
  * > document corresponding to the order in which the first character of the
  * > XML representation of each node occurs in the XML representation of the
@@ -63,13 +64,13 @@ export const enum DocumentPosition {
  *
  * Source:
  * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
- * @param nodaA The first node to use in the comparison
+ *
+ * @param nodeA The first node to use in the comparison
  * @param nodeB The second node to use in the comparison
+ * @returns A bitmask describing the input nodes' relative position.
  *
- * @return A bitmask describing the input nodes' relative position.
- *
- *        See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
- *        a description of these values.
+ * See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
+ * a description of these values.
  */
 export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
     const aParents = [];
@@ -122,8 +123,8 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
  * remove any duplicate nodes. If the array contains nodes that do not belong
  * to the same document, sort order is unspecified.
  *
- * @param nodes Array of DOM nodes
- * @returns collection of unique nodes, sorted in document order
+ * @param nodes Array of DOM nodes.
+ * @returns Collection of unique nodes, sorted in document order.
  */
 export function uniqueSort(nodes: Node[]): Node[] {
     nodes = nodes.filter((node, i, arr) => !arr.includes(node, i + 1));

@@ -1,4 +1,4 @@
-**domutils**
+**[domutils](../README.md)**
 
 > [Globals](../README.md) / "stringify"
 
@@ -18,16 +18,20 @@
 
 ▸ **getInnerHTML**(`node`: Node, `options?`: DomSerializerOptions): string
 
-_Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L12)_
+_Defined in [stringify.ts:24](https://github.com/fb55/domutils/blob/3813e44/src/stringify.ts#L24)_
+
+**`deprecated`** Use the `dom-serializer` module directly.
 
 #### Parameters:
 
-| Name       | Type                 |
-| ---------- | -------------------- |
-| `node`     | Node                 |
-| `options?` | DomSerializerOptions |
+| Name       | Type                 | Description                    |
+| ---------- | -------------------- | ------------------------------ |
+| `node`     | Node                 | Node to get the inner HTML of. |
+| `options?` | DomSerializerOptions | Options for serialization.     |
 
 **Returns:** string
+
+`node`'s inner HTML.
 
 ---
 
@@ -35,16 +39,20 @@ _Defined in [stringify.ts:12](https://github.com/fb55/domutils/blob/69eb044/src/
 
 ▸ **getOuterHTML**(`node`: Node \| Node[], `options?`: DomSerializerOptions): string
 
-_Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L5)_
+_Defined in [stringify.ts:11](https://github.com/fb55/domutils/blob/3813e44/src/stringify.ts#L11)_
+
+**`deprecated`** Use the `dom-serializer` module directly.
 
 #### Parameters:
 
-| Name       | Type                 |
-| ---------- | -------------------- |
-| `node`     | Node \| Node[]       |
-| `options?` | DomSerializerOptions |
+| Name       | Type                 | Description                    |
+| ---------- | -------------------- | ------------------------------ |
+| `node`     | Node \| Node[]       | Node to get the outer HTML of. |
+| `options?` | DomSerializerOptions | Options for serialization.     |
 
 **Returns:** string
+
+`node`'s outer HTML.
 
 ---
 
@@ -52,12 +60,16 @@ _Defined in [stringify.ts:5](https://github.com/fb55/domutils/blob/69eb044/src/s
 
 ▸ **getText**(`node`: Node \| Node[]): string
 
-_Defined in [stringify.ts:21](https://github.com/fb55/domutils/blob/69eb044/src/stringify.ts#L21)_
+_Defined in [stringify.ts:39](https://github.com/fb55/domutils/blob/3813e44/src/stringify.ts#L39)_
+
+Get a node's inner text.
 
 #### Parameters:
 
-| Name   | Type           |
-| ------ | -------------- |
-| `node` | Node \| Node[] |
+| Name   | Type           | Description                    |
+| ------ | -------------- | ------------------------------ |
+| `node` | Node \| Node[] | Node to get the inner text of. |
 
 **Returns:** string
+
+`node`'s inner text.

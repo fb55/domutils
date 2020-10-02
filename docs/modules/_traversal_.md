@@ -1,4 +1,4 @@
-**domutils**
+**[domutils](../README.md)**
 
 > [Globals](../README.md) / "traversal"
 
@@ -22,7 +22,7 @@
 
 ▸ **getAttributeValue**(`elem`: Element, `name`: string): string \| undefined
 
-_Defined in [traversal.ts:46](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L46)_
+_Defined in [traversal.ts:61](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L61)_
 
 Gets an attribute from an element.
 
@@ -35,21 +35,27 @@ Gets an attribute from an element.
 
 **Returns:** string \| undefined
 
+The element's attribute value, or `undefined`.
+
 ---
 
 ### getChildren
 
 ▸ **getChildren**(`elem`: Node): Node[]
 
-_Defined in [traversal.ts:4](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L4)_
+_Defined in [traversal.ts:11](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L11)_
+
+Get a node's children.
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `elem` | Node |
+| Name   | Type | Description                  |
+| ------ | ---- | ---------------------------- |
+| `elem` | Node | Node to get the children of. |
 
 **Returns:** Node[]
+
+`elem`'s children, or an empty array.
 
 ---
 
@@ -57,17 +63,19 @@ _Defined in [traversal.ts:4](https://github.com/fb55/domutils/blob/69eb044/src/t
 
 ▸ **getName**(`elem`: Element): string
 
-_Defined in [traversal.ts:71](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L71)_
+_Defined in [traversal.ts:89](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L89)_
 
-Returns the name property of an element
+Get the tag name of an element.
 
 #### Parameters:
 
-| Name   | Type    | Description                     |
-| ------ | ------- | ------------------------------- |
-| `elem` | Element | The element to get the name for |
+| Name   | Type    | Description                      |
+| ------ | ------- | -------------------------------- |
+| `elem` | Element | The element to get the name for. |
 
 **Returns:** string
+
+The tag name of `elem`.
 
 ---
 
@@ -75,19 +83,25 @@ Returns the name property of an element
 
 ▸ **getParent**(`elem`: Element): Element \| null
 
-_Defined in [traversal.ts:8](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L8)_
+_Defined in [traversal.ts:15](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L15)_
+
+Get a node's parent.
 
 #### Parameters:
 
-| Name   | Type    |
-| ------ | ------- |
-| `elem` | Element |
+| Name   | Type    | Description                |
+| ------ | ------- | -------------------------- |
+| `elem` | Element | Node to get the parent of. |
 
 **Returns:** Element \| null
 
+`elem`'s parent node.
+
 ▸ **getParent**(`elem`: Node): NodeWithChildren \| null
 
-_Defined in [traversal.ts:9](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L9)_
+_Defined in [traversal.ts:16](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L16)_
+
+Get a node's parent.
 
 #### Parameters:
 
@@ -97,13 +111,15 @@ _Defined in [traversal.ts:9](https://github.com/fb55/domutils/blob/69eb044/src/t
 
 **Returns:** NodeWithChildren \| null
 
+`elem`'s parent node.
+
 ---
 
 ### getSiblings
 
 ▸ **getSiblings**(`elem`: Node): Node[]
 
-_Defined in [traversal.ts:23](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L23)_
+_Defined in [traversal.ts:37](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L37)_
 
 Gets an elements siblings, including the element itself.
 
@@ -119,13 +135,15 @@ we walk the element's `prev` & `next` to get all remaining nodes.
 
 **Returns:** Node[]
 
+`elem`'s siblings.
+
 ---
 
 ### hasAttrib
 
 ▸ **hasAttrib**(`elem`: Element, `name`: string): boolean
 
-_Defined in [traversal.ts:59](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L59)_
+_Defined in [traversal.ts:75](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L75)_
 
 Checks whether an element has an attribute.
 
@@ -138,18 +156,24 @@ Checks whether an element has an attribute.
 
 **Returns:** boolean
 
+Returns whether `elem` has the attribute `name`.
+
 ---
 
 ### nextElementSibling
 
 ▸ **nextElementSibling**(`elem`: Node): Node \| null
 
-_Defined in [traversal.ts:75](https://github.com/fb55/domutils/blob/69eb044/src/traversal.ts#L75)_
+_Defined in [traversal.ts:99](https://github.com/fb55/domutils/blob/3813e44/src/traversal.ts#L99)_
+
+Returns the next element sibling of a node.
 
 #### Parameters:
 
-| Name   | Type |
-| ------ | ---- |
-| `elem` | Node |
+| Name   | Type | Description                             |
+| ------ | ---- | --------------------------------------- |
+| `elem` | Node | The element to get the next sibling of. |
 
 **Returns:** Node \| null
+
+`elem`'s next sibling that is a tag.
