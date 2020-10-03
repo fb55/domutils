@@ -36,7 +36,7 @@
     "dependencies": {
         "dom-serializer": "^1.0.1",
         "domelementtype": "^2.0.1",
-        "domhandler": "^3.2.0"
+        "domhandler": "^3.3.0"
     },
     "devDependencies": {
         "@types/jest": "^26.0.0",
