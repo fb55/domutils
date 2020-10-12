@@ -42,8 +42,8 @@ describe("traversal", () => {
             )[0] as Element;
             const firstNode = dom.children[0];
 
-            const next = nextElementSibling(firstNode) as Element;
-            expect(next.tagName).toBe("p");
+            const next = nextElementSibling(firstNode);
+            expect(next?.tagName).toBe("p");
         });
         it("return null if not found", () => {
             const dom = parseDOM("<div><p></p>test</div>")[0] as Element;
@@ -57,8 +57,8 @@ describe("traversal", () => {
             )[0] as Element;
             const firstNode = dom.children[0];
 
-            const next = nextElementSibling(firstNode) as Element;
-            expect(next.tagName).toBe("script");
+            const next = nextElementSibling(firstNode);
+            expect(next?.tagName).toBe("script");
         });
     });
 });
