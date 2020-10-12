@@ -96,7 +96,7 @@ export function getName(elem: Element): string {
  * @param elem The element to get the next sibling of.
  * @returns `elem`'s next sibling that is a tag.
  */
-export function nextElementSibling(elem: Node): Node | null {
+export function nextElementSibling(elem: Node): Element | null {
     let { next } = elem;
     while (next !== null && !isTag(next)) ({ next } = next);
     return next;
