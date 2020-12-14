@@ -1,6 +1,6 @@
-import { parseDOM } from "htmlparser2";
+import { parseDOM, parseDocument } from "htmlparser2";
 import { removeSubsets, compareDocumentPosition, uniqueSort } from "./helpers";
-import type { Element } from "domhandler";
+import type { Element, Document } from "domhandler";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {
@@ -70,15 +70,15 @@ describe("helpers", () => {
     });
 
     describe("uniqueSort", () => {
+        let root: Document;
         let dom: Element;
         let p: Element;
         let span: Element;
         let a: Element;
 
         beforeEach(() => {
-            [dom] = parseDOM(
-                "<div><p><span></span></p><a></a></div>"
-            ) as Element[];
+            root = parseDocument("<div><p><span></span></p><a></a></div>");
+            [dom] = root.children as Element[];
             [p, a] = dom.children as Element[];
             [span] = p.children as Element[];
         });
@@ -91,6 +91,14 @@ describe("helpers", () => {
 
         it("sorts nodes in document order", () =>
             expect(uniqueSort([a, dom, span, p])).toStrictEqual([
+                dom,
+                p,
+                span,
+                a,
+            ]));
+        it("puts the document node in the right spot", () =>
+            expect(uniqueSort([a, dom, span, root, p])).toStrictEqual([
+                root,
                 dom,
                 p,
                 span,
