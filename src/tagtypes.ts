@@ -11,7 +11,7 @@ export function isTag(node: Node): node is Element {
 
 /**
  * @param node Node to check.
- * @returns `true` if the node is a `NodeWithChildren`, `false` otherwise.
+ * @returns `true` if the node has the type `CDATA`, `false` otherwise.
  */
 export function isCDATA(node: Node): node is NodeWithChildren {
     return node.type === ElementType.CDATA;
@@ -19,7 +19,7 @@ export function isCDATA(node: Node): node is NodeWithChildren {
 
 /**
  * @param node Node to check.
- * @returns `true` if the node is a `DataNode`, `false` otherwise.
+ * @returns `true` if the node has the type `Text`, `false` otherwise.
  */
 export function isText(node: Node): node is DataNode {
     return node.type === ElementType.Text;
@@ -27,7 +27,7 @@ export function isText(node: Node): node is DataNode {
 
 /**
  * @param node Node to check.
- * @returns `true` if the node is a `DataNode`, `false` otherwise.
+ * @returns `true` if the node has the type `Comment`, `false` otherwise.
  */
 export function isComment(node: Node): node is DataNode {
     return node.type === ElementType.Comment;
