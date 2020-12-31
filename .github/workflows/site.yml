@@ -30,10 +30,8 @@ jobs:
             - name: Build docs
               run: npm run build:docs
             - name: Deploy
-              uses: s0/git-publish-subdir-action@v2.4.0
-              env:
-                  REPO: self
-                  BRANCH: gh-pages
-                  FOLDER: docs
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SKIP_EMPTY_COMMITS: true
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: docs
+                  cname: domutils.js.org
