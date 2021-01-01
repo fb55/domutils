@@ -2,7 +2,7 @@
 
 Utilities for working with [htmlparser2](https://github.com/fb55/htmlparser2)'s DOM.
 
-All functions are exported as a single module. Look [through the docs](https://feedic.com/domutils/modules.html) to see what is available.
+All functions are exported as a single module. Look [through the docs](https://domutils.js.org/modules.html) to see what is available.
 
 ## Ecosystem
 
