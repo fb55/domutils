@@ -46,7 +46,7 @@
         "coveralls": "^3.0.5",
         "eslint": "^7.0.0",
         "eslint-config-prettier": "^7.0.0",
-        "eslint-plugin-jsdoc": "^30.6.3",
+        "eslint-plugin-jsdoc": "^31.0.3",
         "htmlparser2": "~6.0.0",
         "jest": "^26.0.1",
         "prettier": "^2.0.5",
