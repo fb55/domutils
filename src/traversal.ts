@@ -101,3 +101,15 @@ export function nextElementSibling(elem: Node): Element | null {
     while (next !== null && !isTag(next)) ({ next } = next);
     return next;
 }
+
+/**
+ * Returns the previous element sibling of a node.
+ *
+ * @param elem The element to get the previous sibling of.
+ * @returns `elem`'s previous sibling that is a tag.
+ */
+export function prevElementSibling(elem: Node): Element | null {
+    let { prev } = elem;
+    while (prev !== null && !isTag(prev)) ({ prev } = prev);
+    return prev;
+}

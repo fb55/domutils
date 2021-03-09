@@ -1,6 +1,11 @@
 import { parseDOM } from "htmlparser2";
 import type { Element } from "domhandler";
-import { getSiblings, hasAttrib, nextElementSibling } from "./traversal";
+import {
+    getSiblings,
+    hasAttrib,
+    nextElementSibling,
+    prevElementSibling,
+} from "./traversal";
 
 describe("traversal", () => {
     describe("getSiblings", () => {
@@ -59,6 +64,33 @@ describe("traversal", () => {
 
             const next = nextElementSibling(firstNode);
             expect(next?.tagName).toBe("script");
+        });
+    });
+
+    describe("prevElementSibling", () => {
+        it("return Element if found", () => {
+            const dom = parseDOM(
+                "<div><h1></h1>test<p></p></div>"
+            )[0] as Element;
+            const lastNode = dom.children[2];
+
+            const prev = prevElementSibling(lastNode);
+            expect(prev?.tagName).toBe("h1");
+        });
+        it("return null if not found", () => {
+            const dom = parseDOM("<div>test<p></p></div>")[0] as Element;
+            const lastNode = dom.children[1];
+
+            expect(nextElementSibling(lastNode)).toBeNull();
+        });
+        it("does not ignore script tags", () => {
+            const dom = parseDOM(
+                "<div><p></p><script></script><p></p></div>"
+            )[0] as Element;
+            const lastNode = dom.children[2];
+
+            const prev = prevElementSibling(lastNode);
+            expect(prev?.tagName).toBe("script");
         });
     });
 });
