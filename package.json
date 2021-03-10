@@ -1,9 +1,11 @@
 {
     "name": "domutils",
-    "version": "2.4.4",
+    "version": "2.5.0",
     "description": "Utilities for working with htmlparser2's dom",
     "author": "Felix Boehm <me@feedic.com>",
-    "funding": "https://github.com/fb55/domutils?sponsor=1",
+    "funding": {
+        "url": "https://github.com/fb55/domutils?sponsor=1"
+    },
     "license": "BSD-2-Clause",
     "sideEffects": false,
     "main": "lib/index.js",
