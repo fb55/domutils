@@ -49,7 +49,7 @@
         "eslint": "^7.0.0",
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-jsdoc": "^32.0.2",
-        "htmlparser2": "~6.0.0",
+        "htmlparser2": "~6.1.0",
         "jest": "^26.0.1",
         "prettier": "^2.0.5",
         "ts-jest": "^26.0.0",
