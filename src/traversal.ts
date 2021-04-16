@@ -1,5 +1,4 @@
-import type { Node, Element, NodeWithChildren } from "domhandler";
-import { isTag } from "./tagtypes";
+import { isTag, Node, Element, NodeWithChildren } from "domhandler";
 
 const emptyArray: Node[] = [];
 /**

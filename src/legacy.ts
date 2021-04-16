@@ -1,7 +1,6 @@
-import type { Node, Element } from "domhandler";
+import { isTag, isText, Node, Element } from "domhandler";
 import { ElementType } from "domelementtype";
 import { filter, findOne } from "./querying";
-import { isTag, isText } from "./tagtypes";
 
 type TestType = (elem: Node) => boolean;
 
