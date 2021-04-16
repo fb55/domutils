@@ -1,5 +1,4 @@
-import type { Node } from "domhandler";
-import { hasChildren } from "./tagtypes";
+import { hasChildren, Node } from "domhandler";
 
 /**
  * Given an array of nodes, remove any member that is contained by another.

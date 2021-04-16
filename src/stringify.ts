@@ -1,5 +1,4 @@
-import type { Node } from "domhandler";
-import { isTag, isCDATA, isText, hasChildren } from "./tagtypes";
+import { isTag, isCDATA, isText, hasChildren, Node } from "domhandler";
 import renderHTML, { DomSerializerOptions } from "dom-serializer";
 
 /**

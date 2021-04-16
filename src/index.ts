@@ -4,4 +4,11 @@ export * from "./manipulation";
 export * from "./querying";
 export * from "./legacy";
 export * from "./helpers";
-export * from "./tagtypes";
+export {
+    isTag,
+    isCDATA,
+    isText,
+    isComment,
+    isDocument,
+    hasChildren,
+} from "domhandler";
