@@ -126,7 +126,7 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
  * @param nodes Array of DOM nodes.
  * @returns Collection of unique nodes, sorted in document order.
  */
-export function uniqueSort(nodes: Node[]): Node[] {
+export function uniqueSort<T extends Node>(nodes: T[]): T[] {
     nodes = nodes.filter((node, i, arr) => !arr.includes(node, i + 1));
 
     nodes.sort((a, b) => {
