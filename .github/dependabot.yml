@@ -1,0 +1,33 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+    timezone: America/Los_Angeles
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.26
+    - 15.0.0
+  - dependency-name: typedoc
+    versions:
+    - 0.20.21
+    - 0.20.22
+    - 0.20.24
+    - 0.20.26
+    - 0.20.27
+    - 0.20.29
+    - 0.20.31
+    - 0.20.32
+    - 0.20.33
+  - dependency-name: eslint-config-prettier
+    versions:
+    - 8.0.0
+  - dependency-name: eslint-plugin-jsdoc
+    versions:
+    - 32.0.0
+    - 32.0.1
+    - 32.0.3
