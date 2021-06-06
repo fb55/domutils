@@ -1,5 +1,6 @@
 import { isTag, isCDATA, isText, hasChildren, Node } from "domhandler";
 import renderHTML, { DomSerializerOptions } from "dom-serializer";
+import { ElementType } from "domelementtype";
 
 /**
  * @param node Node to get the outer HTML of.
@@ -30,8 +31,9 @@ export function getInnerHTML(
 }
 
 /**
- * Get a node's inner text.
+ * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags.
  *
+ * @deprecated Use `textContent` instead.
  * @param node Node to get the inner text of.
  * @returns `node`'s inner text.
  */
@@ -39,6 +41,38 @@ export function getText(node: Node | Node[]): string {
     if (Array.isArray(node)) return node.map(getText).join("");
     if (isTag(node)) return node.name === "br" ? "\n" : getText(node.children);
     if (isCDATA(node)) return getText(node.children);
+    if (isText(node)) return node.data;
+    return "";
+}
+
+/**
+ * Get a node's text content.
+ *
+ * @param node Node to get the text content of.
+ * @returns `node`'s text content.
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent}
+ */
+export function textContent(node: Node | Node[]): string {
+    if (Array.isArray(node)) return node.map(textContent).join("");
+    if (isTag(node)) return textContent(node.children);
+    if (isCDATA(node)) return textContent(node.children);
+    if (isText(node)) return node.data;
+    return "";
+}
+
+/**
+ * Get a node's inner text.
+ *
+ * @param node Node to get the inner text of.
+ * @returns `node`'s inner text.
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText}
+ */
+export function innerText(node: Node | Node[]): string {
+    if (Array.isArray(node)) return node.map(innerText).join("");
+    if (hasChildren(node) && node.type === ElementType.Tag) {
+        return innerText(node.children);
+    }
+    if (isCDATA(node)) return innerText(node.children);
     if (isText(node)) return node.data;
     return "";
 }
