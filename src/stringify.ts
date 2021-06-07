@@ -54,8 +54,7 @@ export function getText(node: Node | Node[]): string {
  */
 export function textContent(node: Node | Node[]): string {
     if (Array.isArray(node)) return node.map(textContent).join("");
-    if (isTag(node)) return textContent(node.children);
-    if (isCDATA(node)) return textContent(node.children);
+    if (hasChildren(node)) return textContent(node.children);
     if (isText(node)) return node.data;
     return "";
 }
@@ -69,10 +68,9 @@ export function textContent(node: Node | Node[]): string {
  */
 export function innerText(node: Node | Node[]): string {
     if (Array.isArray(node)) return node.map(innerText).join("");
-    if (hasChildren(node) && node.type === ElementType.Tag) {
+    if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
         return innerText(node.children);
     }
-    if (isCDATA(node)) return innerText(node.children);
     if (isText(node)) return node.data;
     return "";
 }
