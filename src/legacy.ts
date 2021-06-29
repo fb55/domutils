@@ -14,8 +14,11 @@ interface TestElementOpts {
         | ((attributeValue: string) => boolean);
 }
 
-const Checks = {
-    tag_name(name: string | ((name: string) => boolean)): TestType {
+const Checks: Record<
+    string,
+    (value: string | undefined | ((str: string) => boolean)) => TestType
+> = {
+    tag_name(name) {
         if (typeof name === "function") {
             return (elem: Node) => isTag(elem) && name(elem.name);
         } else if (name === "*") {
@@ -23,13 +26,13 @@ const Checks = {
         }
         return (elem: Node) => isTag(elem) && elem.name === name;
     },
-    tag_type(type: ElementType | ((type: ElementType) => boolean)): TestType {
+    tag_type(type) {
         if (typeof type === "function") {
             return (elem: Node) => type(elem.type);
         }
         return (elem: Node) => elem.type === type;
     },
-    tag_contains(data: string | ((data?: string) => boolean)): TestType {
+    tag_contains(data) {
         if (typeof data === "function") {
             return (elem: Node) => isText(elem) && data(elem.data);
         }
@@ -62,10 +65,6 @@ function combineFuncs(a: TestType, b: TestType): TestType {
     return (elem: Node) => a(elem) || b(elem);
 }
 
-type CheckType = (
-    value: string | undefined | ((str: string) => boolean)
-) => TestType;
-
 /**
  * @param options An object describing nodes to look for.
  * @returns A function executing all checks in `options` and returning `true`
@@ -74,8 +73,8 @@ type CheckType = (
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
-        return key in Checks
-            ? (Checks as Record<string, CheckType>)[key](value)
+        return Object.prototype.hasOwnProperty.call(Checks, key)
+            ? Checks[key](value)
             : getAttribCheck(key, value);
     });
 
@@ -121,7 +120,7 @@ export function getElementById(
     recurse = true
 ): Element | null {
     if (!Array.isArray(nodes)) nodes = [nodes];
-    return findOne(getAttribCheck("id", id), nodes, recurse) as Element | null;
+    return findOne(getAttribCheck("id", id), nodes, recurse);
 }
 
 /**
@@ -153,5 +152,5 @@ export function getElementsByTagType(
     recurse = true,
     limit = Infinity
 ): Node[] {
-    return filter(Checks.tag_type(type), nodes, recurse, limit);
+    return filter(Checks.tag_type(type as string), nodes, recurse, limit);
 }
