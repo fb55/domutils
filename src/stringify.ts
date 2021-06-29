@@ -1,4 +1,11 @@
-import { isTag, isCDATA, isText, hasChildren, Node } from "domhandler";
+import {
+    isTag,
+    isCDATA,
+    isText,
+    hasChildren,
+    Node,
+    isComment,
+} from "domhandler";
 import renderHTML, { DomSerializerOptions } from "dom-serializer";
 import { ElementType } from "domelementtype";
 
@@ -54,7 +61,9 @@ export function getText(node: Node | Node[]): string {
  */
 export function textContent(node: Node | Node[]): string {
     if (Array.isArray(node)) return node.map(textContent).join("");
-    if (hasChildren(node)) return textContent(node.children);
+    if (hasChildren(node) && !isComment(node)) {
+        return textContent(node.children);
+    }
     if (isText(node)) return node.data;
     return "";
 }
