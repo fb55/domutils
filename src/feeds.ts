@@ -162,17 +162,8 @@ function getRssFeed(feedRoot: Element) {
     return feed;
 }
 
-const MEDIA_KEYS_STRING: ("url" | "type" | "lang")[] = ["url", "type", "lang"];
-const MEDIA_KEYS_INT: (
-    | "fileSize"
-    | "bitrate"
-    | "framerate"
-    | "samplingrate"
-    | "channels"
-    | "duration"
-    | "height"
-    | "width"
-)[] = [
+const MEDIA_KEYS_STRING = ["url", "type", "lang"] as const;
+const MEDIA_KEYS_INT = [
     "fileSize",
     "bitrate",
     "framerate",
@@ -181,7 +172,7 @@ const MEDIA_KEYS_INT: (
     "duration",
     "height",
     "width",
-];
+] as const;
 
 /**
  * Get all media elements of a feed item.
