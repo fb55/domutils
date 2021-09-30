@@ -4,7 +4,14 @@ import { filter, findOne } from "./querying";
 
 type TestType = (elem: Node) => boolean;
 
-interface TestElementOpts {
+/**
+ * An object with keys to check elements against. If a key is `tag_name`,
+ * `tag_type` or `tag_contains`, it will check the value against that specific
+ * value. Otherwise, it will check an attribute with the key's name.
+ *
+ * @category Legacy Query Functions
+ */
+export interface TestElementOpts {
     tag_name?: string | ((name: string) => boolean);
     tag_type?: string | ((name: string) => boolean);
     tag_contains?: string | ((data?: string) => boolean);
@@ -43,7 +50,8 @@ const Checks: Record<
 /**
  * @param attrib Attribute to check.
  * @param value Attribute value to look for.
- * @returns A function to check whether the a node has an attribute with a particular value.
+ * @returns A function to check whether the a node has an attribute with a
+ *   particular value.
  */
 function getAttribCheck(
     attrib: string,
@@ -58,8 +66,8 @@ function getAttribCheck(
 /**
  * @param a First function to combine.
  * @param b Second function to combine.
- * @returns A function taking a node and returning `true` if either
- * of the input functions returns `true` for the node.
+ * @returns A function taking a node and returning `true` if either of the input
+ *   functions returns `true` for the node.
  */
 function combineFuncs(a: TestType, b: TestType): TestType {
     return (elem: Node) => a(elem) || b(elem);
@@ -67,8 +75,8 @@ function combineFuncs(a: TestType, b: TestType): TestType {
 
 /**
  * @param options An object describing nodes to look for.
- * @returns A function executing all checks in `options` and returning `true`
- * if any of them match a node.
+ * @returns A function executing all checks in `options` and returning `true` if
+ *   any of them match a node.
  */
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
@@ -82,6 +90,7 @@ function compileTest(options: TestElementOpts): TestType | null {
 }
 
 /**
+ * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
@@ -92,6 +101,7 @@ export function testElement(options: TestElementOpts, node: Node): boolean {
 }
 
 /**
+ * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param nodes Nodes to search through.
  * @param recurse Also consider child nodes.
@@ -109,6 +119,7 @@ export function getElements(
 }
 
 /**
+ * @category Legacy Query Functions
  * @param id The unique ID attribute value to look for.
  * @param nodes Nodes to search through.
  * @param recurse Also consider child nodes.
@@ -124,6 +135,7 @@ export function getElementById(
 }
 
 /**
+ * @category Legacy Query Functions
  * @param tagName Tag name to search for.
  * @param nodes Nodes to search through.
  * @param recurse Also consider child nodes.
@@ -140,6 +152,7 @@ export function getElementsByTagName(
 }
 
 /**
+ * @category Legacy Query Functions
  * @param type Element type to look for.
  * @param nodes Nodes to search through.
  * @param recurse Also consider child nodes.

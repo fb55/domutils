@@ -3,6 +3,7 @@ import { isTag, hasChildren, Node, Element } from "domhandler";
 /**
  * Search a node and its children for nodes passing a test function.
  *
+ * @category Querying
  * @param test Function to test nodes on.
  * @param node Node to search. Will be included in the result set if it matches.
  * @param recurse Also consider child nodes.
@@ -22,6 +23,7 @@ export function filter(
 /**
  * Search an array of node and its children for nodes passing a test function.
  *
+ * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @param recurse Also consider child nodes.
@@ -56,6 +58,7 @@ export function find(
 /**
  * Finds the first element inside of an array that matches a test function.
  *
+ * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @returns The first node in the array that passes `test`.
@@ -70,6 +73,7 @@ export function findOneChild(
 /**
  * Finds one element in a tree that passes a test.
  *
+ * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @param recurse Also consider child nodes.
@@ -97,9 +101,10 @@ export function findOne(
 }
 
 /**
+ * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @returns Whether a tree of nodes contains at least one node passing a test.
+ * @returns Whether a tree of nodes contains at least one node passing the test.
  */
 export function existsOne(
     test: (elem: Element) => boolean,
@@ -119,6 +124,7 @@ export function existsOne(
  *
  * Same as `find`, only with less options, leading to reduced complexity.
  *
+ * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @returns All nodes passing `test`.

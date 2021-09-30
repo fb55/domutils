@@ -24,7 +24,7 @@
         "format:prettier": "npm run prettier -- --write",
         "prettier": "prettier \"**/*.{ts,md,json,yml}\" --ignore-path .gitignore",
         "build": "tsc",
-        "build:docs": "typedoc --hideGenerator --exclude \"**/*+(index|.spec).ts\" src",
+        "build:docs": "typedoc --hideGenerator --exclude \"**/*+(index|.spec).ts\" --categorizeByGroup false src",
         "prepare": "npm run build"
     },
     "repository": {

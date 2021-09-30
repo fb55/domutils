@@ -3,6 +3,7 @@ import { hasChildren, Node } from "domhandler";
 /**
  * Given an array of nodes, remove any member that is contained by another.
  *
+ * @category Helpers
  * @param nodes Nodes to filter.
  * @returns Remaining nodes that aren't subtrees of each other.
  */
@@ -36,8 +37,10 @@ export function removeSubsets(nodes: Node[]): Node[] {
 
     return nodes;
 }
-
-// Source: http://dom.spec.whatwg.org/#dom-node-comparedocumentposition
+/**
+ * @category Helpers
+ * @see {@link http://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
+ */
 export const enum DocumentPosition {
     DISCONNECTED = 1,
     PRECEDING = 2,
@@ -64,6 +67,7 @@ export const enum DocumentPosition {
  * Source:
  * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
  *
+ * @category Helpers
  * @param nodeA The first node to use in the comparison
  * @param nodeB The second node to use in the comparison
  * @returns A bitmask describing the input nodes' relative position.
@@ -119,9 +123,10 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
 
 /**
  * Sort an array of nodes based on their relative position in the document and
- * remove any duplicate nodes. If the array contains nodes that do not belong
- * to the same document, sort order is unspecified.
+ * remove any duplicate nodes. If the array contains nodes that do not belong to
+ * the same document, sort order is unspecified.
  *
+ * @category Helpers
  * @param nodes Array of DOM nodes.
  * @returns Collection of unique nodes, sorted in document order.
  */

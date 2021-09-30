@@ -4,6 +4,14 @@
         "node": true,
         "es6": true
     },
+    "settings": {
+        "jsdoc": {
+            "mode": "typescript",
+            "tagNamePreference": {
+                "category": "category"
+            }
+        }
+    },
     "rules": {
         "eqeqeq": [2, "smart"],
         "no-caller": 2,

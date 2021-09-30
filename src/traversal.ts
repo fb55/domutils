@@ -4,6 +4,7 @@ const emptyArray: Node[] = [];
 /**
  * Get a node's children.
  *
+ * @category Traversal
  * @param elem Node to get the children of.
  * @returns `elem`'s children, or an empty array.
  */
@@ -16,6 +17,7 @@ export function getParent(elem: Node): NodeWithChildren | null;
 /**
  * Get a node's parent.
  *
+ * @category Traversal
  * @param elem Node to get the parent of.
  * @returns `elem`'s parent node.
  */
@@ -26,10 +28,11 @@ export function getParent(elem: Node): NodeWithChildren | null {
 /**
  * Gets an elements siblings, including the element itself.
  *
- * Attempts to get the children through the element's parent first.
- * If we don't have a parent (the element is a root node),
- * we walk the element's `prev` & `next` to get all remaining nodes.
+ * Attempts to get the children through the element's parent first. If we don't
+ * have a parent (the element is a root node), we walk the element's `prev` &
+ * `next` to get all remaining nodes.
  *
+ * @category Traversal
  * @param elem Element to get the siblings of.
  * @returns `elem`'s siblings.
  */
@@ -53,6 +56,7 @@ export function getSiblings(elem: Node): Node[] {
 /**
  * Gets an attribute from an element.
  *
+ * @category Traversal
  * @param elem Element to check.
  * @param name Attribute name to retrieve.
  * @returns The element's attribute value, or `undefined`.
@@ -67,6 +71,7 @@ export function getAttributeValue(
 /**
  * Checks whether an element has an attribute.
  *
+ * @category Traversal
  * @param elem Element to check.
  * @param name Attribute name to look for.
  * @returns Returns whether `elem` has the attribute `name`.
@@ -82,6 +87,7 @@ export function hasAttrib(elem: Element, name: string): boolean {
 /**
  * Get the tag name of an element.
  *
+ * @category Traversal
  * @param elem The element to get the name for.
  * @returns The tag name of `elem`.
  */
@@ -92,6 +98,7 @@ export function getName(elem: Element): string {
 /**
  * Returns the next element sibling of a node.
  *
+ * @category Traversal
  * @param elem The element to get the next sibling of.
  * @returns `elem`'s next sibling that is a tag.
  */
@@ -104,6 +111,7 @@ export function nextElementSibling(elem: Node): Element | null {
 /**
  * Returns the previous element sibling of a node.
  *
+ * @category Traversal
  * @param elem The element to get the previous sibling of.
  * @returns `elem`'s previous sibling that is a tag.
  */

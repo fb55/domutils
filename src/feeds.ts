@@ -2,6 +2,11 @@ import type { Node, Element } from "domhandler";
 import { textContent } from "./stringify";
 import { getElementsByTagName } from "./legacy";
 
+/**
+ * The type of a media item.
+ *
+ * @category Feeds
+ */
 export type FeedItemMediaMedium =
     | "image"
     | "audio"
@@ -9,8 +14,18 @@ export type FeedItemMediaMedium =
     | "document"
     | "executable";
 
+/**
+ * The type of a media item.
+ *
+ * @category Feeds
+ */
 export type FeedItemMediaExpression = "sample" | "full" | "nonstop";
 
+/**
+ * A media item of a feed entry.
+ *
+ * @category Feeds
+ */
 export interface FeedItemMedia {
     medium: FeedItemMediaMedium | undefined;
     isDefault: boolean;
@@ -28,6 +43,11 @@ export interface FeedItemMedia {
     lang?: string;
 }
 
+/**
+ * An entry of a feed.
+ *
+ * @category Feeds
+ */
 export interface FeedItem {
     id?: string;
     title?: string;
@@ -37,6 +57,11 @@ export interface FeedItem {
     media: FeedItemMedia[];
 }
 
+/**
+ * The root of a feed.
+ *
+ * @category Feeds
+ */
 export interface Feed {
     type: string;
     id?: string;
@@ -51,6 +76,7 @@ export interface Feed {
 /**
  * Get the feed object from the root of a DOM tree.
  *
+ * @category Feeds
  * @param doc - The DOM to to extract the feed from.
  * @returns The feed.
  */
@@ -230,7 +256,7 @@ function getOneElement(
  * Get the text content of an element with a certain tag name.
  *
  * @param tagName Tag name to look for.
- * @param where  Node to search in.
+ * @param where Node to search in.
  * @param recurse Whether to recurse into child nodes.
  * @returns The text content of the element.
  */

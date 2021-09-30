@@ -10,9 +10,10 @@ import renderHTML, { DomSerializerOptions } from "dom-serializer";
 import { ElementType } from "domelementtype";
 
 /**
+ * @category Stringify
+ * @deprecated Use the `dom-serializer` module directly.
  * @param node Node to get the outer HTML of.
  * @param options Options for serialization.
- * @deprecated Use the `dom-serializer` module directly.
  * @returns `node`'s outer HTML.
  */
 export function getOuterHTML(
@@ -23,9 +24,10 @@ export function getOuterHTML(
 }
 
 /**
+ * @category Stringify
+ * @deprecated Use the `dom-serializer` module directly.
  * @param node Node to get the inner HTML of.
  * @param options Options for serialization.
- * @deprecated Use the `dom-serializer` module directly.
  * @returns `node`'s inner HTML.
  */
 export function getInnerHTML(
@@ -40,6 +42,7 @@ export function getInnerHTML(
 /**
  * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags.
  *
+ * @category Stringify
  * @deprecated Use `textContent` instead.
  * @param node Node to get the inner text of.
  * @returns `node`'s inner text.
@@ -55,6 +58,7 @@ export function getText(node: Node | Node[]): string {
 /**
  * Get a node's text content.
  *
+ * @category Stringify
  * @param node Node to get the text content of.
  * @returns `node`'s text content.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent}
@@ -71,6 +75,7 @@ export function textContent(node: Node | Node[]): string {
 /**
  * Get a node's inner text.
  *
+ * @category Stringify
  * @param node Node to get the inner text of.
  * @returns `node`'s inner text.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText}
