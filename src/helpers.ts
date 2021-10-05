@@ -51,7 +51,7 @@ export const enum DocumentPosition {
 
 /**
  * Compare the position of one node against another node in any other document.
- * The return value is a bitmask with the following values:
+ * The return value is a bitmask with the values from {@link DocumentPosition}.
  *
  * Document order:
  * > There is an ordering, document order, defined on all the nodes in the
