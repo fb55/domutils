@@ -62,7 +62,7 @@ export const enum DocumentPosition {
  * > Thus, document order orders element nodes in order of the occurrence of
  * > their start-tag in the XML (after expansion of entities). The attribute
  * > nodes of an element occur after the element and before its children. The
- * > relative order of attribute nodes is implementation-dependent./
+ * > relative order of attribute nodes is implementation-dependent.
  *
  * Source:
  * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
