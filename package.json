@@ -52,7 +52,7 @@
         "jest": "^27.3.0",
         "prettier": "^2.4.1",
         "ts-jest": "^27.0.6",
-        "typedoc": "^0.22.5",
+        "typedoc": "^0.22.6",
         "typescript": "^4.4.4"
     },
     "jest": {
