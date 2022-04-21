@@ -1,5 +1,11 @@
 import { parseDOM } from "htmlparser2";
-import { append, appendChild, prepend, prependChild } from "./manipulation";
+import {
+    append,
+    appendChild,
+    prepend,
+    prependChild,
+    replaceElement,
+} from "./manipulation.js";
 import type { Element } from "domhandler";
 
 describe("manipulation", () => {
@@ -153,6 +159,25 @@ describe("manipulation", () => {
                     <span />
                     <object />
                   </p>
+                </div>
+            `);
+        });
+    });
+    describe("replaceElement", () => {
+        it("should allow replaced elements to be appended later (#966)", () => {
+            const div = parseDOM("<div><p>")[0] as Element;
+            const template = parseDOM("<template></template>")[0] as Element;
+            const p = div.children[0];
+
+            // We want to wrap the inner <p> in a <template>
+            replaceElement(p, template);
+            appendChild(template, p);
+
+            expect(div).toMatchInlineSnapshot(`
+                <div>
+                  <template>
+                    <p />
+                  </template>
                 </div>
             `);
         });
