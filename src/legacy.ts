@@ -1,6 +1,6 @@
 import { isTag, isText, AnyNode, Element } from "domhandler";
-import { ElementType } from "domelementtype";
-import { filter, findOne } from "./querying";
+import type { ElementType } from "domelementtype";
+import { filter, findOne } from "./querying.js";
 
 type TestType = (elem: AnyNode) => boolean;
 
@@ -148,7 +148,12 @@ export function getElementsByTagName(
     recurse = true,
     limit = Infinity
 ): Element[] {
-    return filter(Checks.tag_name(tagName), nodes, recurse, limit) as Element[];
+    return filter(
+        Checks["tag_name"](tagName),
+        nodes,
+        recurse,
+        limit
+    ) as Element[];
 }
 
 /**
@@ -165,5 +170,5 @@ export function getElementsByTagType(
     recurse = true,
     limit = Infinity
 ): AnyNode[] {
-    return filter(Checks.tag_type(type as string), nodes, recurse, limit);
+    return filter(Checks["tag_type"](type as string), nodes, recurse, limit);
 }

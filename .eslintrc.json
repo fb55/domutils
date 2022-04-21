@@ -59,6 +59,8 @@
                 "@typescript-eslint/prefer-includes": 2,
                 "@typescript-eslint/switch-exhaustiveness-check": 2,
 
+                "dot-notation": 0,
+
                 "jsdoc/require-param-type": 0,
                 "jsdoc/require-returns-type": 0
             }

@@ -10,6 +10,11 @@
     "sideEffects": false,
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
+    "module": "lib/esm/index.js",
+    "exports": {
+        "require": "./lib/index.js",
+        "import": "./lib/esm/index.js"
+    },
     "files": [
         "lib/**/*"
     ],
@@ -23,8 +28,9 @@
         "format:es": "npm run lint:es -- --fix",
         "format:prettier": "npm run prettier -- --write",
         "prettier": "prettier \"**/*.{ts,md,json,yml}\" --ignore-path .gitignore",
-        "build": "tsc",
-        "build:docs": "typedoc --hideGenerator --exclude \"**/*+(index|.spec).ts\" --categorizeByGroup false --sort enum-value-ascending --sort alphabetical src",
+        "build": "npm run build:cjs && npm run build:esm",
+        "build:cjs": "tsc --sourceRoot https://raw.githubusercontent.com/fb55/domutils/$(git rev-parse HEAD)/src/",
+        "build:esm": "npm run build:cjs -- --module esnext --target es2019 --outDir lib/esm && echo '{\"type\":\"module\"}' > lib/esm/package.json",
         "prepare": "npm run build"
     },
     "repository": {
@@ -57,7 +63,11 @@
     },
     "jest": {
         "preset": "ts-jest",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "coverageProvider": "v8",
+        "moduleNameMapper": {
+            "^(.*)\\.js$": "$1"
+        }
     },
     "prettier": {
         "tabWidth": 4
