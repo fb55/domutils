@@ -36,9 +36,9 @@
         "htmlparser2"
     ],
     "dependencies": {
-        "dom-serializer": "^1.0.1",
+        "dom-serializer": "^2.0.0",
         "domelementtype": "^2.3.0",
-        "domhandler": "^4.3.1"
+        "domhandler": "^5.0.1"
     },
     "devDependencies": {
         "@types/jest": "^27.4.1",

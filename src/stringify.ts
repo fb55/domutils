@@ -3,7 +3,7 @@ import {
     isCDATA,
     isText,
     hasChildren,
-    Node,
+    AnyNode,
     isComment,
 } from "domhandler";
 import renderHTML, { DomSerializerOptions } from "dom-serializer";
@@ -17,7 +17,7 @@ import { ElementType } from "domelementtype";
  * @returns `node`'s outer HTML.
  */
 export function getOuterHTML(
-    node: Node | Node[],
+    node: AnyNode | ArrayLike<AnyNode>,
     options?: DomSerializerOptions
 ): string {
     return renderHTML(node, options);
@@ -31,7 +31,7 @@ export function getOuterHTML(
  * @returns `node`'s inner HTML.
  */
 export function getInnerHTML(
-    node: Node,
+    node: AnyNode,
     options?: DomSerializerOptions
 ): string {
     return hasChildren(node)
@@ -47,7 +47,7 @@ export function getInnerHTML(
  * @param node Node to get the inner text of.
  * @returns `node`'s inner text.
  */
-export function getText(node: Node | Node[]): string {
+export function getText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(getText).join("");
     if (isTag(node)) return node.name === "br" ? "\n" : getText(node.children);
     if (isCDATA(node)) return getText(node.children);
@@ -63,7 +63,7 @@ export function getText(node: Node | Node[]): string {
  * @returns `node`'s text content.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent}
  */
-export function textContent(node: Node | Node[]): string {
+export function textContent(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(textContent).join("");
     if (hasChildren(node) && !isComment(node)) {
         return textContent(node.children);
@@ -80,7 +80,7 @@ export function textContent(node: Node | Node[]): string {
  * @returns `node`'s inner text.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText}
  */
-export function innerText(node: Node | Node[]): string {
+export function innerText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(innerText).join("");
     if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
         return innerText(node.children);

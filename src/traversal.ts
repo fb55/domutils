@@ -1,6 +1,12 @@
-import { isTag, Node, Element, NodeWithChildren } from "domhandler";
+import {
+    isTag,
+    AnyNode,
+    ChildNode,
+    Element,
+    ParentNode,
+    hasChildren,
+} from "domhandler";
 
-const emptyArray: Node[] = [];
 /**
  * Get a node's children.
  *
@@ -8,12 +14,11 @@ const emptyArray: Node[] = [];
  * @param elem Node to get the children of.
  * @returns `elem`'s children, or an empty array.
  */
-export function getChildren(elem: Node): Node[] {
-    return (elem as { children?: Node[] }).children ?? emptyArray;
+export function getChildren(elem: AnyNode): ChildNode[] {
+    return hasChildren(elem) ? elem.children : [];
 }
 
-export function getParent(elem: Element): Element | null;
-export function getParent(elem: Node): NodeWithChildren | null;
+export function getParent(elem: AnyNode): ParentNode | null;
 /**
  * Get a node's parent.
  *
@@ -21,7 +26,7 @@ export function getParent(elem: Node): NodeWithChildren | null;
  * @param elem Node to get the parent of.
  * @returns `elem`'s parent node.
  */
-export function getParent(elem: Node): NodeWithChildren | null {
+export function getParent(elem: AnyNode): ParentNode | null {
     return elem.parent || null;
 }
 
@@ -36,7 +41,7 @@ export function getParent(elem: Node): NodeWithChildren | null {
  * @param elem Element to get the siblings of.
  * @returns `elem`'s siblings.
  */
-export function getSiblings(elem: Node): Node[] {
+export function getSiblings(elem: AnyNode): AnyNode[] {
     const parent = getParent(elem);
     if (parent != null) return getChildren(parent);
 
@@ -102,7 +107,7 @@ export function getName(elem: Element): string {
  * @param elem The element to get the next sibling of.
  * @returns `elem`'s next sibling that is a tag.
  */
-export function nextElementSibling(elem: Node): Element | null {
+export function nextElementSibling(elem: AnyNode): Element | null {
     let { next } = elem;
     while (next !== null && !isTag(next)) ({ next } = next);
     return next;
@@ -115,7 +120,7 @@ export function nextElementSibling(elem: Node): Element | null {
  * @param elem The element to get the previous sibling of.
  * @returns `elem`'s previous sibling that is a tag.
  */
-export function prevElementSibling(elem: Node): Element | null {
+export function prevElementSibling(elem: AnyNode): Element | null {
     let { prev } = elem;
     while (prev !== null && !isTag(prev)) ({ prev } = prev);
     return prev;

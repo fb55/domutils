@@ -1,4 +1,4 @@
-import type { Node, Element } from "domhandler";
+import type { AnyNode, Element } from "domhandler";
 import { textContent } from "./stringify";
 import { getElementsByTagName } from "./legacy";
 
@@ -80,7 +80,7 @@ export interface Feed {
  * @param doc - The DOM to to extract the feed from.
  * @returns The feed.
  */
-export function getFeed(doc: Node[]): Feed | null {
+export function getFeed(doc: AnyNode[]): Feed | null {
     const feedRoot = getOneElement(isValidFeed, doc);
 
     return !feedRoot
@@ -206,7 +206,7 @@ const MEDIA_KEYS_INT = [
  * @param where Nodes to search in.
  * @returns Media elements.
  */
-function getMediaElements(where: Node | Node[]): FeedItemMedia[] {
+function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
     return getElementsByTagName("media:content", where).map((elem) => {
         const { attribs } = elem;
 
@@ -247,7 +247,7 @@ function getMediaElements(where: Node | Node[]): FeedItemMedia[] {
  */
 function getOneElement(
     tagName: string | ((name: string) => boolean),
-    node: Node | Node[]
+    node: AnyNode[]
 ): Element | null {
     return getElementsByTagName(tagName, node, true, 1)[0];
 }
@@ -260,7 +260,11 @@ function getOneElement(
  * @param recurse Whether to recurse into child nodes.
  * @returns The text content of the element.
  */
-function fetch(tagName: string, where: Node | Node[], recurse = false): string {
+function fetch(
+    tagName: string,
+    where: AnyNode | AnyNode[],
+    recurse = false
+): string {
     return textContent(getElementsByTagName(tagName, where, recurse, 1)).trim();
 }
 
@@ -277,7 +281,7 @@ function addConditionally<T>(
     obj: T,
     prop: keyof T,
     tagName: string,
-    where: Node | Node[],
+    where: AnyNode[],
     recurse = false
 ) {
     const val = fetch(tagName, where, recurse);

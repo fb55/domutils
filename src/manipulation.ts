@@ -1,4 +1,4 @@
-import type { Node, Element } from "domhandler";
+import type { ChildNode, Element } from "domhandler";
 
 /**
  * Remove an element from the dom
@@ -6,7 +6,7 @@ import type { Node, Element } from "domhandler";
  * @category Manipulation
  * @param elem The element to be removed
  */
-export function removeElement(elem: Node): void {
+export function removeElement(elem: ChildNode): void {
     if (elem.prev) elem.prev.next = elem.next;
     if (elem.next) elem.next.prev = elem.prev;
 
@@ -23,7 +23,7 @@ export function removeElement(elem: Node): void {
  * @param elem The element to be replaced
  * @param replacement The element to be added
  */
-export function replaceElement(elem: Node, replacement: Node): void {
+export function replaceElement(elem: ChildNode, replacement: ChildNode): void {
     const prev = (replacement.prev = elem.prev);
     if (prev) {
         prev.next = replacement;
@@ -48,7 +48,7 @@ export function replaceElement(elem: Node, replacement: Node): void {
  * @param elem The element to append to.
  * @param child The element to be added as a child.
  */
-export function appendChild(elem: Element, child: Node): void {
+export function appendChild(elem: Element, child: ChildNode): void {
     removeElement(child);
 
     child.next = null;
@@ -70,7 +70,7 @@ export function appendChild(elem: Element, child: Node): void {
  * @param elem The element to append after.
  * @param next The element be added.
  */
-export function append(elem: Node, next: Node): void {
+export function append(elem: ChildNode, next: ChildNode): void {
     removeElement(next);
 
     const { parent } = elem;
@@ -99,7 +99,7 @@ export function append(elem: Node, next: Node): void {
  * @param elem The element to prepend before.
  * @param child The element to be added as a child.
  */
-export function prependChild(elem: Element, child: Node): void {
+export function prependChild(elem: Element, child: ChildNode): void {
     removeElement(child);
 
     child.parent = elem;
@@ -121,7 +121,7 @@ export function prependChild(elem: Element, child: Node): void {
  * @param elem The element to prepend before.
  * @param prev The element be added.
  */
-export function prepend(elem: Node, prev: Node): void {
+export function prepend(elem: ChildNode, prev: ChildNode): void {
     removeElement(prev);
 
     const { parent } = elem;

@@ -1,4 +1,4 @@
-import { isTag, hasChildren, Node, Element } from "domhandler";
+import { isTag, hasChildren, Element, AnyNode } from "domhandler";
 
 /**
  * Search a node and its children for nodes passing a test function.
@@ -11,11 +11,11 @@ import { isTag, hasChildren, Node, Element } from "domhandler";
  * @returns All nodes passing `test`.
  */
 export function filter(
-    test: (elem: Node) => boolean,
-    node: Node | Node[],
+    test: (elem: AnyNode) => boolean,
+    node: AnyNode | AnyNode[],
     recurse = true,
     limit = Infinity
-): Node[] {
+): AnyNode[] {
     if (!Array.isArray(node)) node = [node];
     return find(test, node, recurse, limit);
 }
@@ -31,12 +31,12 @@ export function filter(
  * @returns All nodes passing `test`.
  */
 export function find(
-    test: (elem: Node) => boolean,
-    nodes: Node[],
+    test: (elem: AnyNode) => boolean,
+    nodes: AnyNode[],
     recurse: boolean,
     limit: number
-): Node[] {
-    const result: Node[] = [];
+): AnyNode[] {
+    const result: AnyNode[] = [];
 
     for (const elem of nodes) {
         if (test(elem)) {
@@ -62,11 +62,12 @@ export function find(
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @returns The first node in the array that passes `test`.
+ * @deprecated Use `Array.prototype.find` directly.
  */
-export function findOneChild(
-    test: (elem: Node) => boolean,
-    nodes: Node[]
-): Node | undefined {
+export function findOneChild<T>(
+    test: (elem: T) => boolean,
+    nodes: T[]
+): T | undefined {
     return nodes.find(test);
 }
 
@@ -81,7 +82,7 @@ export function findOneChild(
  */
 export function findOne(
     test: (elem: Element) => boolean,
-    nodes: Node[],
+    nodes: AnyNode[],
     recurse = true
 ): Element | null {
     let elem = null;
@@ -108,7 +109,7 @@ export function findOne(
  */
 export function existsOne(
     test: (elem: Element) => boolean,
-    nodes: Node[]
+    nodes: AnyNode[]
 ): boolean {
     return nodes.some(
         (checked) =>
@@ -131,7 +132,7 @@ export function existsOne(
  */
 export function findAll(
     test: (elem: Element) => boolean,
-    nodes: Node[]
+    nodes: AnyNode[]
 ): Element[] {
     const result: Element[] = [];
     const stack = nodes.filter(isTag);

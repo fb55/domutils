@@ -1,8 +1,8 @@
-import { isTag, isText, Node, Element } from "domhandler";
+import { isTag, isText, AnyNode, Element } from "domhandler";
 import { ElementType } from "domelementtype";
 import { filter, findOne } from "./querying";
 
-type TestType = (elem: Node) => boolean;
+type TestType = (elem: AnyNode) => boolean;
 
 /**
  * An object with keys to check elements against. If a key is `tag_name`,
@@ -27,23 +27,23 @@ const Checks: Record<
 > = {
     tag_name(name) {
         if (typeof name === "function") {
-            return (elem: Node) => isTag(elem) && name(elem.name);
+            return (elem: AnyNode) => isTag(elem) && name(elem.name);
         } else if (name === "*") {
             return isTag;
         }
-        return (elem: Node) => isTag(elem) && elem.name === name;
+        return (elem: AnyNode) => isTag(elem) && elem.name === name;
     },
     tag_type(type) {
         if (typeof type === "function") {
-            return (elem: Node) => type(elem.type);
+            return (elem: AnyNode) => type(elem.type);
         }
-        return (elem: Node) => elem.type === type;
+        return (elem: AnyNode) => elem.type === type;
     },
     tag_contains(data) {
         if (typeof data === "function") {
-            return (elem: Node) => isText(elem) && data(elem.data);
+            return (elem: AnyNode) => isText(elem) && data(elem.data);
         }
-        return (elem: Node) => isText(elem) && elem.data === data;
+        return (elem: AnyNode) => isText(elem) && elem.data === data;
     },
 };
 
@@ -58,9 +58,9 @@ function getAttribCheck(
     value: undefined | string | ((value: string) => boolean)
 ): TestType {
     if (typeof value === "function") {
-        return (elem: Node) => isTag(elem) && value(elem.attribs[attrib]);
+        return (elem: AnyNode) => isTag(elem) && value(elem.attribs[attrib]);
     }
-    return (elem: Node) => isTag(elem) && elem.attribs[attrib] === value;
+    return (elem: AnyNode) => isTag(elem) && elem.attribs[attrib] === value;
 }
 
 /**
@@ -70,7 +70,7 @@ function getAttribCheck(
  *   functions returns `true` for the node.
  */
 function combineFuncs(a: TestType, b: TestType): TestType {
-    return (elem: Node) => a(elem) || b(elem);
+    return (elem: AnyNode) => a(elem) || b(elem);
 }
 
 /**
@@ -95,7 +95,7 @@ function compileTest(options: TestElementOpts): TestType | null {
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
  */
-export function testElement(options: TestElementOpts, node: Node): boolean {
+export function testElement(options: TestElementOpts, node: AnyNode): boolean {
     const test = compileTest(options);
     return test ? test(node) : true;
 }
@@ -110,10 +110,10 @@ export function testElement(options: TestElementOpts, node: Node): boolean {
  */
 export function getElements(
     options: TestElementOpts,
-    nodes: Node | Node[],
+    nodes: AnyNode | AnyNode[],
     recurse: boolean,
     limit = Infinity
-): Node[] {
+): AnyNode[] {
     const test = compileTest(options);
     return test ? filter(test, nodes, recurse, limit) : [];
 }
@@ -127,7 +127,7 @@ export function getElements(
  */
 export function getElementById(
     id: string | ((id: string) => boolean),
-    nodes: Node | Node[],
+    nodes: AnyNode | AnyNode[],
     recurse = true
 ): Element | null {
     if (!Array.isArray(nodes)) nodes = [nodes];
@@ -144,7 +144,7 @@ export function getElementById(
  */
 export function getElementsByTagName(
     tagName: string | ((name: string) => boolean),
-    nodes: Node | Node[],
+    nodes: AnyNode | AnyNode[],
     recurse = true,
     limit = Infinity
 ): Element[] {
@@ -161,9 +161,9 @@ export function getElementsByTagName(
  */
 export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
-    nodes: Node | Node[],
+    nodes: AnyNode | AnyNode[],
     recurse = true,
     limit = Infinity
-): Node[] {
+): AnyNode[] {
     return filter(Checks.tag_type(type as string), nodes, recurse, limit);
 }

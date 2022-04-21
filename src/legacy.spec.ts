@@ -6,14 +6,14 @@ import {
     getElementsByTagName,
     getElementsByTagType,
 } from "./legacy";
-import type { Node, Element } from "domhandler";
+import type { AnyNode, Element } from "domhandler";
 
 describe("legacy", () => {
     // Set up expected structures
     const expected = {
         idAsdf: fixture[1] as Element,
-        tag2: [] as Node[],
-        typeScript: [] as Node[],
+        tag2: [] as AnyNode[],
+        typeScript: [] as AnyNode[],
     };
 
     beforeAll(() => {

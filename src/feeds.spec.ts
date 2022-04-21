@@ -3,7 +3,7 @@
 import { getFeed } from "./feeds";
 import fs from "fs";
 import path from "path";
-import { parseDocument } from "htmlparser2";
+import { parseDocument } from "./__fixtures__/fixture";
 
 const documents = path.join(__dirname, "__fixtures__", "Documents");
 
