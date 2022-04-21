@@ -38,6 +38,7 @@ export function replaceElement(elem: ChildNode, replacement: ChildNode): void {
     if (parent) {
         const childs = parent.children;
         childs[childs.lastIndexOf(elem)] = replacement;
+        elem.parent = null;
     }
 }
 
