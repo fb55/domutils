@@ -1,4 +1,4 @@
-import { hasChildren, Node } from "domhandler";
+import { hasChildren, AnyNode, ParentNode } from "domhandler";
 
 /**
  * Given an array of nodes, remove any member that is contained by another.
@@ -7,7 +7,7 @@ import { hasChildren, Node } from "domhandler";
  * @param nodes Nodes to filter.
  * @returns Remaining nodes that aren't subtrees of each other.
  */
-export function removeSubsets(nodes: Node[]): Node[] {
+export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
     let idx = nodes.length;
 
     /*
@@ -75,9 +75,12 @@ export const enum DocumentPosition {
  * See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
  * a description of these values.
  */
-export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
-    const aParents = [];
-    const bParents = [];
+export function compareDocumentPosition(
+    nodeA: AnyNode,
+    nodeB: AnyNode
+): number {
+    const aParents: ParentNode[] = [];
+    const bParents: ParentNode[] = [];
 
     if (nodeA === nodeB) {
         return 0;
@@ -105,7 +108,7 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
     }
 
     const sharedParent = aParents[idx - 1];
-    const siblings = sharedParent.children;
+    const siblings: AnyNode[] = sharedParent.children;
     const aSibling = aParents[idx];
     const bSibling = bParents[idx];
 
@@ -130,7 +133,7 @@ export function compareDocumentPosition(nodeA: Node, nodeB: Node): number {
  * @param nodes Array of DOM nodes.
  * @returns Collection of unique nodes, sorted in document order.
  */
-export function uniqueSort<T extends Node>(nodes: T[]): T[] {
+export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
     nodes = nodes.filter((node, i, arr) => !arr.includes(node, i + 1));
 
     nodes.sort((a, b) => {

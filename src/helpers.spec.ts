@@ -1,12 +1,11 @@
-import { parseDOM, parseDocument } from "htmlparser2";
+import { parseDocument } from "./__fixtures__/fixture";
 import { removeSubsets, compareDocumentPosition, uniqueSort } from "./helpers";
 import type { Element, Document } from "domhandler";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {
-        const dom = parseDOM(
-            "<div><p><span></span></p><p></p></div>"
-        )[0] as Element;
+        const dom = parseDocument("<div><p><span></span></p><p></p></div>")
+            .children[0] as Element;
 
         it("removes identical trees", () =>
             expect(removeSubsets([dom, dom])).toHaveLength(1));
@@ -28,7 +27,7 @@ describe("helpers", () => {
 
     describe("compareDocumentPosition", () => {
         const markup = "<div><p><span></span></p><a></a></div>";
-        const dom = parseDOM(markup)[0] as Element;
+        const dom = parseDocument(markup).children[0] as Element;
         const p = dom.children[0] as Element;
         const span = p.children[0];
         const a = dom.children[1];
@@ -46,7 +45,7 @@ describe("helpers", () => {
             expect(compareDocumentPosition(span, p)).toBe(20));
 
         it("reports when the nodes belong to separate documents", () => {
-            const otherDom = parseDOM(markup)[0] as Element;
+            const otherDom = parseDocument(markup).children[0] as Element;
             const other = (otherDom.children[0] as Element).children[0];
 
             expect(compareDocumentPosition(span, other)).toBe(1);
@@ -56,9 +55,8 @@ describe("helpers", () => {
             expect(compareDocumentPosition(span, span)).toBe(0));
 
         it("does not end up in infinite loop (#109)", () => {
-            const dom = parseDOM(
-                "<div><span>1</span><span>2</span></div>"
-            )[0] as Element;
+            const dom = parseDocument("<div><span>1</span><span>2</span></div>")
+                .children[0] as Element;
 
             expect(
                 compareDocumentPosition(
