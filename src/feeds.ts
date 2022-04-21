@@ -1,6 +1,6 @@
 import type { AnyNode, Element } from "domhandler";
-import { textContent } from "./stringify";
-import { getElementsByTagName } from "./legacy";
+import { textContent } from "./stringify.js";
+import { getElementsByTagName } from "./legacy.js";
 
 /**
  * The type of a media item.
@@ -108,7 +108,7 @@ function getAtomFeed(feedRoot: Element) {
             addConditionally(entry, "id", "id", children);
             addConditionally(entry, "title", "title", children);
 
-            const href = getOneElement("link", children)?.attribs.href;
+            const href = getOneElement("link", children)?.attribs["href"];
             if (href) {
                 entry.link = href;
             }
@@ -130,7 +130,7 @@ function getAtomFeed(feedRoot: Element) {
 
     addConditionally(feed, "id", "id", childs);
     addConditionally(feed, "title", "title", childs);
-    const href = getOneElement("link", childs)?.attribs.href;
+    const href = getOneElement("link", childs)?.attribs["href"];
     if (href) {
         feed.link = href;
     }
@@ -211,10 +211,10 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         const { attribs } = elem;
 
         const media: FeedItemMedia = {
-            medium: attribs.medium as unknown as
+            medium: attribs["medium"] as unknown as
                 | FeedItemMediaMedium
                 | undefined,
-            isDefault: !!attribs.isDefault,
+            isDefault: !!attribs["isDefault"],
         };
 
         for (const attrib of MEDIA_KEYS_STRING) {
@@ -229,9 +229,10 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
             }
         }
 
-        if (attribs.expression) {
-            media.expression =
-                attribs.expression as unknown as FeedItemMediaExpression;
+        if (attribs["expression"]) {
+            media.expression = attribs[
+                "expression"
+            ] as unknown as FeedItemMediaExpression;
         }
 
         return media;
