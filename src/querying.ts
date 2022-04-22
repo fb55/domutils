@@ -94,7 +94,7 @@ export function findOne(
         } else if (test(checked)) {
             elem = checked;
         } else if (recurse && checked.children.length > 0) {
-            elem = findOne(test, checked.children);
+            elem = findOne(test, checked.children, true);
         }
     }
 
@@ -121,9 +121,9 @@ export function existsOne(
 }
 
 /**
- * Search and array of nodes and its children for nodes passing a test function.
+ * Search and array of nodes and its children for elements passing a test function.
  *
- * Same as `find`, only with less options, leading to reduced complexity.
+ * Same as `find`, but limited to elements and with less options, leading to reduced complexity.
  *
  * @category Querying
  * @param test Function to test nodes on.
