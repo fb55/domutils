@@ -48,7 +48,7 @@ describe("traversal", () => {
             const firstNode = dom.children[0];
 
             const next = nextElementSibling(firstNode);
-            expect(next?.tagName).toBe("p");
+            expect(next).toHaveProperty("tagName", "p");
         });
         it("return null if not found", () => {
             const dom = parseDOM("<div><p></p>test</div>")[0] as Element;
@@ -63,7 +63,7 @@ describe("traversal", () => {
             const firstNode = dom.children[0];
 
             const next = nextElementSibling(firstNode);
-            expect(next?.tagName).toBe("script");
+            expect(next).toHaveProperty("tagName", "script");
         });
     });
 
@@ -75,13 +75,13 @@ describe("traversal", () => {
             const lastNode = dom.children[2];
 
             const prev = prevElementSibling(lastNode);
-            expect(prev?.tagName).toBe("h1");
+            expect(prev).toHaveProperty("tagName", "h1");
         });
         it("return null if not found", () => {
             const dom = parseDOM("<div>test<p></p></div>")[0] as Element;
             const lastNode = dom.children[1];
 
-            expect(nextElementSibling(lastNode)).toBeNull();
+            expect(prevElementSibling(lastNode)).toBeNull();
         });
         it("does not ignore script tags", () => {
             const dom = parseDOM(
@@ -90,7 +90,7 @@ describe("traversal", () => {
             const lastNode = dom.children[2];
 
             const prev = prevElementSibling(lastNode);
-            expect(prev?.tagName).toBe("script");
+            expect(prev).toHaveProperty("tagName", "script");
         });
     });
 });
