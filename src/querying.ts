@@ -1,7 +1,7 @@
 import { isTag, hasChildren, Element, AnyNode } from "domhandler";
 
 /**
- * Search a node and its children for nodes passing a test function.
+ * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -21,7 +21,7 @@ export function filter(
 }
 
 /**
- * Search an array of node and its children for nodes passing a test function.
+ * Search an array of nodes and their children for nodes passing a test function.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -56,7 +56,7 @@ export function find(
 }
 
 /**
- * Finds the first element inside of an array that matches a test function.
+ * Finds the first element inside of an array that matches a test function. This is an alias for `Array.prototype.find`.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -76,9 +76,9 @@ export function findOneChild<T>(
  *
  * @category Querying
  * @param test Function to test nodes on.
- * @param nodes Array of nodes to search.
+ * @param nodes Node or array of nodes to search.
  * @param recurse Also consider child nodes.
- * @returns The first child node that passes `test`.
+ * @returns The first node that passes `test`.
  */
 export function findOne(
     test: (elem: Element) => boolean,
@@ -102,6 +102,8 @@ export function findOne(
 }
 
 /**
+ * Checks if a tree of nodes contains at least one node passing a test.
+ *
  * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
@@ -121,7 +123,7 @@ export function existsOne(
 }
 
 /**
- * Search and array of nodes and its children for elements passing a test function.
+ * Search an array of nodes and their children for elements passing a test function.
  *
  * Same as `find`, but limited to elements and with less options, leading to reduced complexity.
  *

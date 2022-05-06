@@ -24,7 +24,7 @@ export function getParent(elem: AnyNode): ParentNode | null;
  *
  * @category Traversal
  * @param elem Node to get the parent of.
- * @returns `elem`'s parent node.
+ * @returns `elem`'s parent node, or `null` if `elem` is a root node.
  */
 export function getParent(elem: AnyNode): ParentNode | null {
     return elem.parent || null;
@@ -39,7 +39,7 @@ export function getParent(elem: AnyNode): ParentNode | null {
  *
  * @category Traversal
  * @param elem Element to get the siblings of.
- * @returns `elem`'s siblings.
+ * @returns `elem`'s siblings, including `elem`.
  */
 export function getSiblings(elem: AnyNode): AnyNode[] {
     const parent = getParent(elem);
@@ -105,7 +105,8 @@ export function getName(elem: Element): string {
  *
  * @category Traversal
  * @param elem The element to get the next sibling of.
- * @returns `elem`'s next sibling that is a tag.
+ * @returns `elem`'s next sibling that is a tag, or `null` if there is no next
+ * sibling.
  */
 export function nextElementSibling(elem: AnyNode): Element | null {
     let { next } = elem;
@@ -118,7 +119,8 @@ export function nextElementSibling(elem: AnyNode): Element | null {
  *
  * @category Traversal
  * @param elem The element to get the previous sibling of.
- * @returns `elem`'s previous sibling that is a tag.
+ * @returns `elem`'s previous sibling that is a tag, or `null` if there is no
+ * previous sibling.
  */
 export function prevElementSibling(elem: AnyNode): Element | null {
     let { prev } = elem;

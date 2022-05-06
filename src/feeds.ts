@@ -3,7 +3,7 @@ import { textContent } from "./stringify.js";
 import { getElementsByTagName } from "./legacy.js";
 
 /**
- * The type of a media item.
+ * The medium of a media item.
  *
  * @category Feeds
  */

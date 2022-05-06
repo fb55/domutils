@@ -1,11 +1,12 @@
 import { hasChildren, AnyNode, ParentNode } from "domhandler";
 
 /**
- * Given an array of nodes, remove any member that is contained by another.
+ * Given an array of nodes, remove any member that is contained by another
+ * member.
  *
  * @category Helpers
  * @param nodes Nodes to filter.
- * @returns Remaining nodes that aren't subtrees of each other.
+ * @returns Remaining nodes that aren't contained by other nodes.
  */
 export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
     let idx = nodes.length;
@@ -50,8 +51,8 @@ export const enum DocumentPosition {
 }
 
 /**
- * Compare the position of one node against another node in any other document.
- * The return value is a bitmask with the values from {@link DocumentPosition}.
+ * Compare the position of one node against another node in any other document,
+ * returning a bitmask with the values from {@link DocumentPosition}.
  *
  * Document order:
  * > There is an ordering, document order, defined on all the nodes in the
@@ -125,9 +126,9 @@ export function compareDocumentPosition(
 }
 
 /**
- * Sort an array of nodes based on their relative position in the document and
- * remove any duplicate nodes. If the array contains nodes that do not belong to
- * the same document, sort order is unspecified.
+ * Sort an array of nodes based on their relative position in the document,
+ * removing any duplicate nodes. If the array contains nodes that do not belong
+ * to the same document, sort order is unspecified.
  *
  * @category Helpers
  * @param nodes Array of DOM nodes.

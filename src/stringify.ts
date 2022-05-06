@@ -40,7 +40,7 @@ export function getInnerHTML(
 }
 
 /**
- * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags.
+ * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags. Ignores comments.
  *
  * @category Stringify
  * @deprecated Use `textContent` instead.
@@ -56,7 +56,7 @@ export function getText(node: AnyNode | AnyNode[]): string {
 }
 
 /**
- * Get a node's text content.
+ * Get a node's text content. Ignores comments.
  *
  * @category Stringify
  * @param node Node to get the text content of.
@@ -73,7 +73,7 @@ export function textContent(node: AnyNode | AnyNode[]): string {
 }
 
 /**
- * Get a node's inner text.
+ * Get a node's inner text, ignoring `<script>` and `<style>` tags. Ignores comments.
  *
  * @category Stringify
  * @param node Node to get the inner text of.

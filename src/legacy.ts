@@ -21,6 +21,9 @@ export interface TestElementOpts {
         | ((attributeValue: string) => boolean);
 }
 
+/**
+ * A map of functions to check nodes against.
+ */
 const Checks: Record<
     string,
     (value: string | undefined | ((str: string) => boolean)) => TestType
@@ -48,6 +51,9 @@ const Checks: Record<
 };
 
 /**
+ * Returns a function to check whether a node has an attribute with a particular
+ * value.
+ *
  * @param attrib Attribute to check.
  * @param value Attribute value to look for.
  * @returns A function to check whether the a node has an attribute with a
@@ -64,6 +70,9 @@ function getAttribCheck(
 }
 
 /**
+ * Returns a function that returns `true` if either of the input functions
+ * returns `true` for a node.
+ *
  * @param a First function to combine.
  * @param b Second function to combine.
  * @returns A function taking a node and returning `true` if either of the input
@@ -74,9 +83,12 @@ function combineFuncs(a: TestType, b: TestType): TestType {
 }
 
 /**
+ * Returns a function that executes all checks in `options` and returns `true`
+ * if any of them match a node.
+ *
  * @param options An object describing nodes to look for.
- * @returns A function executing all checks in `options` and returning `true` if
- *   any of them match a node.
+ * @returns A function that executes all checks in `options` and returns `true`
+ *   if any of them match a node.
  */
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
@@ -90,6 +102,8 @@ function compileTest(options: TestElementOpts): TestType | null {
 }
 
 /**
+ * Checks whether a node matches the description in `options`.
+ *
  * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param node The element to test.
@@ -101,6 +115,8 @@ export function testElement(options: TestElementOpts, node: AnyNode): boolean {
 }
 
 /**
+ * Returns all nodes that match `options`.
+ *
  * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param nodes Nodes to search through.
@@ -119,6 +135,8 @@ export function getElements(
 }
 
 /**
+ * Returns the node with the supplied ID.
+ *
  * @category Legacy Query Functions
  * @param id The unique ID attribute value to look for.
  * @param nodes Nodes to search through.
@@ -135,6 +153,8 @@ export function getElementById(
 }
 
 /**
+ * Returns all nodes with the supplied `tagName`.
+ *
  * @category Legacy Query Functions
  * @param tagName Tag name to search for.
  * @param nodes Nodes to search through.
@@ -157,6 +177,8 @@ export function getElementsByTagName(
 }
 
 /**
+ * Returns all nodes with the supplied `type`.
+ *
  * @category Legacy Query Functions
  * @param type Element type to look for.
  * @param nodes Nodes to search through.
