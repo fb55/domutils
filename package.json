@@ -13,7 +13,8 @@
     "module": "lib/esm/index.js",
     "exports": {
         "require": "./lib/index.js",
-        "import": "./lib/esm/index.js"
+        "import": "./lib/esm/index.js",
+        "./package.json": "./package.json"
     },
     "files": [
         "lib/**/*"
