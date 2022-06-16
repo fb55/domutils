@@ -12,9 +12,11 @@
     "types": "lib/index.d.ts",
     "module": "lib/esm/index.js",
     "exports": {
-        "require": "./lib/index.js",
-        "import": "./lib/esm/index.js",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        ".": {
+            "require": "./lib/index.js",
+            "import": "./lib/esm/index.js"
+        }
     },
     "files": [
         "lib/**/*"
