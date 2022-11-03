@@ -54,7 +54,7 @@
         "@typescript-eslint/parser": "^5.42.0",
         "eslint": "^8.26.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-jsdoc": "^39.5.0",
+        "eslint-plugin-jsdoc": "^39.6.2",
         "htmlparser2": "~8.0.1",
         "jest": "^27.5.1",
         "prettier": "^2.7.1",
