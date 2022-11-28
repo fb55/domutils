@@ -1,4 +1,4 @@
-import type { ChildNode, Element } from "domhandler";
+import type { ChildNode, ParentNode } from "domhandler";
 
 /**
  * Remove an element from the dom
@@ -46,17 +46,17 @@ export function replaceElement(elem: ChildNode, replacement: ChildNode): void {
  * Append a child to an element.
  *
  * @category Manipulation
- * @param elem The element to append to.
+ * @param parent The element to append to.
  * @param child The element to be added as a child.
  */
-export function appendChild(elem: Element, child: ChildNode): void {
+export function appendChild(parent: ParentNode, child: ChildNode): void {
     removeElement(child);
 
     child.next = null;
-    child.parent = elem;
+    child.parent = parent;
 
-    if (elem.children.push(child) > 1) {
-        const sibling = elem.children[elem.children.length - 2];
+    if (parent.children.push(child) > 1) {
+        const sibling = parent.children[parent.children.length - 2];
         sibling.next = child;
         child.prev = sibling;
     } else {
@@ -97,17 +97,17 @@ export function append(elem: ChildNode, next: ChildNode): void {
  * Prepend a child to an element.
  *
  * @category Manipulation
- * @param elem The element to prepend before.
+ * @param parent The element to prepend before.
  * @param child The element to be added as a child.
  */
-export function prependChild(elem: Element, child: ChildNode): void {
+export function prependChild(parent: ParentNode, child: ChildNode): void {
     removeElement(child);
 
-    child.parent = elem;
+    child.parent = parent;
     child.prev = null;
 
-    if (elem.children.unshift(child) !== 1) {
-        const sibling = elem.children[1];
+    if (parent.children.unshift(child) !== 1) {
+        const sibling = parent.children[1];
         sibling.prev = child;
         child.next = sibling;
     } else {
