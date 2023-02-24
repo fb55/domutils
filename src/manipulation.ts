@@ -12,8 +12,14 @@ export function removeElement(elem: ChildNode): void {
 
     if (elem.parent) {
         const childs = elem.parent.children;
-        childs.splice(childs.lastIndexOf(elem), 1);
+        const childsIndex = childs.lastIndexOf(elem);
+        if (childsIndex >= 0) {
+            childs.splice(childsIndex, 1);
+        }
     }
+    elem.next = null;
+    elem.prev = null;
+    elem.parent = null;
 }
 
 /**

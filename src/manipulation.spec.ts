@@ -5,6 +5,7 @@ import {
     prepend,
     prependChild,
     replaceElement,
+    removeElement,
 } from "./manipulation.js";
 import type { Element } from "domhandler";
 
@@ -82,6 +83,47 @@ describe("manipulation", () => {
                   <p>
                     <object />
                     <span />
+                  </p>
+                </div>
+            `);
+        });
+    });
+    describe("removeElement", () => {
+        it("should correctly remove element", () => {
+            const dom = parseDOM(
+                "<div><p><img/><object/></p><p></p></div>"
+            )[0] as Element;
+            const parents = dom.children as Element[];
+
+            const image = parents[0].children[0];
+
+            removeElement(image);
+
+            expect(image.next).toBeNull();
+            expect(image.prev).toBeNull();
+            expect(image.parent).toBeNull();
+
+            expect(dom).toMatchInlineSnapshot(`
+                <div>
+                  <p>
+                    <object />
+                  </p>
+                  <p />
+                </div>
+            `);
+
+            appendChild(parents[1], image);
+
+            expect(parents[0].children).toHaveLength(1);
+            expect(parents[1].children).toHaveLength(1);
+
+            expect(dom).toMatchInlineSnapshot(`
+                <div>
+                  <p>
+                    <object />
+                  </p>
+                  <p>
+                    <img />
                   </p>
                 </div>
             `);
