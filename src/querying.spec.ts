@@ -4,7 +4,7 @@ import { ElementType } from "domelementtype";
 
 describe("querying", () => {
     describe("find", () => {
-        it("should accept too many children without stack overflow", () => {
+        it("should accept too many children without RangeError", () => {
             let html = "<body>";
             for (let i = 0; i < 200000; i++) {
                 html += "<div></div>";
