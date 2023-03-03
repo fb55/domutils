@@ -46,7 +46,10 @@ export function find(
 
         if (recurse && hasChildren(elem) && elem.children.length > 0) {
             const children = find(test, elem.children, recurse, limit);
-            result.push(...children);
+            const chunksize = 1024;
+            for (let i = 0; i < children.length; i += chunksize) {
+                result.push(...children.slice(i, i + chunksize));
+            }
             limit -= children.length;
             if (limit <= 0) break;
         }
