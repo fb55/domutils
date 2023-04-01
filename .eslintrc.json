@@ -1,16 +1,12 @@
 {
-    "extends": ["eslint:recommended", "plugin:jsdoc/recommended", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:jsdoc/recommended-typescript",
+        "prettier"
+    ],
     "env": {
         "node": true,
         "es6": true
-    },
-    "settings": {
-        "jsdoc": {
-            "mode": "typescript",
-            "tagNamePreference": {
-                "category": "category"
-            }
-        }
     },
     "rules": {
         "eqeqeq": [2, "smart"],
@@ -29,7 +25,9 @@
         "spaced-comment": 2,
         "yoda": [2, "never"],
         "curly": [2, "multi-line"],
-        "no-else-return": 2
+        "no-else-return": 2,
+
+        "jsdoc/check-tag-names": [2, { "definedTags": ["category"] }]
     },
     "overrides": [
         {
@@ -59,10 +57,7 @@
                 "@typescript-eslint/prefer-includes": 2,
                 "@typescript-eslint/switch-exhaustiveness-check": 2,
 
-                "dot-notation": 0,
-
-                "jsdoc/require-param-type": 0,
-                "jsdoc/require-returns-type": 0
+                "dot-notation": 0
             }
         }
     ]
