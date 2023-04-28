@@ -16,8 +16,7 @@ export function filter(
     recurse = true,
     limit = Infinity
 ): AnyNode[] {
-    if (!Array.isArray(node)) node = [node];
-    return find(test, node, recurse, limit);
+    return find(test, Array.isArray(node) ? node : [node], recurse, limit);
 }
 
 /**
@@ -37,22 +36,45 @@ export function find(
     limit: number
 ): AnyNode[] {
     const result: AnyNode[] = [];
+    /** Stack of the arrays we are looking at. */
+    const nodeStack = [nodes];
+    /** Stack of the indices within the arrays. */
+    const indexStack = [0];
+    /** The index of the array we are currently looking at. */
+    let stackIndex = 0;
 
-    for (const elem of nodes) {
+    for (;;) {
+        // First, check if the current array has any more elements to look at.
+        if (indexStack[stackIndex] >= nodeStack[stackIndex].length) {
+            // If not, move up the stack. Note that we don't mutate the stack.
+            stackIndex -= 1;
+
+            // If we have no more arrays to look at, we are done.
+            if (stackIndex < 0) {
+                return result;
+            }
+
+            // Loop back to the start to continue with the next array.
+            continue;
+        }
+
+        const elem = nodeStack[stackIndex][indexStack[stackIndex]++];
+
         if (test(elem)) {
             result.push(elem);
-            if (--limit <= 0) break;
+            if (--limit <= 0) return result;
         }
 
         if (recurse && hasChildren(elem) && elem.children.length > 0) {
-            const children = find(test, elem.children, recurse, limit);
-            result.push(...children);
-            limit -= children.length;
-            if (limit <= 0) break;
+            /*
+             * Add the children to the stack. We are depth-first, so this is
+             * the next array we look at.
+             */
+            stackIndex += 1;
+            nodeStack[stackIndex] = elem.children;
+            indexStack[stackIndex] = 0;
         }
     }
-
-    return result;
 }
 
 /**
@@ -88,13 +110,13 @@ export function findOne(
     let elem = null;
 
     for (let i = 0; i < nodes.length && !elem; i++) {
-        const checked = nodes[i];
-        if (!isTag(checked)) {
+        const node = nodes[i];
+        if (!isTag(node)) {
             continue;
-        } else if (test(checked)) {
-            elem = checked;
-        } else if (recurse && checked.children.length > 0) {
-            elem = findOne(test, checked.children, true);
+        } else if (test(node)) {
+            elem = node;
+        } else if (recurse && node.children.length > 0) {
+            elem = findOne(test, node.children, true);
         }
     }
 
@@ -116,9 +138,7 @@ export function existsOne(
     return nodes.some(
         (checked) =>
             isTag(checked) &&
-            (test(checked) ||
-                (checked.children.length > 0 &&
-                    existsOne(test, checked.children)))
+            (test(checked) || existsOne(test, checked.children))
     );
 }
 
@@ -136,15 +156,31 @@ export function findAll(
     test: (elem: Element) => boolean,
     nodes: AnyNode[]
 ): Element[] {
-    const result: Element[] = [];
-    const stack = nodes.filter(isTag);
-    let elem;
-    while ((elem = stack.shift())) {
-        const children = elem.children?.filter(isTag);
-        if (children && children.length > 0) {
-            stack.unshift(...children);
+    const result = [];
+    const nodeStack = [nodes];
+    const indexStack = [0];
+    let stackIndex = 0;
+
+    for (;;) {
+        if (indexStack[stackIndex] >= nodeStack[stackIndex].length) {
+            stackIndex -= 1;
+
+            if (stackIndex < 0) {
+                return result;
+            }
+
+            continue;
         }
+
+        const elem = nodeStack[stackIndex][indexStack[stackIndex]++];
+
+        if (!isTag(elem)) continue;
         if (test(elem)) result.push(elem);
+
+        if (elem.children.length > 0) {
+            stackIndex += 1;
+            nodeStack[stackIndex] = elem.children;
+            indexStack[stackIndex] = 0;
+        }
     }
-    return result;
 }
