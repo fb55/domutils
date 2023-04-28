@@ -40,25 +40,24 @@ export function find(
     const nodeStack = [nodes];
     /** Stack of the indices within the arrays. */
     const indexStack = [0];
-    /** The index of the array we are currently looking at. */
-    let stackIndex = 0;
 
     for (;;) {
         // First, check if the current array has any more elements to look at.
-        if (indexStack[stackIndex] >= nodeStack[stackIndex].length) {
-            // If not, move up the stack. Note that we don't mutate the stack.
-            stackIndex -= 1;
-
+        if (indexStack[0] >= nodeStack[0].length) {
             // If we have no more arrays to look at, we are done.
-            if (stackIndex < 0) {
+            if (indexStack.length === 1) {
                 return result;
             }
+
+            // Otherwise, remove the current array from the stack.
+            nodeStack.shift();
+            indexStack.shift();
 
             // Loop back to the start to continue with the next array.
             continue;
         }
 
-        const elem = nodeStack[stackIndex][indexStack[stackIndex]++];
+        const elem = nodeStack[0][indexStack[0]++];
 
         if (test(elem)) {
             result.push(elem);
@@ -70,9 +69,8 @@ export function find(
              * Add the children to the stack. We are depth-first, so this is
              * the next array we look at.
              */
-            stackIndex += 1;
-            nodeStack[stackIndex] = elem.children;
-            indexStack[stackIndex] = 0;
+            indexStack.unshift(0);
+            nodeStack.unshift(elem.children);
         }
     }
 }
@@ -159,28 +157,29 @@ export function findAll(
     const result = [];
     const nodeStack = [nodes];
     const indexStack = [0];
-    let stackIndex = 0;
 
     for (;;) {
-        if (indexStack[stackIndex] >= nodeStack[stackIndex].length) {
-            stackIndex -= 1;
-
-            if (stackIndex < 0) {
+        if (indexStack[0] >= nodeStack[0].length) {
+            if (nodeStack.length === 1) {
                 return result;
             }
 
+            // Otherwise, remove the current array from the stack.
+            nodeStack.shift();
+            indexStack.shift();
+
+            // Loop back to the start to continue with the next array.
             continue;
         }
 
-        const elem = nodeStack[stackIndex][indexStack[stackIndex]++];
+        const elem = nodeStack[0][indexStack[0]++];
 
         if (!isTag(elem)) continue;
         if (test(elem)) result.push(elem);
 
         if (elem.children.length > 0) {
-            stackIndex += 1;
-            nodeStack[stackIndex] = elem.children;
-            indexStack[stackIndex] = 0;
+            indexStack.unshift(0);
+            nodeStack.unshift(elem.children);
         }
     }
 }
