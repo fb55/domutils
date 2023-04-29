@@ -32,6 +32,10 @@ describe("legacy", () => {
             expect(getElements({ id: "asdfs" }, fixture, true)).toHaveLength(
                 0
             ));
+        it("returns the node for a ID function", () =>
+            expect(
+                getElements({ id: (id) => id === "asdf" }, fixture, true, 1)
+            ).toEqual([expected.idAsdf]));
         it("returns the nodes with the specified tag name", () =>
             expect(getElements({ tag_name: "tag2" }, fixture, true)).toEqual(
                 expected.tag2
@@ -40,6 +44,18 @@ describe("legacy", () => {
             expect(
                 getElements({ tag_name: "asdfs" }, fixture, true)
             ).toHaveLength(0));
+        it("returns all elements for wildcard tag names", () =>
+            expect(getElements({ tag_name: "*" }, fixture, true)).toHaveLength(
+                60
+            ));
+        it("returns the nodes with the specified tag name function", () =>
+            expect(
+                getElements(
+                    { tag_name: (name) => name === "tag2" },
+                    fixture,
+                    true
+                )
+            ).toEqual(expected.tag2));
         it("returns the nodes with the specified tag type", () =>
             expect(getElements({ tag_type: "script" }, fixture, true)).toEqual(
                 expected.typeScript
@@ -48,6 +64,26 @@ describe("legacy", () => {
             expect(
                 getElements({ tag_type: "video" }, fixture, true)
             ).toHaveLength(0));
+        it("returns the nodes with the specified tag type function", () =>
+            expect(
+                getElements(
+                    { tag_type: (type) => type === "script" },
+                    fixture,
+                    true
+                )
+            ).toEqual(expected.typeScript));
+        it("returns elements for contains", () =>
+            expect(
+                getElements({ tag_contains: "text" }, fixture, true)
+            ).toHaveLength(20));
+        it("returns elements for contains function", () =>
+            expect(
+                getElements(
+                    { tag_contains: (text) => text === "text" },
+                    fixture,
+                    true
+                )
+            ).toHaveLength(20));
     });
 
     describe("getElementById", () => {

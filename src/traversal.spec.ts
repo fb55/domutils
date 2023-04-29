@@ -1,6 +1,8 @@
 import { parseDOM } from "htmlparser2";
 import type { Element } from "domhandler";
 import {
+    getAttributeValue,
+    getName,
     getSiblings,
     hasAttrib,
     nextElementSibling,
@@ -18,25 +20,36 @@ describe("traversal", () => {
         it("returns a root element's siblings", () => {
             const dom = parseDOM("<h1></h1><p><p><p>") as Element[];
 
+            for (const node of dom) {
+                node.parent = null;
+            }
+
             expect(getSiblings(dom[2])).toHaveLength(4);
         });
     });
 
     describe("hasAttrib", () => {
-        it("doesn't throw on text nodes", () => {
-            const [firstNode] = parseDOM("textnode");
-
+        it("doesn't throw on text nodes", () =>
             expect(() =>
-                hasAttrib(firstNode as never, "some-attrib")
-            ).not.toThrow();
-        });
+                hasAttrib(parseDOM("textnode")[0] as never, "some-attrib")
+            ).not.toThrow());
 
-        it("returns `false` for Object prototype properties", () => {
-            const dom = parseDOM(
-                "<div><h1></h1>test<p></p></div>"
-            )[0] as Element;
+        it("returns `false` for Object prototype properties", () =>
+            expect(
+                hasAttrib(
+                    parseDOM("<div><h1></h1>test<p></p></div>")[0] as Element,
+                    "constructor"
+                )
+            ).toBeFalsy());
 
-            expect(hasAttrib(dom, "constructor")).toBeFalsy();
+        it('should return `false` for "null" values', () => {
+            const div = parseDOM("<div class=test>")[0] as Element;
+
+            expect(hasAttrib(div, "class")).toBeTruthy();
+
+            div.attribs["class"] = null as never;
+
+            expect(hasAttrib(div, "class")).toBeFalsy();
         });
     });
 
@@ -92,5 +105,30 @@ describe("traversal", () => {
             const prev = prevElementSibling(lastNode);
             expect(prev).toHaveProperty("tagName", "script");
         });
+    });
+
+    describe("getAttributeValue", () => {
+        it("returns the attribute value", () =>
+            expect(
+                getAttributeValue(
+                    parseDOM("<div class='test'>")[0] as Element,
+                    "class"
+                )
+            ).toBe("test"));
+        it("returns undefined if attribute does not exist", () =>
+            expect(
+                getAttributeValue(parseDOM("<div>")[0] as Element, "id")
+            ).toBeUndefined());
+        it("should return undefined if a random node is passed", () =>
+            expect(
+                getAttributeValue(parseDOM("TEXT")[0] as never, "id")
+            ).toBeUndefined());
+    });
+
+    describe("getName", () => {
+        it("returns the name of the element", () =>
+            expect(getName(parseDOM("<div>")[0] as Element)).toBe("div"));
+        it("should return undefined if a random node is passed", () =>
+            expect(getName(parseDOM("TEXT")[0] as never)).toBeUndefined());
     });
 });
