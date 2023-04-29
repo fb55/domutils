@@ -166,7 +166,8 @@ function getRssFeed(feedRoot: Element) {
                 addConditionally(entry, "title", "title", children);
                 addConditionally(entry, "link", "link", children);
                 addConditionally(entry, "description", "description", children);
-                const pubDate = fetch("pubDate", children);
+                const pubDate =
+                    fetch("pubDate", children) || fetch("dc:date", children);
                 if (pubDate) entry.pubDate = new Date(pubDate);
 
                 return entry;
