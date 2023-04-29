@@ -1,4 +1,4 @@
-import { parseDocument } from "./__fixtures__/fixture";
+import { parseDocument } from "htmlparser2";
 import { removeSubsets, compareDocumentPosition, uniqueSort } from "./helpers";
 import type { Element, Document } from "domhandler";
 
