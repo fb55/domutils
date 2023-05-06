@@ -1,0 +1,11 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "hideGenerator": true,
+    "exclude": ["**/*+(index|.spec).ts"],
+    "excludeExternals": true,
+    "categorizeByGroup": false,
+    "sort": ["enum-value-ascending", "alphabetical"],
+    "navigation": {
+        "includeCategories": true
+    }
+}
