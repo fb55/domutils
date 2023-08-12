@@ -171,7 +171,7 @@ function getRssFeed(feedRoot: Element) {
                 if (pubDate) entry.pubDate = new Date(pubDate);
 
                 return entry;
-            }
+            },
         ),
     };
 
@@ -249,7 +249,7 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
  */
 function getOneElement(
     tagName: string | ((name: string) => boolean),
-    node: AnyNode[]
+    node: AnyNode[],
 ): Element | null {
     return getElementsByTagName(tagName, node, true, 1)[0];
 }
@@ -265,7 +265,7 @@ function getOneElement(
 function fetch(
     tagName: string,
     where: AnyNode | AnyNode[],
-    recurse = false
+    recurse = false,
 ): string {
     return textContent(getElementsByTagName(tagName, where, recurse, 1)).trim();
 }
@@ -284,7 +284,7 @@ function addConditionally<T>(
     prop: keyof T,
     tagName: string,
     where: AnyNode[],
-    recurse = false
+    recurse = false,
 ) {
     const val = fetch(tagName, where, recurse);
     if (val) obj[prop] = val as unknown as T[keyof T];

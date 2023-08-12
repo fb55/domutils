@@ -18,7 +18,7 @@ import { ElementType } from "domelementtype";
  */
 export function getOuterHTML(
     node: AnyNode | ArrayLike<AnyNode>,
-    options?: DomSerializerOptions
+    options?: DomSerializerOptions,
 ): string {
     return renderHTML(node, options);
 }
@@ -32,7 +32,7 @@ export function getOuterHTML(
  */
 export function getInnerHTML(
     node: AnyNode,
-    options?: DomSerializerOptions
+    options?: DomSerializerOptions,
 ): string {
     return hasChildren(node)
         ? node.children.map((node) => getOuterHTML(node, options)).join("")

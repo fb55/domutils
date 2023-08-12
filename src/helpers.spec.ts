@@ -21,7 +21,7 @@ describe("helpers", () => {
 
         it("Does not remove unique trees", () =>
             expect(
-                removeSubsets([dom.children[0], dom.children[1]])
+                removeSubsets([dom.children[0], dom.children[1]]),
             ).toHaveLength(2));
     });
 
@@ -61,8 +61,8 @@ describe("helpers", () => {
             expect(
                 compareDocumentPosition(
                     dom.children[0],
-                    (dom.children[0] as Element).children[0]
-                )
+                    (dom.children[0] as Element).children[0],
+                ),
             ).toBe(10);
         });
     });

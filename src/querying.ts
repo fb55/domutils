@@ -14,7 +14,7 @@ export function filter(
     test: (elem: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity
+    limit = Infinity,
 ): AnyNode[] {
     return find(test, Array.isArray(node) ? node : [node], recurse, limit);
 }
@@ -33,7 +33,7 @@ export function find(
     test: (elem: AnyNode) => boolean,
     nodes: AnyNode[],
     recurse: boolean,
-    limit: number
+    limit: number,
 ): AnyNode[] {
     const result: AnyNode[] = [];
     /** Stack of the arrays we are looking at. */
@@ -86,7 +86,7 @@ export function find(
  */
 export function findOneChild<T>(
     test: (elem: T) => boolean,
-    nodes: T[]
+    nodes: T[],
 ): T | undefined {
     return nodes.find(test);
 }
@@ -103,7 +103,7 @@ export function findOneChild<T>(
 export function findOne(
     test: (elem: Element) => boolean,
     nodes: AnyNode[],
-    recurse = true
+    recurse = true,
 ): Element | null {
     let elem = null;
 
@@ -131,12 +131,12 @@ export function findOne(
  */
 export function existsOne(
     test: (elem: Element) => boolean,
-    nodes: AnyNode[]
+    nodes: AnyNode[],
 ): boolean {
     return nodes.some(
         (checked) =>
             isTag(checked) &&
-            (test(checked) || existsOne(test, checked.children))
+            (test(checked) || existsOne(test, checked.children)),
     );
 }
 
@@ -152,7 +152,7 @@ export function existsOne(
  */
 export function findAll(
     test: (elem: Element) => boolean,
-    nodes: AnyNode[]
+    nodes: AnyNode[],
 ): Element[] {
     const result = [];
     const nodeStack = [nodes];
