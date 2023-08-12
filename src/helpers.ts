@@ -78,7 +78,7 @@ export const enum DocumentPosition {
  */
 export function compareDocumentPosition(
     nodeA: AnyNode,
-    nodeB: AnyNode
+    nodeB: AnyNode,
 ): number {
     const aParents: ParentNode[] = [];
     const bParents: ParentNode[] = [];

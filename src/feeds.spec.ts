@@ -12,7 +12,7 @@ describe("getFeed", () => {
         test(name, async () => {
             const file = await fs.promises.readFile(
                 path.join(documents, name),
-                "utf8"
+                "utf8",
             );
             const document = parseDocument(file, { xmlMode: true });
             const feed = getFeed(document.children);

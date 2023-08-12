@@ -61,7 +61,7 @@ const Checks: Record<
  */
 function getAttribCheck(
     attrib: string,
-    value: undefined | string | ((value: string) => boolean)
+    value: undefined | string | ((value: string) => boolean),
 ): TestType {
     if (typeof value === "function") {
         return (elem: AnyNode) => isTag(elem) && value(elem.attribs[attrib]);
@@ -128,7 +128,7 @@ export function getElements(
     options: TestElementOpts,
     nodes: AnyNode | AnyNode[],
     recurse: boolean,
-    limit = Infinity
+    limit = Infinity,
 ): AnyNode[] {
     const test = compileTest(options);
     return test ? filter(test, nodes, recurse, limit) : [];
@@ -146,7 +146,7 @@ export function getElements(
 export function getElementById(
     id: string | ((id: string) => boolean),
     nodes: AnyNode | AnyNode[],
-    recurse = true
+    recurse = true,
 ): Element | null {
     if (!Array.isArray(nodes)) nodes = [nodes];
     return findOne(getAttribCheck("id", id), nodes, recurse);
@@ -166,13 +166,13 @@ export function getElementsByTagName(
     tagName: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity
+    limit = Infinity,
 ): Element[] {
     return filter(
         Checks["tag_name"](tagName),
         nodes,
         recurse,
-        limit
+        limit,
     ) as Element[];
 }
 
@@ -190,7 +190,7 @@ export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity
+    limit = Infinity,
 ): AnyNode[] {
     return filter(Checks["tag_type"](type as string), nodes, recurse, limit);
 }

@@ -31,15 +31,15 @@ describe("traversal", () => {
     describe("hasAttrib", () => {
         it("doesn't throw on text nodes", () =>
             expect(() =>
-                hasAttrib(parseDOM("textnode")[0] as never, "some-attrib")
+                hasAttrib(parseDOM("textnode")[0] as never, "some-attrib"),
             ).not.toThrow());
 
         it("returns `false` for Object prototype properties", () =>
             expect(
                 hasAttrib(
                     parseDOM("<div><h1></h1>test<p></p></div>")[0] as Element,
-                    "constructor"
-                )
+                    "constructor",
+                ),
             ).toBeFalsy());
 
         it('should return `false` for "null" values', () => {
@@ -56,7 +56,7 @@ describe("traversal", () => {
     describe("nextElementSibling", () => {
         it("return Element if found", () => {
             const dom = parseDOM(
-                "<div><h1></h1>test<p></p></div>"
+                "<div><h1></h1>test<p></p></div>",
             )[0] as Element;
             const firstNode = dom.children[0];
 
@@ -71,7 +71,7 @@ describe("traversal", () => {
         });
         it("does not ignore script tags", () => {
             const dom = parseDOM(
-                "<div><p></p><script></script><p></div>"
+                "<div><p></p><script></script><p></div>",
             )[0] as Element;
             const firstNode = dom.children[0];
 
@@ -83,7 +83,7 @@ describe("traversal", () => {
     describe("prevElementSibling", () => {
         it("return Element if found", () => {
             const dom = parseDOM(
-                "<div><h1></h1>test<p></p></div>"
+                "<div><h1></h1>test<p></p></div>",
             )[0] as Element;
             const lastNode = dom.children[2];
 
@@ -98,7 +98,7 @@ describe("traversal", () => {
         });
         it("does not ignore script tags", () => {
             const dom = parseDOM(
-                "<div><p></p><script></script><p></p></div>"
+                "<div><p></p><script></script><p></p></div>",
             )[0] as Element;
             const lastNode = dom.children[2];
 
@@ -112,16 +112,16 @@ describe("traversal", () => {
             expect(
                 getAttributeValue(
                     parseDOM("<div class='test'>")[0] as Element,
-                    "class"
-                )
+                    "class",
+                ),
             ).toBe("test"));
         it("returns undefined if attribute does not exist", () =>
             expect(
-                getAttributeValue(parseDOM("<div>")[0] as Element, "id")
+                getAttributeValue(parseDOM("<div>")[0] as Element, "id"),
             ).toBeUndefined());
         it("should return undefined if a random node is passed", () =>
             expect(
-                getAttributeValue(parseDOM("TEXT")[0] as never, "id")
+                getAttributeValue(parseDOM("TEXT")[0] as never, "id"),
             ).toBeUndefined());
     });
 

@@ -13,7 +13,7 @@ describe("manipulation", () => {
     describe("append", () => {
         it("should not be duplicated when called twice", () => {
             const dom = parseDOM(
-                "<div><p><img/></p><p><object/></p></div>"
+                "<div><p><img/></p><p><object/></p></div>",
             )[0] as Element;
             const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];
@@ -51,7 +51,7 @@ describe("manipulation", () => {
     describe("appendChild", () => {
         it("should not be duplicated when called twice", () => {
             const dom = parseDOM(
-                "<div><p><img/></p><p><object/></p></div>"
+                "<div><p><img/></p><p><object/></p></div>",
             )[0] as Element;
             const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];
@@ -91,7 +91,7 @@ describe("manipulation", () => {
     describe("removeElement", () => {
         it("should correctly remove element", () => {
             const dom = parseDOM(
-                "<div><p><img/><object/></p><p></p></div>"
+                "<div><p><img/><object/></p><p></p></div>",
             )[0] as Element;
             const parents = dom.children as Element[];
 
@@ -132,7 +132,7 @@ describe("manipulation", () => {
     describe("prepend", () => {
         it("should not be duplicated when called twice", () => {
             const dom = parseDOM(
-                "<div><p><img/></p><p><object/></p></div>"
+                "<div><p><img/></p><p><object/></p></div>",
             )[0] as Element;
             const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];
@@ -170,7 +170,7 @@ describe("manipulation", () => {
     describe("prependChild", () => {
         it("should not be duplicated when called twice", () => {
             const dom = parseDOM(
-                "<div><p><img/></p><p><object/></p></div>"
+                "<div><p><img/></p><p><object/></p></div>",
             )[0] as Element;
             const child = parseDOM("<span></span>")[0] as Element;
             const parents = dom.children as Element[];

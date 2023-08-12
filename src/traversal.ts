@@ -68,7 +68,7 @@ export function getSiblings(elem: AnyNode): AnyNode[] {
  */
 export function getAttributeValue(
     elem: Element,
-    name: string
+    name: string,
 ): string | undefined {
     return elem.attribs?.[name];
 }
