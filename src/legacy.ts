@@ -190,7 +190,7 @@ export function getElementsByClassName(
     className: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity,
+    limit: number = Infinity,
 ): Element[] {
     return filter(
         getAttribCheck("class", className),

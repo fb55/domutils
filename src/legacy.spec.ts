@@ -3,6 +3,7 @@ import { ElementType } from "domelementtype";
 import {
     getElements,
     getElementById,
+    getElementsByClassName,
     getElementsByTagName,
     getElementsByTagType,
 } from "./legacy";
@@ -93,6 +94,17 @@ describe("legacy", () => {
             ));
         it("returns `null` for unknown IDs", () =>
             expect(getElementById("asdfs", fixture, true)).toBeNull());
+    });
+
+    describe("getElementsByClassName", () => {
+        it("returns the specified nodes", () =>
+            expect(
+                getElementsByClassName("class1", fixture, true),
+            ).toHaveLength(20));
+        it("returns empty array for unknown class names", () =>
+            expect(
+                getElementsByClassName("class23", fixture, true),
+            ).toHaveLength(0));
     });
 
     describe("getElementsByTagName", () => {
