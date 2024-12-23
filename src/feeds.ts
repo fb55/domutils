@@ -86,8 +86,8 @@ export function getFeed(doc: AnyNode[]): Feed | null {
     return !feedRoot
         ? null
         : feedRoot.name === "feed"
-        ? getAtomFeed(feedRoot)
-        : getRssFeed(feedRoot);
+          ? getAtomFeed(feedRoot)
+          : getRssFeed(feedRoot);
 }
 
 /**

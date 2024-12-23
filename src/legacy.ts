@@ -128,7 +128,7 @@ export function getElements(
     options: TestElementOpts,
     nodes: AnyNode | AnyNode[],
     recurse: boolean,
-    limit = Infinity,
+    limit: number = Infinity,
 ): AnyNode[] {
     const test = compileTest(options);
     return test ? filter(test, nodes, recurse, limit) : [];
@@ -166,7 +166,7 @@ export function getElementsByTagName(
     tagName: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity,
+    limit: number = Infinity,
 ): Element[] {
     return filter(
         Checks["tag_name"](tagName),
@@ -214,7 +214,7 @@ export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit = Infinity,
+    limit: number = Infinity,
 ): AnyNode[] {
     return filter(Checks["tag_type"](type as string), nodes, recurse, limit);
 }
