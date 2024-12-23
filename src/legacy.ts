@@ -177,6 +177,30 @@ export function getElementsByTagName(
 }
 
 /**
+ * Returns all nodes with the supplied `className`.
+ *
+ * @category Legacy Query Functions
+ * @param className Class name to search for.
+ * @param nodes Nodes to search through.
+ * @param recurse Also consider child nodes.
+ * @param limit Maximum number of nodes to return.
+ * @returns All nodes with the supplied `className`.
+ */
+export function getElementsByClassName(
+    className: string | ((name: string) => boolean),
+    nodes: AnyNode | AnyNode[],
+    recurse = true,
+    limit: number = Infinity,
+): Element[] {
+    return filter(
+        getAttribCheck("class", className),
+        nodes,
+        recurse,
+        limit,
+    ) as Element[];
+}
+
+/**
  * Returns all nodes with the supplied `type`.
  *
  * @category Legacy Query Functions
