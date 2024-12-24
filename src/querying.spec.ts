@@ -13,7 +13,7 @@ import { ElementType } from "domelementtype";
 describe("querying", () => {
     const manyNodesWide = parseDocument(
         `<body>${"<div></div>".repeat(200_000)}Text</body>`,
-    ).children;
+    );
 
     describe("find", () => {
         it("should accept many children without RangeError", () =>
@@ -65,7 +65,7 @@ describe("querying", () => {
             expect(
                 filter(
                     (elem) => elem.type === ElementType.Tag,
-                    manyNodesWide[0],
+                    manyNodesWide.children[0],
                 ),
             ).toHaveLength(200_001));
     });
@@ -75,15 +75,15 @@ describe("querying", () => {
             expect(
                 findOneChild(
                     (elem) => isTag(elem) && elem.name === "body",
-                    manyNodesWide,
+                    manyNodesWide.children,
                 ),
-            ).toBe(manyNodesWide[0]));
+            ).toBe(manyNodesWide.children[0]));
 
         it("should only query direct children", () =>
             expect(
                 findOneChild(
                     (elem) => isTag(elem) && elem.name === "div",
-                    manyNodesWide,
+                    manyNodesWide.children,
                 ),
             ).toBeUndefined());
     });
@@ -91,13 +91,21 @@ describe("querying", () => {
     describe("findOne", () => {
         it("should find elements", () =>
             expect(
-                findOne((elem) => elem.name === "body", manyNodesWide, true),
-            ).toBe(manyNodesWide[0]));
+                findOne(
+                    (elem) => elem.name === "body",
+                    manyNodesWide.children,
+                    true,
+                ),
+            ).toBe(manyNodesWide.children[0]));
 
         it("should find elements in children", () =>
             expect(
-                findOne((elem) => elem.name === "div", manyNodesWide, true),
-            ).toBe((manyNodesWide[0] as Element).children[0]));
+                findOne(
+                    (elem) => elem.name === "div",
+                    manyNodesWide.children,
+                    true,
+                ),
+            ).toBe((manyNodesWide.children[0] as Element).children[0]));
 
         it("should not find elements in children if recurse is false", () =>
             expect(
@@ -116,7 +124,10 @@ describe("querying", () => {
 
         it("should find elements in children", () =>
             expect(
-                existsOne((elem) => elem.name === "div", manyNodesWide),
+                existsOne(
+                    (elem) => elem.name === "div",
+                    manyNodesWide.children,
+                ),
             ).toBeTruthy());
 
         it("should return `false` if nothing is found", () =>
