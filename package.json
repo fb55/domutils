@@ -1,6 +1,6 @@
 {
     "name": "domutils",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "description": "Utilities for working with htmlparser2's dom",
     "author": "Felix Boehm <me@feedic.com>",
     "funding": {
