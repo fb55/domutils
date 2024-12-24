@@ -1,4 +1,4 @@
-import { isTag, hasChildren, Element, AnyNode } from "domhandler";
+import { isTag, hasChildren, Element, AnyNode, ParentNode } from "domhandler";
 
 /**
  * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
@@ -31,13 +31,13 @@ export function filter(
  */
 export function find(
     test: (elem: AnyNode) => boolean,
-    nodes: AnyNode[],
+    nodes: AnyNode[] | ParentNode,
     recurse: boolean,
     limit: number,
 ): AnyNode[] {
     const result: AnyNode[] = [];
     /** Stack of the arrays we are looking at. */
-    const nodeStack = [nodes];
+    const nodeStack: AnyNode[][] = [Array.isArray(nodes) ? nodes : [nodes]];
     /** Stack of the indices within the arrays. */
     const indexStack = [0];
 
@@ -102,23 +102,21 @@ export function findOneChild<T>(
  */
 export function findOne(
     test: (elem: Element) => boolean,
-    nodes: AnyNode[],
+    nodes: AnyNode[] | ParentNode,
     recurse = true,
 ): Element | null {
-    let elem = null;
-
-    for (let i = 0; i < nodes.length && !elem; i++) {
-        const node = nodes[i];
-        if (!isTag(node)) {
-            continue;
-        } else if (test(node)) {
-            elem = node;
-        } else if (recurse && node.children.length > 0) {
-            elem = findOne(test, node.children, true);
+    const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
+    for (let i = 0; i < searchedNodes.length; i++) {
+        const node = searchedNodes[i];
+        if (isTag(node) && test(node)) {
+            return node;
+        }
+        if (recurse && hasChildren(node) && node.children.length > 0) {
+            return findOne(test, node.children, true);
         }
     }
 
-    return elem;
+    return null;
 }
 
 /**
@@ -131,12 +129,12 @@ export function findOne(
  */
 export function existsOne(
     test: (elem: Element) => boolean,
-    nodes: AnyNode[],
+    nodes: AnyNode[] | ParentNode,
 ): boolean {
-    return nodes.some(
-        (checked) =>
-            isTag(checked) &&
-            (test(checked) || existsOne(test, checked.children)),
+    return (Array.isArray(nodes) ? nodes : [nodes]).some(
+        (node) =>
+            (isTag(node) && test(node)) ||
+            (hasChildren(node) && existsOne(test, node.children)),
     );
 }
 
@@ -152,10 +150,10 @@ export function existsOne(
  */
 export function findAll(
     test: (elem: Element) => boolean,
-    nodes: AnyNode[],
+    nodes: AnyNode[] | ParentNode,
 ): Element[] {
     const result = [];
-    const nodeStack = [nodes];
+    const nodeStack = [Array.isArray(nodes) ? nodes : [nodes]];
     const indexStack = [0];
 
     for (;;) {
@@ -174,10 +172,9 @@ export function findAll(
 
         const elem = nodeStack[0][indexStack[0]++];
 
-        if (!isTag(elem)) continue;
-        if (test(elem)) result.push(elem);
+        if (isTag(elem) && test(elem)) result.push(elem);
 
-        if (elem.children.length > 0) {
+        if (hasChildren(elem) && elem.children.length > 0) {
             indexStack.unshift(0);
             nodeStack.unshift(elem.children);
         }
