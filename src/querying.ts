@@ -113,7 +113,7 @@ export function findOne(
         }
         if (recurse && hasChildren(node) && node.children.length > 0) {
             const found = findOne(test, node.children, true);
-            if(found) return found
+            if (found) return found;
         }
     }
 

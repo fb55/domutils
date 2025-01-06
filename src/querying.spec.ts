@@ -14,6 +14,9 @@ describe("querying", () => {
     const manyNodesWide = parseDocument(
         `<body>${"<div></div>".repeat(200_000)}Text</body>`,
     );
+    const someDeepNodes = parseDocument(
+        `<body><div><div></div></div><div><p></p></div></body>`,
+    );
 
     describe("find", () => {
         it("should accept many children without RangeError", () =>
@@ -106,6 +109,15 @@ describe("querying", () => {
                     true,
                 ),
             ).toBe((manyNodesWide.children[0] as Element).children[0]));
+
+        it("should find elements in children in any branch", () =>
+            expect(
+                findOne(
+                    (elem) => elem.name === "p",
+                    someDeepNodes.children,
+                    true,
+                ),
+            ).toBeTruthy());
 
         it("should not find elements in children if recurse is false", () =>
             expect(
