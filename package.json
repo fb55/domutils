@@ -60,7 +60,7 @@
         "prettier": "^3.5.3",
         "ts-jest": "^29.2.6",
         "typedoc": "^0.27.9",
-        "typescript": "^5.7.3"
+        "typescript": "^5.8.2"
     },
     "jest": {
         "preset": "ts-jest",
