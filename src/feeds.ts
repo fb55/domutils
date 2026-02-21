@@ -1,6 +1,6 @@
 import type { AnyNode, Element } from "domhandler";
-import { textContent } from "./stringify.js";
 import { getElementsByTagName } from "./legacy.js";
+import { textContent } from "./stringify.js";
 
 /**
  * The medium of a media item.
@@ -78,16 +78,17 @@ export interface Feed {
  *
  * @category Feeds
  * @param doc - The DOM to to extract the feed from.
+ * @param document
  * @returns The feed.
  */
-export function getFeed(doc: AnyNode[]): Feed | null {
-    const feedRoot = getOneElement(isValidFeed, doc);
+export function getFeed(document: AnyNode[]): Feed | null {
+    const feedRoot = getOneElement(isValidFeed, document);
 
-    return !feedRoot
-        ? null
-        : feedRoot.name === "feed"
-          ? getAtomFeed(feedRoot)
-          : getRssFeed(feedRoot);
+    return feedRoot
+        ? feedRoot.name === "feed"
+            ? getAtomFeed(feedRoot)
+            : getRssFeed(feedRoot)
+        : null;
 }
 
 /**
@@ -208,8 +209,8 @@ const MEDIA_KEYS_INT = [
  * @returns Media elements.
  */
 function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
-    return getElementsByTagName("media:content", where).map((elem) => {
-        const { attribs } = elem;
+    return getElementsByTagName("media:content", where).map((element) => {
+        const { attribs } = element;
 
         const media: FeedItemMedia = {
             medium: attribs["medium"] as unknown as
@@ -226,7 +227,7 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
 
         for (const attrib of MEDIA_KEYS_INT) {
             if (attribs[attrib]) {
-                media[attrib] = parseInt(attribs[attrib], 10);
+                media[attrib] = Number.parseInt(attribs[attrib], 10);
             }
         }
 
@@ -274,20 +275,22 @@ function fetch(
  * Adds a property to an object if it has a value.
  *
  * @param obj Object to be extended
+ * @param object
  * @param prop Property name
+ * @param property
  * @param tagName Tag name that contains the conditionally added property
  * @param where Element to search for the property
  * @param recurse Whether to recurse into child nodes.
  */
 function addConditionally<T>(
-    obj: T,
-    prop: keyof T,
+    object: T,
+    property: keyof T,
     tagName: string,
     where: AnyNode[],
     recurse = false,
 ) {
-    const val = fetch(tagName, where, recurse);
-    if (val) obj[prop] = val as unknown as T[keyof T];
+    const value = fetch(tagName, where, recurse);
+    if (value) object[property] = value as unknown as T[keyof T];
 }
 
 /**

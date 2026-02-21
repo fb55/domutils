@@ -1,4 +1,5 @@
-import { Element, isTag } from "domhandler";
+import { ElementType } from "domelementtype";
+import { type Element, isTag } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import {
     existsOne,
@@ -8,7 +9,6 @@ import {
     findOne,
     findOneChild,
 } from "./querying";
-import { ElementType } from "domelementtype";
 
 describe("querying", () => {
     const manyNodesWide = parseDocument(
@@ -22,7 +22,7 @@ describe("querying", () => {
         it("should accept many children without RangeError", () =>
             expect(
                 find(
-                    (elem) => elem.type === ElementType.Tag,
+                    (element) => element.type === ElementType.Tag,
                     manyNodesWide,
                     true,
                     Infinity,
@@ -32,7 +32,7 @@ describe("querying", () => {
         it("should respect limit", () =>
             expect(
                 find(
-                    (elem) => elem.type === ElementType.Tag,
+                    (element) => element.type === ElementType.Tag,
                     manyNodesWide,
                     true,
                     20,
@@ -42,7 +42,7 @@ describe("querying", () => {
         it("should find text nodes", () =>
             expect(
                 find(
-                    (elem) => elem.type === ElementType.Text,
+                    (element) => element.type === ElementType.Text,
                     manyNodesWide,
                     true,
                     Infinity,
@@ -53,7 +53,7 @@ describe("querying", () => {
     describe("findAll", () => {
         it("should accept many children without RangeError", () => {
             expect(
-                findAll((elem) => elem.name === "div", manyNodesWide),
+                findAll((element) => element.name === "div", manyNodesWide),
             ).toHaveLength(200_000);
         });
     });
@@ -61,13 +61,16 @@ describe("querying", () => {
     describe("filter", () => {
         it("should accept many children without RangeError", () =>
             expect(
-                filter((elem) => elem.type === ElementType.Tag, manyNodesWide),
+                filter(
+                    (element) => element.type === ElementType.Tag,
+                    manyNodesWide,
+                ),
             ).toHaveLength(200_001));
 
         it("should turn a single node into an array", () =>
             expect(
                 filter(
-                    (elem) => elem.type === ElementType.Tag,
+                    (element) => element.type === ElementType.Tag,
                     manyNodesWide.children[0],
                 ),
             ).toHaveLength(200_001));
@@ -77,7 +80,7 @@ describe("querying", () => {
         it("should find elements", () =>
             expect(
                 findOneChild(
-                    (elem) => isTag(elem) && elem.name === "body",
+                    (element) => isTag(element) && element.name === "body",
                     manyNodesWide.children,
                 ),
             ).toBe(manyNodesWide.children[0]));
@@ -85,7 +88,7 @@ describe("querying", () => {
         it("should only query direct children", () =>
             expect(
                 findOneChild(
-                    (elem) => isTag(elem) && elem.name === "div",
+                    (element) => isTag(element) && element.name === "div",
                     manyNodesWide.children,
                 ),
             ).toBeUndefined());
@@ -95,7 +98,7 @@ describe("querying", () => {
         it("should find elements", () =>
             expect(
                 findOne(
-                    (elem) => elem.name === "body",
+                    (element) => element.name === "body",
                     manyNodesWide.children,
                     true,
                 ),
@@ -104,7 +107,7 @@ describe("querying", () => {
         it("should find elements in children", () =>
             expect(
                 findOne(
-                    (elem) => elem.name === "div",
+                    (element) => element.name === "div",
                     manyNodesWide.children,
                     true,
                 ),
@@ -113,7 +116,7 @@ describe("querying", () => {
         it("should find elements in children in any branch", () =>
             expect(
                 findOne(
-                    (elem) => elem.name === "p",
+                    (element) => element.name === "p",
                     someDeepNodes.children,
                     true,
                 ),
@@ -121,7 +124,11 @@ describe("querying", () => {
 
         it("should not find elements in children if recurse is false", () =>
             expect(
-                findOne((elem) => elem.name === "div", manyNodesWide, false),
+                findOne(
+                    (element) => element.name === "div",
+                    manyNodesWide,
+                    false,
+                ),
             ).toBeNull());
 
         it("should return `null` if nothing is found", () =>
@@ -131,13 +138,13 @@ describe("querying", () => {
     describe("existsOne", () => {
         it("should find elements", () =>
             expect(
-                existsOne((elem) => elem.name === "body", manyNodesWide),
+                existsOne((element) => element.name === "body", manyNodesWide),
             ).toBeTruthy());
 
         it("should find elements in children", () =>
             expect(
                 existsOne(
-                    (elem) => elem.name === "div",
+                    (element) => element.name === "div",
                     manyNodesWide.children,
                 ),
             ).toBeTruthy());

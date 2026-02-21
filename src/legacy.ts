@@ -1,8 +1,8 @@
-import { isTag, isText, AnyNode, Element } from "domhandler";
 import type { ElementType } from "domelementtype";
+import { type AnyNode, type Element, isTag, isText } from "domhandler";
 import { filter, findOne } from "./querying.js";
 
-type TestType = (elem: AnyNode) => boolean;
+type TestType = (element: AnyNode) => boolean;
 
 /**
  * An object with keys to check elements against. If a key is `tag_name`,
@@ -11,7 +11,7 @@ type TestType = (elem: AnyNode) => boolean;
  *
  * @category Legacy Query Functions
  */
-export interface TestElementOpts {
+export interface TestElementOptions {
     tag_name?: string | ((name: string) => boolean);
     tag_type?: string | ((name: string) => boolean);
     tag_contains?: string | ((data?: string) => boolean);
@@ -26,27 +26,27 @@ export interface TestElementOpts {
  */
 const Checks: Record<
     string,
-    (value: string | undefined | ((str: string) => boolean)) => TestType
+    (value: string | undefined | ((string_: string) => boolean)) => TestType
 > = {
     tag_name(name) {
         if (typeof name === "function") {
-            return (elem: AnyNode) => isTag(elem) && name(elem.name);
+            return (element: AnyNode) => isTag(element) && name(element.name);
         } else if (name === "*") {
             return isTag;
         }
-        return (elem: AnyNode) => isTag(elem) && elem.name === name;
+        return (element: AnyNode) => isTag(element) && element.name === name;
     },
     tag_type(type) {
         if (typeof type === "function") {
-            return (elem: AnyNode) => type(elem.type);
+            return (element: AnyNode) => type(element.type);
         }
-        return (elem: AnyNode) => elem.type === type;
+        return (element: AnyNode) => element.type === type;
     },
     tag_contains(data) {
         if (typeof data === "function") {
-            return (elem: AnyNode) => isText(elem) && data(elem.data);
+            return (element: AnyNode) => isText(element) && data(element.data);
         }
-        return (elem: AnyNode) => isText(elem) && elem.data === data;
+        return (element: AnyNode) => isText(element) && element.data === data;
     },
 };
 
@@ -64,9 +64,11 @@ function getAttribCheck(
     value: undefined | string | ((value: string) => boolean),
 ): TestType {
     if (typeof value === "function") {
-        return (elem: AnyNode) => isTag(elem) && value(elem.attribs[attrib]);
+        return (element: AnyNode) =>
+            isTag(element) && value(element.attribs[attrib]);
     }
-    return (elem: AnyNode) => isTag(elem) && elem.attribs[attrib] === value;
+    return (element: AnyNode) =>
+        isTag(element) && element.attribs[attrib] === value;
 }
 
 /**
@@ -79,7 +81,7 @@ function getAttribCheck(
  *   functions returns `true` for the node.
  */
 function combineFuncs(a: TestType, b: TestType): TestType {
-    return (elem: AnyNode) => a(elem) || b(elem);
+    return (element: AnyNode) => a(element) || b(element);
 }
 
 /**
@@ -90,10 +92,10 @@ function combineFuncs(a: TestType, b: TestType): TestType {
  * @returns A function that executes all checks in `options` and returns `true`
  *   if any of them match a node.
  */
-function compileTest(options: TestElementOpts): TestType | null {
+function compileTest(options: TestElementOptions): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
-        return Object.prototype.hasOwnProperty.call(Checks, key)
+        return Object.hasOwn(Checks, key)
             ? Checks[key](value)
             : getAttribCheck(key, value);
     });
@@ -109,7 +111,10 @@ function compileTest(options: TestElementOpts): TestType | null {
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
  */
-export function testElement(options: TestElementOpts, node: AnyNode): boolean {
+export function testElement(
+    options: TestElementOptions,
+    node: AnyNode,
+): boolean {
     const test = compileTest(options);
     return test ? test(node) : true;
 }
@@ -125,7 +130,7 @@ export function testElement(options: TestElementOpts, node: AnyNode): boolean {
  * @returns All nodes that match `options`.
  */
 export function getElements(
-    options: TestElementOpts,
+    options: TestElementOptions,
     nodes: AnyNode | AnyNode[],
     recurse: boolean,
     limit: number = Infinity,

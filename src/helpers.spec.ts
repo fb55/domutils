@@ -1,6 +1,6 @@
+import type { Document, Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
-import { removeSubsets, compareDocumentPosition, uniqueSort } from "./helpers";
-import type { Element, Document } from "domhandler";
+import { compareDocumentPosition, removeSubsets, uniqueSort } from "./helpers";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {
