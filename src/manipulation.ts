@@ -49,7 +49,12 @@ export function replaceElement(
     const { parent } = replacement;
     if (parent) {
         const childs = parent.children;
-        childs[childs.lastIndexOf(element)] = replacement;
+        const childsIndex = childs.lastIndexOf(element);
+        if (childsIndex === -1) {
+            return;
+        }
+
+        childs[childsIndex] = replacement;
         element.parent = null;
     }
 }
