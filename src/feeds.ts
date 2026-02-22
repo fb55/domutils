@@ -77,8 +77,7 @@ export interface Feed {
  * Get the feed object from the root of a DOM tree.
  *
  * @category Feeds
- * @param doc - The DOM to to extract the feed from.
- * @param document
+ * @param document The DOM to extract the feed from.
  * @returns The feed.
  */
 export function getFeed(document: AnyNode[]): Feed | null {
@@ -274,12 +273,10 @@ function fetch(
 /**
  * Adds a property to an object if it has a value.
  *
- * @param obj Object to be extended
- * @param object
- * @param prop Property name
- * @param property
- * @param tagName Tag name that contains the conditionally added property
- * @param where Element to search for the property
+ * @param object Object to be extended.
+ * @param property Property name.
+ * @param tagName Tag name that contains the conditionally added property.
+ * @param where Element to search for the property.
  * @param recurse Whether to recurse into child nodes.
  */
 function addConditionally<T>(

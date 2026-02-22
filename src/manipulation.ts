@@ -4,8 +4,7 @@ import type { ChildNode, ParentNode } from "domhandler";
  * Remove an element from the dom
  *
  * @category Manipulation
- * @param elem The element to be removed
- * @param element
+ * @param element The element to be removed.
  */
 export function removeElement(element: ChildNode): void {
     if (element.prev) element.prev.next = element.next;
@@ -27,8 +26,7 @@ export function removeElement(element: ChildNode): void {
  * Replace an element in the dom
  *
  * @category Manipulation
- * @param elem The element to be replaced
- * @param element
+ * @param element The element to be replaced.
  * @param replacement The element to be added
  */
 export function replaceElement(
@@ -82,8 +80,7 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
  * Append an element after another.
  *
  * @category Manipulation
- * @param elem The element to append after.
- * @param element
+ * @param element The element to append after.
  * @param next The element be added.
  */
 export function append(element: ChildNode, next: ChildNode): void {
@@ -134,10 +131,8 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
  * Prepend an element before another.
  *
  * @category Manipulation
- * @param elem The element to prepend before.
- * @param element
- * @param prev The element be added.
- * @param previous
+ * @param element The element to prepend before.
+ * @param previous The element to be added.
  */
 export function prepend(element: ChildNode, previous: ChildNode): void {
     removeElement(previous);

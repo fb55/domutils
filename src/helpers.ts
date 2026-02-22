@@ -42,7 +42,7 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
  * @category Helpers
  * @see {@link http://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
  */
-export enum DocumentPosition {
+export const enum DocumentPosition {
     DISCONNECTED = 1,
     PRECEDING = 2,
     FOLLOWING = 4,

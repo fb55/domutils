@@ -11,9 +11,8 @@ import {
  * Get a node's children.
  *
  * @category Traversal
- * @param elem Node to get the children of.
- * @param element
- * @returns `elem`'s children, or an empty array.
+ * @param element Node to get the children of.
+ * @returns `element`'s children, or an empty array.
  */
 export function getChildren(element: AnyNode): ChildNode[] {
     return hasChildren(element) ? element.children : [];
@@ -24,9 +23,8 @@ export function getParent(element: AnyNode): ParentNode | null;
  * Get a node's parent.
  *
  * @category Traversal
- * @param elem Node to get the parent of.
- * @param element
- * @returns `elem`'s parent node, or `null` if `elem` is a root node.
+ * @param element Node to get the parent of.
+ * @returns `element`'s parent node, or `null` if `element` is a root node.
  */
 export function getParent(element: AnyNode): ParentNode | null {
     return element.parent || null;
@@ -40,9 +38,8 @@ export function getParent(element: AnyNode): ParentNode | null {
  * `next` to get all remaining nodes.
  *
  * @category Traversal
- * @param elem Element to get the siblings of.
- * @param element
- * @returns `elem`'s siblings, including `elem`.
+ * @param element Element to get the siblings of.
+ * @returns `element`'s siblings, including `element`.
  */
 export function getSiblings(element: AnyNode): AnyNode[] {
     const parent = getParent(element);
@@ -65,8 +62,7 @@ export function getSiblings(element: AnyNode): AnyNode[] {
  * Gets an attribute from an element.
  *
  * @category Traversal
- * @param elem Element to check.
- * @param element
+ * @param element Element to check.
  * @param name Attribute name to retrieve.
  * @returns The element's attribute value, or `undefined`.
  */
@@ -84,10 +80,9 @@ export function getAttributeValue(
  * Checks whether an element has an attribute.
  *
  * @category Traversal
- * @param elem Element to check.
- * @param element
+ * @param element Element to check.
  * @param name Attribute name to look for.
- * @returns Returns whether `elem` has the attribute `name`.
+ * @returns Returns whether `element` has the attribute `name`.
  */
 export function hasAttrib(element: Element, name: string): boolean {
     const { attribs } = element as { attribs?: Record<string, string | null> };
@@ -100,9 +95,8 @@ export function hasAttrib(element: Element, name: string): boolean {
  * Get the tag name of an element.
  *
  * @category Traversal
- * @param elem The element to get the name for.
- * @param element
- * @returns The tag name of `elem`.
+ * @param element The element to get the name for.
+ * @returns The tag name of `element`.
  */
 export function getName(element: Element): string {
     return element.name;
@@ -112,9 +106,8 @@ export function getName(element: Element): string {
  * Returns the next element sibling of a node.
  *
  * @category Traversal
- * @param elem The element to get the next sibling of.
- * @param element
- * @returns `elem`'s next sibling that is a tag, or `null` if there is no next
+ * @param element The element to get the next sibling of.
+ * @returns `element`'s next sibling that is a tag, or `null` if there is no next
  * sibling.
  */
 export function nextElementSibling(element: AnyNode): Element | null {
@@ -127,11 +120,11 @@ export function nextElementSibling(element: AnyNode): Element | null {
  * Returns the previous element sibling of a node.
  *
  * @category Traversal
- * @param elem The element to get the previous sibling of.
- * @param element
- * @returns `elem`'s previous sibling that is a tag, or `null` if there is no
+ * @param element The element to get the previous sibling of.
+ * @returns `element`'s previous sibling that is a tag, or `null` if there is no
  * previous sibling.
  */
+// eslint-disable-next-line unicorn/prevent-abbreviations -- Keep public API name for backwards compatibility.
 export function prevElementSibling(element: AnyNode): Element | null {
     let { prev } = element;
     while (prev !== null && !isTag(prev)) ({ prev } = prev);

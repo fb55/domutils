@@ -54,8 +54,7 @@ export default defineConfig([
       "n/no-unsupported-features/es-builtins": 0,
       "unicorn/no-array-callback-reference": 0,
       "unicorn/no-array-reduce": 0,
-      "unicorn/prefer-includes": 0,
-      "unicorn/prevent-abbreviations": 0
+      "unicorn/prefer-includes": 0
     },
   },
   eslintConfigPrettier

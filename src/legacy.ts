@@ -11,7 +11,8 @@ type TestType = (element: AnyNode) => boolean;
  *
  * @category Legacy Query Functions
  */
-export interface TestElementOptions {
+// eslint-disable-next-line unicorn/prevent-abbreviations -- Keep the exported API name for backwards compatibility.
+export interface TestElementOpts {
     tag_name?: string | ((name: string) => boolean);
     tag_type?: string | ((name: string) => boolean);
     tag_contains?: string | ((data?: string) => boolean);
@@ -92,7 +93,7 @@ function combineFuncs(a: TestType, b: TestType): TestType {
  * @returns A function that executes all checks in `options` and returns `true`
  *   if any of them match a node.
  */
-function compileTest(options: TestElementOptions): TestType | null {
+function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
         return Object.hasOwn(Checks, key)
@@ -111,10 +112,7 @@ function compileTest(options: TestElementOptions): TestType | null {
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
  */
-export function testElement(
-    options: TestElementOptions,
-    node: AnyNode,
-): boolean {
+export function testElement(options: TestElementOpts, node: AnyNode): boolean {
     const test = compileTest(options);
     return test ? test(node) : true;
 }
