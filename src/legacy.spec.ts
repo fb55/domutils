@@ -1,13 +1,13 @@
-import fixture from "./__fixtures__/fixture";
 import { ElementType } from "domelementtype";
+import type { AnyNode, Element } from "domhandler";
+import fixture from "./__fixtures__/fixture";
 import {
-    getElements,
     getElementById,
+    getElements,
     getElementsByClassName,
     getElementsByTagName,
     getElementsByTagType,
 } from "./legacy";
-import type { AnyNode, Element } from "domhandler";
 
 describe("legacy", () => {
     // Set up expected structures
@@ -18,8 +18,8 @@ describe("legacy", () => {
     };
 
     beforeAll(() => {
-        for (let idx = 0; idx < 20; ++idx) {
-            const node = fixture[idx * 2 + 1] as Element;
+        for (let index = 0; index < 20; ++index) {
+            const node = fixture[index * 2 + 1] as Element;
             expected.tag2.push(node.children[5]);
             expected.typeScript.push(node.children[1]);
         }

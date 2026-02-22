@@ -2,8 +2,8 @@ import {
     getInnerHTML,
     getOuterHTML,
     getText,
-    textContent,
     innerText,
+    textContent,
 } from "./";
 import fixture from "./__fixtures__/fixture";
 

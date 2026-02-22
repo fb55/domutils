@@ -1,13 +1,13 @@
+import type { Element } from "domhandler";
 import { parseDOM } from "htmlparser2";
 import {
     append,
     appendChild,
     prepend,
     prependChild,
-    replaceElement,
     removeElement,
+    replaceElement,
 } from "./manipulation.js";
-import type { Element } from "domhandler";
 
 describe("manipulation", () => {
     describe("append", () => {

@@ -1,9 +1,9 @@
 // Runs tests for feeds
 
-import { getFeed } from "./feeds";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { parseDocument } from "htmlparser2";
+import { getFeed } from "./feeds";
 
 const documents = path.join(__dirname, "__fixtures__", "Documents");
 

@@ -1,4 +1,10 @@
-import { isTag, hasChildren, Element, AnyNode, ParentNode } from "domhandler";
+import {
+    type AnyNode,
+    type Element,
+    hasChildren,
+    isTag,
+    type ParentNode,
+} from "domhandler";
 
 /**
  * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
@@ -11,7 +17,7 @@ import { isTag, hasChildren, Element, AnyNode, ParentNode } from "domhandler";
  * @returns All nodes passing `test`.
  */
 export function filter(
-    test: (elem: AnyNode) => boolean,
+    test: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
     recurse = true,
     limit: number = Infinity,
@@ -30,7 +36,7 @@ export function filter(
  * @returns All nodes passing `test`.
  */
 export function find(
-    test: (elem: AnyNode) => boolean,
+    test: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
     recurse: boolean,
     limit: number,
@@ -57,20 +63,20 @@ export function find(
             continue;
         }
 
-        const elem = nodeStack[0][indexStack[0]++];
+        const element = nodeStack[0][indexStack[0]++];
 
-        if (test(elem)) {
-            result.push(elem);
+        if (test(element)) {
+            result.push(element);
             if (--limit <= 0) return result;
         }
 
-        if (recurse && hasChildren(elem) && elem.children.length > 0) {
+        if (recurse && hasChildren(element) && element.children.length > 0) {
             /*
              * Add the children to the stack. We are depth-first, so this is
              * the next array we look at.
              */
             indexStack.unshift(0);
-            nodeStack.unshift(elem.children);
+            nodeStack.unshift(element.children);
         }
     }
 }
@@ -85,7 +91,7 @@ export function find(
  * @deprecated Use `Array.prototype.find` directly.
  */
 export function findOneChild<T>(
-    test: (elem: T) => boolean,
+    test: (element: T) => boolean,
     nodes: T[],
 ): T | undefined {
     return nodes.find(test);
@@ -101,13 +107,12 @@ export function findOneChild<T>(
  * @returns The first node that passes `test`.
  */
 export function findOne(
-    test: (elem: Element) => boolean,
+    test: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
     recurse = true,
 ): Element | null {
     const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
-    for (let i = 0; i < searchedNodes.length; i++) {
-        const node = searchedNodes[i];
+    for (const node of searchedNodes) {
         if (isTag(node) && test(node)) {
             return node;
         }
@@ -129,7 +134,7 @@ export function findOne(
  * @returns Whether a tree of nodes contains at least one node passing the test.
  */
 export function existsOne(
-    test: (elem: Element) => boolean,
+    test: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): boolean {
     return (Array.isArray(nodes) ? nodes : [nodes]).some(
@@ -150,7 +155,7 @@ export function existsOne(
  * @returns All nodes passing `test`.
  */
 export function findAll(
-    test: (elem: Element) => boolean,
+    test: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): Element[] {
     const result = [];
@@ -171,13 +176,13 @@ export function findAll(
             continue;
         }
 
-        const elem = nodeStack[0][indexStack[0]++];
+        const element = nodeStack[0][indexStack[0]++];
 
-        if (isTag(elem) && test(elem)) result.push(elem);
+        if (isTag(element) && test(element)) result.push(element);
 
-        if (hasChildren(elem) && elem.children.length > 0) {
+        if (hasChildren(element) && element.children.length > 0) {
             indexStack.unshift(0);
-            nodeStack.unshift(elem.children);
+            nodeStack.unshift(element.children);
         }
     }
 }
