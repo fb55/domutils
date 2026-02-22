@@ -18,7 +18,6 @@ export function getChildren(element: AnyNode): ChildNode[] {
     return hasChildren(element) ? element.children : [];
 }
 
-export function getParent(element: AnyNode): ParentNode | null;
 /**
  * Get a node's parent.
  *
@@ -26,6 +25,7 @@ export function getParent(element: AnyNode): ParentNode | null;
  * @param element Node to get the parent of.
  * @returns `element`'s parent node, or `null` if `element` is a root node.
  */
+export function getParent(element: AnyNode): ParentNode | null;
 export function getParent(element: AnyNode): ParentNode | null {
     return element.parent || null;
 }
@@ -87,7 +87,9 @@ export function getAttributeValue(
 export function hasAttrib(element: Element, name: string): boolean {
     const { attribs } = element as { attribs?: Record<string, string | null> };
     return (
-        attribs != null && Object.hasOwn(attribs, name) && attribs[name] != null
+        attribs != null &&
+        Object.prototype.hasOwnProperty.call(attribs, name) &&
+        attribs[name] != null
     );
 }
 

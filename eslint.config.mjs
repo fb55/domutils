@@ -4,7 +4,6 @@ import { commonTypeScriptRules } from '@feedic/eslint-config/typescript';
 import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
 import { fileURLToPath } from 'node:url';
-import eslintPluginJsdoc from 'eslint-plugin-jsdoc';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url));
@@ -15,7 +14,6 @@ export default defineConfig([
     ignores: ['eslint.config.{js,cjs,mjs}'],
   },
   ...feedicFlatConfig,
-  eslintPluginJsdoc.configs['flat/recommended-typescript'],
   {
     rules: {
         "jsdoc/tag-lines": [

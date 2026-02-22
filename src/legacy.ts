@@ -96,7 +96,7 @@ function combineFuncs(a: TestType, b: TestType): TestType {
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
-        return Object.hasOwn(Checks, key)
+        return Object.prototype.hasOwnProperty.call(Checks, key)
             ? Checks[key](value)
             : getAttribCheck(key, value);
     });
@@ -128,7 +128,7 @@ export function testElement(options: TestElementOpts, node: AnyNode): boolean {
  * @returns All nodes that match `options`.
  */
 export function getElements(
-    options: TestElementOptions,
+    options: TestElementOpts,
     nodes: AnyNode | AnyNode[],
     recurse: boolean,
     limit: number = Infinity,
