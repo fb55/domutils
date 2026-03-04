@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         /* Basic Options */
-        "target": "es5",
+        "target": "ES2022",
         "module": "commonjs",
-        "lib": ["ES2015.Core"],
+        "lib": ["ES2022"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,

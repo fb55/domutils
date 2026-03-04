@@ -1,13 +1,13 @@
-import {
-    isTag,
-    isCDATA,
-    isText,
-    hasChildren,
-    AnyNode,
-    isComment,
-} from "domhandler";
-import renderHTML, { DomSerializerOptions } from "dom-serializer";
+import renderHTML, { type DomSerializerOptions } from "dom-serializer";
 import { ElementType } from "domelementtype";
+import {
+    type AnyNode,
+    hasChildren,
+    isCDATA,
+    isComment,
+    isTag,
+    isText,
+} from "domhandler";
 
 /**
  * @category Stringify

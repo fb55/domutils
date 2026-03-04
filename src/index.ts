@@ -1,16 +1,16 @@
-export * from "./stringify.js";
-export * from "./traversal.js";
-export * from "./manipulation.js";
-export * from "./querying.js";
-export * from "./legacy.js";
-export * from "./helpers.js";
-export * from "./feeds.js";
 /** @deprecated Use these methods from `domhandler` directly. */
 export {
-    isTag,
+    hasChildren,
     isCDATA,
-    isText,
     isComment,
     isDocument,
-    hasChildren,
+    isTag,
+    isText,
 } from "domhandler";
+export * from "./feeds.js";
+export * from "./helpers.js";
+export * from "./legacy.js";
+export * from "./manipulation.js";
+export * from "./querying.js";
+export * from "./stringify.js";
+export * from "./traversal.js";

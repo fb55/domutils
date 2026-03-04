@@ -1,12 +1,12 @@
-import { parseDOM } from "htmlparser2";
 import type { Element } from "domhandler";
+import { parseDOM } from "htmlparser2";
 import {
     getAttributeValue,
     getName,
     getSiblings,
     hasAttrib,
     nextElementSibling,
-    prevElementSibling,
+    prevElementSibling as previousElementSibling,
 } from "./traversal";
 
 describe("traversal", () => {
@@ -47,7 +47,7 @@ describe("traversal", () => {
 
             expect(hasAttrib(div, "class")).toBeTruthy();
 
-            div.attribs["class"] = null as never;
+            div.attribs.class = null as never;
 
             expect(hasAttrib(div, "class")).toBeFalsy();
         });
@@ -87,14 +87,14 @@ describe("traversal", () => {
             )[0] as Element;
             const lastNode = dom.children[2];
 
-            const prev = prevElementSibling(lastNode);
-            expect(prev).toHaveProperty("tagName", "h1");
+            const previous = previousElementSibling(lastNode);
+            expect(previous).toHaveProperty("tagName", "h1");
         });
         it("return null if not found", () => {
             const dom = parseDOM("<div>test<p></p></div>")[0] as Element;
             const lastNode = dom.children[1];
 
-            expect(prevElementSibling(lastNode)).toBeNull();
+            expect(previousElementSibling(lastNode)).toBeNull();
         });
         it("does not ignore script tags", () => {
             const dom = parseDOM(
@@ -102,8 +102,8 @@ describe("traversal", () => {
             )[0] as Element;
             const lastNode = dom.children[2];
 
-            const prev = prevElementSibling(lastNode);
-            expect(prev).toHaveProperty("tagName", "script");
+            const previous = previousElementSibling(lastNode);
+            expect(previous).toHaveProperty("tagName", "script");
         });
     });
 
