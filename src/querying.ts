@@ -20,7 +20,7 @@ export function filter(
     test: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
     recurse = true,
-    limit: number = Infinity,
+    limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
     return find(test, Array.isArray(node) ? node : [node], recurse, limit);
 }

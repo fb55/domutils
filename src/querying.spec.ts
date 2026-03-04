@@ -15,7 +15,7 @@ describe("querying", () => {
         `<body>${"<div></div>".repeat(200_000)}Text</body>`,
     );
     const someDeepNodes = parseDocument(
-        `<body><div><div></div></div><div><p></p></div></body>`,
+        "<body><div><div></div></div><div><p></p></div></body>",
     );
 
     describe("find", () => {
@@ -25,7 +25,7 @@ describe("querying", () => {
                     (element) => element.type === ElementType.Tag,
                     manyNodesWide,
                     true,
-                    Infinity,
+                    Number.POSITIVE_INFINITY,
                 ),
             ).toHaveLength(200_001));
 
@@ -45,7 +45,7 @@ describe("querying", () => {
                     (element) => element.type === ElementType.Text,
                     manyNodesWide,
                     true,
-                    Infinity,
+                    Number.POSITIVE_INFINITY,
                 ),
             ).toHaveLength(1));
     });

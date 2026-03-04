@@ -32,7 +32,8 @@ const Checks: Record<
     tag_name(name) {
         if (typeof name === "function") {
             return (element: AnyNode) => isTag(element) && name(element.name);
-        } else if (name === "*") {
+        }
+        if (name === "*") {
             return isTag;
         }
         return (element: AnyNode) => isTag(element) && element.name === name;
@@ -96,7 +97,7 @@ function combineFuncs(a: TestType, b: TestType): TestType {
 function compileTest(options: TestElementOpts): TestType | null {
     const funcs = Object.keys(options).map((key) => {
         const value = options[key];
-        return Object.prototype.hasOwnProperty.call(Checks, key)
+        return Object.hasOwn(Checks, key)
             ? Checks[key](value)
             : getAttribCheck(key, value);
     });
@@ -131,7 +132,7 @@ export function getElements(
     options: TestElementOpts,
     nodes: AnyNode | AnyNode[],
     recurse: boolean,
-    limit: number = Infinity,
+    limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
     const test = compileTest(options);
     return test ? filter(test, nodes, recurse, limit) : [];
@@ -169,7 +170,7 @@ export function getElementsByTagName(
     tagName: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit: number = Infinity,
+    limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
     return filter(
         Checks["tag_name"](tagName),
@@ -193,7 +194,7 @@ export function getElementsByClassName(
     className: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit: number = Infinity,
+    limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
     return filter(
         getAttribCheck("class", className),
@@ -217,7 +218,7 @@ export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
     nodes: AnyNode | AnyNode[],
     recurse = true,
-    limit: number = Infinity,
+    limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
     return filter(Checks["tag_type"](type as string), nodes, recurse, limit);
 }

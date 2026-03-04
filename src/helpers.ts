@@ -143,7 +143,8 @@ export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
         const relative = compareDocumentPosition(a, b);
         if (relative & DocumentPosition.PRECEDING) {
             return -1;
-        } else if (relative & DocumentPosition.FOLLOWING) {
+        }
+        if (relative & DocumentPosition.FOLLOWING) {
             return 1;
         }
         return 0;

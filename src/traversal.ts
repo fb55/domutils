@@ -87,9 +87,7 @@ export function getAttributeValue(
 export function hasAttrib(element: Element, name: string): boolean {
     const { attribs } = element as { attribs?: Record<string, string | null> };
     return (
-        attribs != null &&
-        Object.prototype.hasOwnProperty.call(attribs, name) &&
-        attribs[name] != null
+        attribs != null && Object.hasOwn(attribs, name) && attribs[name] != null
     );
 }
 
