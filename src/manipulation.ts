@@ -45,7 +45,7 @@ export function replaceElement(
 
     replacement.parent = element.parent;
     if (replacement.parent) {
-        const {children} = replacement.parent;
+        const { children } = replacement.parent;
         const elementIndex = children.lastIndexOf(element);
         if (elementIndex === -1) {
             return;
