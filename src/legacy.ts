@@ -27,7 +27,7 @@ export interface TestElementOpts {
  */
 const Checks: Record<
     string,
-    (value: string | undefined | ((string_: string) => boolean)) => TestType
+    (value: string | undefined | ((inputString: string) => boolean)) => TestType
 > = {
     tag_name(name) {
         if (typeof name === "function") {

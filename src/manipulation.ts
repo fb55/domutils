@@ -34,27 +34,24 @@ export function replaceElement(
     replacement: ChildNode,
 ): void {
     replacement.prev = element.prev;
-    const { prev } = replacement;
-    if (prev) {
-        prev.next = replacement;
+    if (replacement.prev) {
+        replacement.prev.next = replacement;
     }
 
     replacement.next = element.next;
-    const { next } = replacement;
-    if (next) {
-        next.prev = replacement;
+    if (replacement.next) {
+        replacement.next.prev = replacement;
     }
 
     replacement.parent = element.parent;
-    const { parent } = replacement;
-    if (parent) {
-        const childs = parent.children;
-        const childsIndex = childs.lastIndexOf(element);
-        if (childsIndex === -1) {
+    if (replacement.parent) {
+        const {children} = replacement.parent;
+        const elementIndex = children.lastIndexOf(element);
+        if (elementIndex === -1) {
             return;
         }
 
-        childs[childsIndex] = replacement;
+        children[elementIndex] = replacement;
         element.parent = null;
     }
 }
