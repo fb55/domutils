@@ -48,7 +48,7 @@
         "domhandler": "^5.0.3"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.4.6",
+        "@biomejs/biome": "^2.4.7",
         "@eslint/compat": "^2.0.3",
         "@feedic/eslint-config": "^0.2.3",
         "@types/jest": "^29.5.14",
