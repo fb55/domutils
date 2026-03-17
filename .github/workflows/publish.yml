@@ -1,30 +1,48 @@
 name: Publish
-
 on:
-  release:
-    types: [created]
-
-permissions:
-  contents: read
-  id-token: write
+    push:
+        tags:
+            - "v*"
 
 jobs:
-  publish-npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
-        with:
-          node-version: lts/*
-          cache: npm
-          registry-url: https://registry.npmjs.org
-      - run: npm ci
-      - run: npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    publish:
+        runs-on: ubuntu-latest
 
-  publish-jsr:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - run: npx jsr publish --import-map '{"dom-serializer":"npm:dom-serializer","domelementtype":"npm:domelementtype","domhandler":"npm:domhandler"}'
+        permissions:
+            contents: read
+            id-token: write
+
+        steps:
+            - uses: actions/checkout@v6
+
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: lts/*
+                  registry-url: https://registry.npmjs.org
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Create jsr.json based on package.json
+              run: |
+                  node --input-type=module -e '
+                    import { readFileSync, writeFileSync } from "fs";
+                    const p = JSON.parse(readFileSync("./package.json", "utf8"));
+                    const jsrJson = {
+                        name: `@cheerio/${p.name}`,
+                        version: p.version,
+                        exports: { ".": "./src/index.ts" },
+                        imports: {
+                            "dom-serializer": `jsr:@cheerio/dom-serializer@${p.dependencies["dom-serializer"]}`,
+                            "domelementtype": `jsr:@cheerio/domelementtype@${p.dependencies.domelementtype}`,
+                            "domhandler": `jsr:@cheerio/domhandler@${p.dependencies.domhandler}`,
+                        },
+                    };
+                    writeFileSync("./jsr.json", JSON.stringify(jsrJson, null, 2));
+                  '
+
+            - name: Publish package to JSR
+              run: npx jsr publish
+
+            - name: Publish package to npm
+              run: npm publish --provenance --access public
