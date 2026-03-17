@@ -19,7 +19,9 @@
         }
     },
     "files": [
-        "dist"
+        "dist",
+        "src",
+        "!**/*.spec.ts"
     ],
     "scripts": {
         "build": "tsc",
