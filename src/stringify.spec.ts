@@ -1,11 +1,12 @@
+import { describe, expect, it } from "vitest";
+import fixture from "./__fixtures__/fixture.js";
 import {
     getInnerHTML,
     getOuterHTML,
     getText,
     innerText,
     textContent,
-} from "./";
-import fixture from "./__fixtures__/fixture";
+} from "./index.js";
 
 describe("stringify", () => {
     describe("getOuterHTML", () => {

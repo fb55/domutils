@@ -82,22 +82,6 @@ export function find(
 }
 
 /**
- * Finds the first element inside of an array that matches a test function. This is an alias for `Array.prototype.find`.
- *
- * @category Querying
- * @param test Function to test nodes on.
- * @param nodes Array of nodes to search.
- * @returns The first node in the array that passes `test`.
- * @deprecated Use `Array.prototype.find` directly.
- */
-export function findOneChild<T>(
-    test: (element: T) => boolean,
-    nodes: T[],
-): T | undefined {
-    return nodes.find(test);
-}
-
-/**
  * Finds one element in a tree that passes a test.
  *
  * @category Querying

@@ -2,9 +2,12 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseDocument } from "htmlparser2";
-import { getFeed } from "./feeds";
+import { describe, expect, test } from "vitest";
+import { getFeed } from "./feeds.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const documents = path.join(__dirname, "__fixtures__", "Documents");
 
 describe("getFeed", () => {
