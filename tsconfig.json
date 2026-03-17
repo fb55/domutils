@@ -2,12 +2,13 @@
     "compilerOptions": {
         /* Basic Options */
         "target": "ES2022",
-        "module": "commonjs",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "lib": ["ES2022"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "outDir": "lib",
+        "outDir": "dist",
 
         /* Strict Type-Checking Options */
         "strict": true,
@@ -25,8 +26,6 @@
         "noUnusedParameters": true,
 
         /* Module Resolution Options */
-        "esModuleInterop": true,
-        "moduleResolution": "node",
         "resolveJsonModule": true
     },
     "include": ["src"],

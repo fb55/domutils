@@ -1,6 +1,11 @@
 import type { Document, Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
-import { compareDocumentPosition, removeSubsets, uniqueSort } from "./helpers";
+import { beforeEach, describe, expect, it } from "vitest";
+import {
+    compareDocumentPosition,
+    removeSubsets,
+    uniqueSort,
+} from "./helpers.js";
 
 describe("helpers", () => {
     describe("removeSubsets", () => {

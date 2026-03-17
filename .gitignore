@@ -2,4 +2,5 @@
 docs/
 node_modules/
 coverage/
-lib/
+dist/
+jsr.json

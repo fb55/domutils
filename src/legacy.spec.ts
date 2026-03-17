@@ -1,13 +1,14 @@
 import { ElementType } from "domelementtype";
 import type { AnyNode, Element } from "domhandler";
-import fixture from "./__fixtures__/fixture";
+import { beforeAll, describe, expect, it } from "vitest";
+import fixture from "./__fixtures__/fixture.js";
 import {
     getElementById,
     getElements,
     getElementsByClassName,
     getElementsByTagName,
     getElementsByTagType,
-} from "./legacy";
+} from "./legacy.js";
 
 describe("legacy", () => {
     // Set up expected structures

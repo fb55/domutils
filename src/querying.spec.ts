@@ -1,14 +1,8 @@
 import { ElementType } from "domelementtype";
-import { type Element, isTag } from "domhandler";
+import type { Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
-import {
-    existsOne,
-    filter,
-    find,
-    findAll,
-    findOne,
-    findOneChild,
-} from "./querying";
+import { describe, expect, it } from "vitest";
+import { existsOne, filter, find, findAll, findOne } from "./querying.js";
 
 describe("querying", () => {
     const manyNodesWide = parseDocument(
@@ -74,24 +68,6 @@ describe("querying", () => {
                     manyNodesWide.children[0],
                 ),
             ).toHaveLength(200_001));
-    });
-
-    describe("findOneChild", () => {
-        it("should find elements", () =>
-            expect(
-                findOneChild(
-                    (element) => isTag(element) && element.name === "body",
-                    manyNodesWide.children,
-                ),
-            ).toBe(manyNodesWide.children[0]));
-
-        it("should only query direct children", () =>
-            expect(
-                findOneChild(
-                    (element) => isTag(element) && element.name === "div",
-                    manyNodesWide.children,
-                ),
-            ).toBeUndefined());
     });
 
     describe("findOne", () => {

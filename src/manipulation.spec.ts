@@ -1,5 +1,6 @@
 import type { Element } from "domhandler";
-import { parseDOM } from "htmlparser2";
+import { parseDocument } from "htmlparser2";
+import { describe, expect, it } from "vitest";
 import {
     append,
     appendChild,
@@ -8,6 +9,10 @@ import {
     removeElement,
     replaceElement,
 } from "./manipulation.js";
+
+function parseDOM(markup: string) {
+    return parseDocument(markup).children;
+}
 
 describe("manipulation", () => {
     describe("append", () => {

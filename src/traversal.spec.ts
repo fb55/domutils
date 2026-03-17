@@ -1,5 +1,6 @@
 import type { Element } from "domhandler";
-import { parseDOM } from "htmlparser2";
+import { parseDocument } from "htmlparser2";
+import { describe, expect, it } from "vitest";
 import {
     getAttributeValue,
     getName,
@@ -7,7 +8,11 @@ import {
     hasAttrib,
     nextElementSibling,
     prevElementSibling as previousElementSibling,
-} from "./traversal";
+} from "./traversal.js";
+
+function parseDOM(markup: string) {
+    return parseDocument(markup).children;
+}
 
 describe("traversal", () => {
     describe("getSiblings", () => {

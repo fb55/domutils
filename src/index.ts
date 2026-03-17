@@ -1,12 +1,3 @@
-/** @deprecated Use these methods from `domhandler` directly. */
-export {
-    hasChildren,
-    isCDATA,
-    isComment,
-    isDocument,
-    isTag,
-    isText,
-} from "domhandler";
 export * from "./feeds.js";
 export * from "./helpers.js";
 export * from "./legacy.js";
