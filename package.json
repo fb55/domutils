@@ -21,7 +21,8 @@
     "files": [
         "dist",
         "src",
-        "!**/*.spec.ts"
+        "!**/*.spec.ts",
+        "!**/__fixtures__/**"
     ],
     "scripts": {
         "build": "tsc",
