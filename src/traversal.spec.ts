@@ -52,7 +52,7 @@ describe("traversal", () => {
 
             expect(hasAttrib(div, "class")).toBeTruthy();
 
-            div.attribs.class = null as never;
+            div.attribs["class"] = null as never;
 
             expect(hasAttrib(div, "class")).toBeFalsy();
         });

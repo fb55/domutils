@@ -1,3 +1,4 @@
+import type { ChildNode } from "domhandler";
 import { parseDocument } from "htmlparser2";
 
 const markup =
@@ -5,4 +6,5 @@ const markup =
         20,
     );
 
-export default parseDocument(markup).children;
+const children: ChildNode[] = parseDocument(markup).children;
+export default children;
