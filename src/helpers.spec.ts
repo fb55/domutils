@@ -103,6 +103,19 @@ describe("helpers", () => {
         it("removes duplicate elements", () =>
             expect(uniqueSort([p, a, p])).toStrictEqual([p, a]));
 
+        it("sorts a comment sibling into document order", () => {
+            const withComment = parseDocument(
+                "<div><p></p><!--c--><a></a></div>",
+            ).children[0] as Element;
+            const [firstP, comment, lastA] = withComment.children;
+
+            expect(uniqueSort([lastA, comment, firstP])).toStrictEqual([
+                firstP,
+                comment,
+                lastA,
+            ]);
+        });
+
         it("sorts nodes in document order", () =>
             expect(uniqueSort([a, dom, span, p])).toStrictEqual([
                 dom,
