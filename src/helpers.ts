@@ -110,8 +110,8 @@ export function compareDocumentPosition(
 
     const sharedParent = aParents[index - 1];
     const siblings: AnyNode[] = sharedParent.children;
-    const aSibling = aParents[index];
-    const bSibling = bParents[index];
+    const aSibling = index < aParents.length ? aParents[index] : nodeA;
+    const bSibling = index < bParents.length ? bParents[index] : nodeB;
 
     if (siblings.indexOf(aSibling) > siblings.indexOf(bSibling)) {
         if (sharedParent === nodeB) {
