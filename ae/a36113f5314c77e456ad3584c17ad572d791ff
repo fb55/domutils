@@ -1,0 +1,25 @@
+src/querying.spec.ts
+  s_3335ef16d16bcd::t_d2a907cceb3fa1 4,16-44,77-103
+src/querying.ts
+  s_3335ef16d16bcd::t_c5b54fec6d60b1 45-53,60-61,63,70-71,77,84,89-90,161-163,169-170,176,181-182
+src/traversal.spec.ts
+  s_3335ef16d16bcd::t_817795ebce37cf 3,19-40
+src/traversal.ts
+  s_3335ef16d16bcd::t_e35357b58129d5 50-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aea36113f5314c77e456ad3584c17ad572d791ff",
+  "prompts": {},
+  "sessions": {
+    "s_3335ef16d16bcd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a103bb-2002-7613-bb70-fa08c256fda4",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
