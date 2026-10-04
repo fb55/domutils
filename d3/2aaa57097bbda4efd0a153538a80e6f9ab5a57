@@ -1,0 +1,20 @@
+src/querying.ts
+  s_6bbbbbc7cea8e7::t_feccdce72d58c5 110-114,117,177-182
+  s_6bbbbbc7cea8e7::t_ce183ca38c5507 198-206,208-219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d32aaa57097bbda4efd0a153538a80e6f9ab5a57",
+  "prompts": {},
+  "sessions": {
+    "s_6bbbbbc7cea8e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "477ae3a9-56cd-4535-bf0f-8d24ed1686d9",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": null
+    }
+  }
+}
