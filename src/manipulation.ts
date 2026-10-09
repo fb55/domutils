@@ -69,7 +69,8 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
     child.next = null;
     child.parent = parent;
 
-    if (parent.children.push(child) > 1) {
+    parent.children.push(child);
+    if (parent.children.length > 1) {
         const sibling = parent.children[parent.children.length - 2];
         sibling.next = child;
         child.prev = sibling;
@@ -120,7 +121,8 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
     child.parent = parent;
     child.prev = null;
 
-    if (parent.children.unshift(child) === 1) {
+    parent.children.unshift(child);
+    if (parent.children.length === 1) {
         child.next = null;
     } else {
         const sibling = parent.children[1];

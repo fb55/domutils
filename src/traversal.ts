@@ -124,7 +124,6 @@ export function nextElementSibling(element: AnyNode): Element | null {
  * @returns `element`'s previous sibling that is a tag, or `null` if there is no
  * previous sibling.
  */
-// eslint-disable-next-line unicorn/prevent-abbreviations -- Keep public API name for backwards compatibility.
 export function prevElementSibling(element: AnyNode): Element | null {
     let { prev } = element;
     while (prev !== null && !isTag(prev)) ({ prev } = prev);

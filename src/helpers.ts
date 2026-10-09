@@ -29,10 +29,12 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
         }
 
         for (let ancestor = node.parent; ancestor; ancestor = ancestor.parent) {
-            if (nodes.includes(ancestor)) {
-                nodes.splice(index, 1);
-                break;
+            if (!nodes.includes(ancestor)) {
+                continue;
             }
+
+            nodes.splice(index, 1);
+            break;
         }
     }
 
@@ -40,7 +42,7 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
 }
 /**
  * @category Helpers
- * @see {@link http://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
+ * @see {@link https://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
  */
 export const enum DocumentPosition {
     DISCONNECTED = 1,
@@ -66,26 +68,26 @@ export const enum DocumentPosition {
  * > relative order of attribute nodes is implementation-dependent.
  *
  * Source:
- * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
+ * https://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
  *
  * @category Helpers
  * @param nodeA The first node to use in the comparison
  * @param nodeB The second node to use in the comparison
  * @returns A bitmask describing the input nodes' relative position.
  *
- * See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
+ * See https://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
  * a description of these values.
  */
 export function compareDocumentPosition(
     nodeA: AnyNode,
     nodeB: AnyNode,
 ): number {
-    const aParents: ParentNode[] = [];
-    const bParents: ParentNode[] = [];
-
     if (nodeA === nodeB) {
         return 0;
     }
+
+    const aParents: ParentNode[] = [];
+    const bParents: ParentNode[] = [];
 
     let current = hasChildren(nodeA) ? nodeA : nodeA.parent;
     while (current) {

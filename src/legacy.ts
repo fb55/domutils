@@ -11,7 +11,10 @@ type TestType = (element: AnyNode) => boolean;
  *
  * @category Legacy Query Functions
  */
-// eslint-disable-next-line unicorn/prevent-abbreviations -- Keep the exported API name for backwards compatibility.
+
+/**
+ *
+ */
 export interface TestElementOpts {
     tag_name?: string | ((name: string) => boolean);
     tag_type?: string | ((name: string) => boolean);
@@ -95,12 +98,11 @@ function combineFuncs(a: TestType, b: TestType): TestType {
  *   if any of them match a node.
  */
 function compileTest(options: TestElementOpts): TestType | null {
-    const funcs = Object.keys(options).map((key) => {
-        const value = options[key];
-        return Object.hasOwn(Checks, key)
+    const funcs = Object.entries(options).map(([key, value]) =>
+        Object.hasOwn(Checks, key)
             ? Checks[key](value)
-            : getAttribCheck(key, value);
-    });
+            : getAttribCheck(key, value),
+    );
 
     return funcs.length === 0 ? null : funcs.reduce(combineFuncs);
 }

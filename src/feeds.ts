@@ -83,11 +83,9 @@ export interface Feed {
 export function getFeed(document: AnyNode[]): Feed | null {
     const feedRoot = getOneElement(isValidFeed, document);
 
-    return feedRoot
-        ? feedRoot.name === "feed"
-            ? getAtomFeed(feedRoot)
-            : getRssFeed(feedRoot)
-        : null;
+    if (!feedRoot) return null;
+    if (feedRoot.name === "feed") return getAtomFeed(feedRoot);
+    return getRssFeed(feedRoot);
 }
 
 /**
@@ -297,5 +295,5 @@ function addConditionally<T>(
  * @returns Whether an element is a feed root node.
  */
 function isValidFeed(value: string) {
-    return value === "rss" || value === "feed" || value === "rdf:RDF";
+    return ["rss", "feed", "rdf:RDF"].includes(value);
 }
