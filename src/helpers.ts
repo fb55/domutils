@@ -9,81 +9,31 @@ import { type AnyNode, hasChildren, type ParentNode } from "domhandler";
  * @returns Remaining nodes that aren't contained by other nodes.
  */
 export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
-    const { length } = nodes;
-
-    /*
-     * A lone node is the most common input by far, and the only member it can
-     * be contained by is itself, so walk its ancestors directly rather than
-     * building a set for one entry.
-     */
-    if (length < 2) {
-        if (length === 1) {
-            const node = nodes[0];
-            for (
-                let ancestor = node.parent;
-                ancestor;
-                ancestor = ancestor.parent
-            ) {
-                if (ancestor === node) {
-                    nodes.length = 0;
-                    break;
-                }
-            }
-        }
-        return nodes;
-    }
-
-    /*
-     * Membership is only ever tested against the nodes that were passed in, so
-     * collect them up front. That replaces the `includes` scan run for every
-     * ancestor of every node, which made this O(n^2 * depth), with an O(1)
-     * lookup per ancestor. Each slot is read once and kept, since a getter on
-     * the array would otherwise be invoked twice.
-     */
-    const members = new Set<AnyNode>();
-    const slots: AnyNode[] = [];
-    for (let index = 0; index < length; index++) {
-        const node = nodes[index];
-        slots.push(node);
-        members.add(node);
-    }
-
-    /*
-     * A second set is only needed to drop repeats. If every node was distinct
-     * there are none, so the common case allocates just the one set.
-     */
-    const seen = members.size === length ? null : new Set<AnyNode>();
+    // Iterating the set also drops repeats, keeping the first occurrence.
+    const members = new Set(nodes);
+    // Ancestors already walked, and whether they are inside a member.
+    const known = new Map<ParentNode, boolean>();
     let kept = 0;
 
-    for (let index = 0; index < length; index++) {
-        const node = slots[index];
-
-        /* Keep the first occurrence of each node, as `lastIndexOf` did. */
-        if (seen !== null) {
-            if (seen.has(node)) continue;
-            seen.add(node);
+    for (const node of members) {
+        let ancestor = node.parent;
+        while (ancestor && !members.has(ancestor) && !known.has(ancestor)) {
+            ancestor = ancestor.parent;
         }
-
-        let contained = false;
-        for (let ancestor = node.parent; ancestor; ancestor = ancestor.parent) {
-            if (members.has(ancestor)) {
-                contained = true;
-                break;
-            }
+        const contained =
+            ancestor !== null &&
+            (members.has(ancestor) || known.get(ancestor) === true);
+        for (
+            let walked = node.parent;
+            walked && walked !== ancestor;
+            walked = walked.parent
+        ) {
+            known.set(walked, contained);
         }
-
-        if (contained) continue;
-
-        /*
-         * Compact the survivors in place, as the splices did. Only write when
-         * the value actually moves, so that an array needing no changes is
-         * never written to -- a frozen array survived the original untouched.
-         */
-        if (kept !== index) nodes[kept] = node;
-        kept++;
+        if (!contained) nodes[kept++] = node;
     }
 
-    if (kept !== length) nodes.length = kept;
+    nodes.length = kept;
     return nodes;
 }
 /**
@@ -183,36 +133,7 @@ export function compareDocumentPosition(
  * @returns Collection of unique nodes, sorted in document order.
  */
 export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
-    /* Nothing to dedupe or sort, and no reason to allocate a Set. */
-    if (nodes.length < 2) {
-        return nodes;
-    }
-
-    /*
-     * Keep the LAST occurrence of each node, as `array.includes(node, index + 1)`
-     * did. That matters for nodes in different documents: they compare equal, and
-     * the sort below is stable, so which duplicate survives decides the output
-     * order. Walking backwards and reversing preserves that, while making the
-     * dedupe O(n) instead of O(n^2).
-     */
-    const seen = new Set<T>();
-    const unique: T[] = [];
-    for (let index = nodes.length - 1; index >= 0; index--) {
-        /*
-         * `filter` skipped holes in a sparse array, so an absent slot must not
-         * become an `undefined` entry in the result.
-         */
-        if (!(index in nodes)) {
-            continue;
-        }
-        const node = nodes[index];
-        if (!seen.has(node)) {
-            seen.add(node);
-            unique.push(node);
-        }
-    }
-    unique.reverse();
-    nodes = unique;
+    nodes = [...new Set(nodes)];
 
     nodes.sort((a, b) => {
         const relative = compareDocumentPosition(a, b);
