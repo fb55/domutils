@@ -11,10 +11,6 @@ type TestType = (element: AnyNode) => boolean;
  *
  * @category Legacy Query Functions
  */
-
-/**
- *
- */
 export interface TestElementOpts {
     tag_name?: string | ((name: string) => boolean);
     tag_type?: string | ((name: string) => boolean);

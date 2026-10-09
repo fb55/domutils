@@ -67,7 +67,7 @@ export default defineConfig([
       "unicorn/filename-case": [
         "error",
         {
-          ignore: ["^__fixtures__$"],
+          checkDirectories: false,
         },
       ],
     },
