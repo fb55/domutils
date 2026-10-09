@@ -70,6 +70,17 @@ describe("helpers", () => {
                 ),
             ).toBe(10);
         });
+
+        it("reports the correct order when a sibling is a comment", () => {
+            const dom = parseDocument("<div><p></p><!--c--><a></a></div>")
+                .children[0] as Element;
+            const [p, comment, a] = dom.children;
+
+            expect(compareDocumentPosition(p, comment)).toBe(2);
+            expect(compareDocumentPosition(comment, p)).toBe(4);
+            expect(compareDocumentPosition(comment, a)).toBe(2);
+            expect(compareDocumentPosition(a, comment)).toBe(4);
+        });
     });
 
     describe("uniqueSort", () => {
@@ -91,6 +102,19 @@ describe("helpers", () => {
 
         it("removes duplicate elements", () =>
             expect(uniqueSort([p, a, p])).toStrictEqual([p, a]));
+
+        it("sorts a comment sibling into document order", () => {
+            const withComment = parseDocument(
+                "<div><p></p><!--c--><a></a></div>",
+            ).children[0] as Element;
+            const [firstP, comment, lastA] = withComment.children;
+
+            expect(uniqueSort([lastA, comment, firstP])).toStrictEqual([
+                firstP,
+                comment,
+                lastA,
+            ]);
+        });
 
         it("sorts nodes in document order", () =>
             expect(uniqueSort([a, dom, span, p])).toStrictEqual([
