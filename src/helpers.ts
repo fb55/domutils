@@ -30,10 +30,14 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
         ) {
             known.set(walked, contained);
         }
-        if (!contained) nodes[kept++] = node;
+        if (!contained) {
+            // Only write when the slot changes, so an unchanged input is never written to.
+            if (nodes[kept] !== node) nodes[kept] = node;
+            kept++;
+        }
     }
 
-    nodes.length = kept;
+    if (kept !== nodes.length) nodes.length = kept;
     return nodes;
 }
 /**
@@ -133,7 +137,12 @@ export function compareDocumentPosition(
  * @returns Collection of unique nodes, sorted in document order.
  */
 export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
-    nodes = [...new Set(nodes)];
+    // Keep the last occurrence of each node, as `includes(node, index + 1)` did; `filter` skips holes.
+    const lastIndex = new Map<T, number>();
+    for (let index = 0; index < nodes.length; index++) {
+        if (index in nodes) lastIndex.set(nodes[index], index);
+    }
+    nodes = nodes.filter((node, index) => lastIndex.get(node) === index);
 
     nodes.sort((a, b) => {
         const relative = compareDocumentPosition(a, b);

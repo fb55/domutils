@@ -51,6 +51,11 @@ describe("helpers", () => {
         const dom = parseDocument("<div><p><span></span></p><p></p></div>")
             .children[0] as Element;
 
+        it("leaves an unchanged input untouched", () => {
+            const nodes = Object.freeze([dom.children[0], dom.children[1]]);
+            expect(removeSubsets(nodes as Element[])).toBe(nodes);
+        });
+
         it("removes identical trees", () =>
             expect(removeSubsets([dom, dom])).toHaveLength(1));
 
@@ -181,14 +186,24 @@ describe("helpers", () => {
                 a,
             ]));
 
+        it("skips holes in sparse arrays", () => {
+            const nodes: Element[] = [];
+            nodes[0] = new Element("p", {});
+            nodes[2] = new Element("p", {});
+            expect(uniqueSort(nodes)).toHaveLength(2);
+        });
+
         it("removes duplicates from large arrays in linear time", () => {
             const detached = Array.from(
                 { length: 1000 },
                 () => new Element("p", {}),
             );
-            const [nodes, reads] = countReads([...detached, ...detached]);
+            const reversed = [...detached];
+            reversed.reverse();
+            const [nodes, reads] = countReads([...detached, ...reversed]);
 
-            expect(uniqueSort(nodes)).toHaveLength(detached.length);
+            // Detached nodes keep their order, and the last occurrence is kept.
+            expect(uniqueSort(nodes)).toStrictEqual(reversed);
             expect(reads()).toBeLessThan(10 * nodes.length);
         });
     });
