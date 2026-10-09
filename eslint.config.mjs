@@ -60,96 +60,68 @@ export default defineConfig([
     },
   },
   eslintConfigBiome,
-// These nodes implement domhandler APIs, not the browser DOM.
-{
-    "files": [
-        "**/*.ts"
-    ],
-    "rules": {
-        "unicorn/better-dom-traversing": "off"
-    }
-},
-// Keep the conventional fixture directory name while checking other paths.
-{
-    "files": [
-        "**/*.ts"
-    ],
-    "rules": {
-        "unicorn/filename-case": [
-            "error",
-            {
-                "ignore": [
-                    "^__fixtures__$"
-                ]
-            }
-        ]
-    }
-},
-// Preserve established public predicate names and selector vocabulary.
-{
-    "files": [
-        "src/feeds.ts",
-        "src/legacy.ts",
-        "src/querying.ts"
-    ],
-    "rules": {
-        "unicorn/consistent-boolean-name": "off"
-    }
-},
-// Feed attributes have dynamic names and numeric fields permit parseInt prefix parsing.
-{
-    "files": [
-        "src/feeds.ts"
-    ],
-    "rules": {
-        "unicorn/no-computed-property-existence-check": "off",
-        "unicorn/prefer-number-coercion": "off"
-    }
-},
-// Keep the ancestor scan inline with the node-removal loop.
-{
-    "files": [
-        "src/helpers.ts"
-    ],
-    "rules": {
-        "unicorn/no-break-in-nested-loop": "off"
-    }
-},
-// Preserve tree traversal behavior in the established stringification helpers.
-{
-    "files": [
-        "src/stringify.ts"
-    ],
-    "rules": {
-        "unicorn/no-useless-recursion": "off"
-    }
-},
+  // Retain the conventional fixture directory while checking other names.
+  {
+    files: ["src/__fixtures__/fixture.ts"],
+    rules: {
+      "unicorn/filename-case": [
+        "error",
+        {
+          ignore: ["^__fixtures__$"],
+        },
+      ],
+    },
+  },
 
-// Biome enforces the Number namespace for these constants.
-{
-    "files": [
-        "**/*.ts"
+  // Preserve the exported API name.
+  {
+    files: ["src/legacy.ts"],
+    rules: {
+      "unicorn/name-replacements": [
+        "error",
+        {
+          allowList: {
+            TestElementOpts: true,
+          },
+        },
+      ],
+    },
+  },
+
+  // Preserve the exported API name.
+  {
+    files: ["src/traversal.ts"],
+    rules: {
+      "unicorn/name-replacements": [
+        "error",
+        {
+          allowList: {
+            prevElementSibling: true,
+          },
+        },
+      ],
+    },
+  },
+
+  // These fixtures use domhandler nodes; browser querySelector and firstElementChild APIs do not apply.
+  {
+    files: [
+      "src/helpers.spec.ts",
+      "src/legacy.spec.ts",
+      "src/manipulation.spec.ts",
+      "src/querying.spec.ts",
+      "src/traversal.spec.ts",
     ],
-    "rules": {
-        "unicorn/prefer-global-number-constants": "off"
-    }
-},
-// Preserve the existing exported type and function names.
-{
-    "files": [
-        "src/legacy.ts",
-        "src/traversal.ts"
-    ],
-    "rules": {
-        "unicorn/name-replacements": [
-            "error",
-            {
-                "allowList": {
-                    "TestElementOpts": true,
-                    "prevElementSibling": true
-                }
-            }
-        ]
-    }
-},
+    rules: {
+      "unicorn/better-dom-traversing": "off",
+    },
+  },
+
+  // Use the Number namespace required by the existing Biome configuration.
+  {
+    files: ["src/legacy.ts", "src/querying.spec.ts", "src/querying.ts"],
+    rules: {
+      "unicorn/prefer-global-number-constants": "off",
+    },
+  },
 ]);

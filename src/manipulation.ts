@@ -125,7 +125,7 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
     if (parent.children.length === 1) {
         child.next = null;
     } else {
-        const sibling = parent.children[1];
+        const [, sibling] = parent.children;
         sibling.prev = child;
         child.next = sibling;
     }

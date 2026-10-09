@@ -28,14 +28,11 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
             continue;
         }
 
-        for (let ancestor = node.parent; ancestor; ancestor = ancestor.parent) {
-            if (!nodes.includes(ancestor)) {
-                continue;
-            }
-
-            nodes.splice(index, 1);
-            break;
+        let ancestor = node.parent;
+        while (ancestor && !nodes.includes(ancestor)) {
+            ancestor = ancestor.parent;
         }
+        if (ancestor) nodes.splice(index, 1);
     }
 
     return nodes;

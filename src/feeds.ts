@@ -217,14 +217,15 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         };
 
         for (const attrib of MEDIA_KEYS_STRING) {
-            if (attribs[attrib]) {
-                media[attrib] = attribs[attrib];
-            }
+            const value = attribs[attrib];
+            if (value) media[attrib] = value;
         }
 
         for (const attrib of MEDIA_KEYS_INT) {
-            if (attribs[attrib]) {
-                media[attrib] = Number.parseInt(attribs[attrib], 10);
+            const value = attribs[attrib];
+            if (value) {
+                // eslint-disable-next-line unicorn/prefer-number-coercion -- Feed values intentionally allow numeric prefixes.
+                media[attrib] = Number.parseInt(value, 10);
             }
         }
 
@@ -257,15 +258,17 @@ function getOneElement(
  *
  * @param tagName Tag name to look for.
  * @param where Node to search in.
- * @param recurse Whether to recurse into child nodes.
+ * @param isRecurse Whether to recurse into child nodes.
  * @returns The text content of the element.
  */
 function fetch(
     tagName: string,
     where: AnyNode | AnyNode[],
-    recurse = false,
+    isRecurse = false,
 ): string {
-    return textContent(getElementsByTagName(tagName, where, recurse, 1)).trim();
+    return textContent(
+        getElementsByTagName(tagName, where, isRecurse, 1),
+    ).trim();
 }
 
 /**
@@ -275,16 +278,16 @@ function fetch(
  * @param property Property name.
  * @param tagName Tag name that contains the conditionally added property.
  * @param where Element to search for the property.
- * @param recurse Whether to recurse into child nodes.
+ * @param isRecurse Whether to recurse into child nodes.
  */
 function addConditionally<T>(
     object: T,
     property: keyof T,
     tagName: string,
     where: AnyNode[],
-    recurse = false,
+    isRecurse = false,
 ) {
-    const value = fetch(tagName, where, recurse);
+    const value = fetch(tagName, where, isRecurse);
     if (value) object[property] = value as unknown as T[keyof T];
 }
 
