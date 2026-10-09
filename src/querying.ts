@@ -14,7 +14,7 @@ import {
  * @param node Node to search. Will be included in the result set if it matches.
  * @param isRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function filter(
     isTest: (element: AnyNode) => boolean,
@@ -33,7 +33,7 @@ export function filter(
  * @param nodes Array of nodes to search.
  * @param isRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function find(
     isTest: (element: AnyNode) => boolean,
@@ -88,7 +88,7 @@ export function find(
  * @param isTest Function to test nodes on.
  * @param nodes Node or array of nodes to search.
  * @param isRecurse Also consider child nodes.
- * @returns The first node that passes `test`.
+ * @returns The first node that passes `isTest`.
  */
 export function findOne(
     isTest: (element: Element) => boolean,
@@ -137,7 +137,7 @@ export function existsOne(
  * @category Querying
  * @param isTest Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function findAll(
     isTest: (element: Element) => boolean,
