@@ -1,0 +1,24 @@
+src/helpers.spec.ts
+  s_6bbbbbc7cea8e7::t_a6b974a27fcf3a 222,224
+src/helpers.ts
+  s_6bbbbbc7cea8e7::t_32780308f61ca7 12-13
+  s_6bbbbbc7cea8e7::t_5d487707da5143 18
+  s_6bbbbbc7cea8e7::t_1d6110be05d655 14-15,20,24-28,133-135
+  s_6bbbbbc7cea8e7::t_6013696bc93220 31,88,94,136,138-142
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e18f3920b965ef7962dca716018adb8361efa3b4",
+  "prompts": {},
+  "sessions": {
+    "s_6bbbbbc7cea8e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "477ae3a9-56cd-4535-bf0f-8d24ed1686d9",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": null
+    }
+  }
+}
