@@ -1,0 +1,21 @@
+src/helpers.spec.ts
+  s_016fe9c05014c1::t_5934ab5f3bebf9 184-190,196-198,200-201
+src/helpers.ts
+  s_016fe9c05014c1::t_6d8f3189f3d29a 136-141
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c4eab87d48be44d61ebfed66fdc3d2c5f702d8d7",
+  "prompts": {},
+  "sessions": {
+    "s_016fe9c05014c1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-aa2afd8c9c2bf7abb",
+        "model": "unknown"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
