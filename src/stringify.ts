@@ -49,8 +49,9 @@ export function getInnerHTML(
  */
 export function getText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(getText).join("");
-    if (isTag(node)) return node.name === "br" ? "\n" : getText(node.children);
-    if (isCDATA(node)) return getText(node.children);
+    if (isTag(node))
+        return node.name === "br" ? "\n" : node.children.map(getText).join("");
+    if (isCDATA(node)) return node.children.map(getText).join("");
     if (isText(node)) return node.data;
     return "";
 }
@@ -66,7 +67,7 @@ export function getText(node: AnyNode | AnyNode[]): string {
 export function textContent(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(textContent).join("");
     if (hasChildren(node) && !isComment(node)) {
-        return textContent(node.children);
+        return node.children.map(textContent).join("");
     }
     if (isText(node)) return node.data;
     return "";
@@ -83,7 +84,7 @@ export function textContent(node: AnyNode | AnyNode[]): string {
 export function innerText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(innerText).join("");
     if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
-        return innerText(node.children);
+        return node.children.map(innerText).join("");
     }
     if (isText(node)) return node.data;
     return "";

@@ -59,5 +59,62 @@ export default defineConfig([
       "unicorn/prefer-includes": 0
     },
   },
-  eslintConfigBiome
+  eslintConfigBiome,
+  // Retain the conventional fixture directory while checking other names.
+  {
+    files: ["src/__fixtures__/fixture.ts"],
+    rules: {
+      "unicorn/filename-case": [
+        "error",
+        {
+          checkDirectories: false,
+        },
+      ],
+    },
+  },
+
+  // Preserve the exported API name.
+  {
+    files: ["src/legacy.ts"],
+    rules: {
+      "unicorn/name-replacements": [
+        "error",
+        {
+          allowList: {
+            TestElementOpts: true,
+          },
+        },
+      ],
+    },
+  },
+
+  // Preserve the exported API name.
+  {
+    files: ["src/traversal.ts"],
+    rules: {
+      "unicorn/name-replacements": [
+        "error",
+        {
+          allowList: {
+            prevElementSibling: true,
+          },
+        },
+      ],
+    },
+  },
+
+  // This module uses parser DOM nodes, which do not implement browser traversal APIs.
+  {
+    rules: {
+      "unicorn/better-dom-traversing": "off",
+    },
+  },
+
+  // Use the Number namespace required by the existing Biome configuration.
+  {
+    files: ["src/legacy.ts", "src/querying.spec.ts", "src/querying.ts"],
+    rules: {
+      "unicorn/prefer-global-number-constants": "off",
+    },
+  },
 ]);

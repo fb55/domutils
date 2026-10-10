@@ -10,35 +10,35 @@ import {
  * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
  *
  * @category Querying
- * @param test Function to test nodes on.
+ * @param isTest Function to test nodes on.
  * @param node Node to search. Will be included in the result set if it matches.
- * @param recurse Also consider child nodes.
+ * @param isRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function filter(
-    test: (element: AnyNode) => boolean,
+    isTest: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
-    recurse = true,
+    isRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
-    return find(test, Array.isArray(node) ? node : [node], recurse, limit);
+    return find(isTest, Array.isArray(node) ? node : [node], isRecurse, limit);
 }
 
 /**
  * Search an array of nodes and their children for nodes passing a test function.
  *
  * @category Querying
- * @param test Function to test nodes on.
+ * @param isTest Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @param recurse Also consider child nodes.
+ * @param isRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function find(
-    test: (element: AnyNode) => boolean,
+    isTest: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
-    recurse: boolean,
+    isRecurse: boolean,
     limit: number,
 ): AnyNode[] {
     const result: AnyNode[] = [];
@@ -65,12 +65,12 @@ export function find(
 
         const element = nodeStack[0][indexStack[0]++];
 
-        if (test(element)) {
+        if (isTest(element)) {
             result.push(element);
             if (--limit <= 0) return result;
         }
 
-        if (recurse && hasChildren(element) && element.children.length > 0) {
+        if (isRecurse && hasChildren(element) && element.children.length > 0) {
             /*
              * Add the children to the stack. We are depth-first, so this is
              * the next array we look at.
@@ -85,23 +85,23 @@ export function find(
  * Finds one element in a tree that passes a test.
  *
  * @category Querying
- * @param test Function to test nodes on.
+ * @param isTest Function to test nodes on.
  * @param nodes Node or array of nodes to search.
- * @param recurse Also consider child nodes.
- * @returns The first node that passes `test`.
+ * @param isRecurse Also consider child nodes.
+ * @returns The first node that passes `isTest`.
  */
 export function findOne(
-    test: (element: Element) => boolean,
+    isTest: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
-    recurse = true,
+    isRecurse = true,
 ): Element | null {
     const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
     for (const node of searchedNodes) {
-        if (isTag(node) && test(node)) {
+        if (isTag(node) && isTest(node)) {
             return node;
         }
-        if (recurse && hasChildren(node) && node.children.length > 0) {
-            const found = findOne(test, node.children, true);
+        if (isRecurse && hasChildren(node) && node.children.length > 0) {
+            const found = findOne(isTest, node.children, true);
             if (found) return found;
         }
     }
@@ -113,18 +113,19 @@ export function findOne(
  * Checks if a tree of nodes contains at least one node passing a test.
  *
  * @category Querying
- * @param test Function to test nodes on.
+ * @param isTest Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @returns Whether a tree of nodes contains at least one node passing the test.
  */
+// eslint-disable-next-line unicorn/consistent-boolean-name -- Preserve the existing exported function name.
 export function existsOne(
-    test: (element: Element) => boolean,
+    isTest: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): boolean {
     return (Array.isArray(nodes) ? nodes : [nodes]).some(
         (node) =>
-            (isTag(node) && test(node)) ||
-            (hasChildren(node) && existsOne(test, node.children)),
+            (isTag(node) && isTest(node)) ||
+            (hasChildren(node) && existsOne(isTest, node.children)),
     );
 }
 
@@ -134,12 +135,12 @@ export function existsOne(
  * Same as `find`, but limited to elements and with less options, leading to reduced complexity.
  *
  * @category Querying
- * @param test Function to test nodes on.
+ * @param isTest Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @returns All nodes passing `test`.
+ * @returns All nodes passing `isTest`.
  */
 export function findAll(
-    test: (element: Element) => boolean,
+    isTest: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): Element[] {
     const result = [];
@@ -162,7 +163,7 @@ export function findAll(
 
         const element = nodeStack[0][indexStack[0]++];
 
-        if (isTag(element) && test(element)) result.push(element);
+        if (isTag(element) && isTest(element)) result.push(element);
 
         if (hasChildren(element) && element.children.length > 0) {
             indexStack.unshift(0);
