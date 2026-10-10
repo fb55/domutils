@@ -62,7 +62,7 @@ export default defineConfig([
   eslintConfigBiome,
   // Retain the conventional fixture directory while checking other names.
   {
-    files: ["src/__fixtures__/fixture.ts"],
+    files: ["src/__fixtures__/**"],
     rules: {
       "unicorn/filename-case": [
         "error",
@@ -112,7 +112,6 @@ export default defineConfig([
 
   // Use the Number namespace required by the existing Biome configuration.
   {
-    files: ["src/legacy.ts", "src/querying.spec.ts", "src/querying.ts"],
     rules: {
       "unicorn/prefer-global-number-constants": "off",
     },
