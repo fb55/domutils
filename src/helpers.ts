@@ -9,32 +9,35 @@ import { type AnyNode, hasChildren, type ParentNode } from "domhandler";
  * @returns Remaining nodes that aren't contained by other nodes.
  */
 export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
-    let index = nodes.length;
+    // Iterating the set also drops repeats, keeping the first occurrence.
+    const members = new Set(nodes);
+    // Ancestors already walked, and whether they are inside a member.
+    const known = new Map<ParentNode, boolean>();
+    let kept = 0;
 
-    /*
-     * Check if each node (or one of its ancestors) is already contained in the
-     * array.
-     */
-    while (--index >= 0) {
-        const node = nodes[index];
-
-        /*
-         * Remove the node if it is not unique.
-         * We are going through the array from the end, so we only
-         * have to check nodes that preceed the node under consideration in the array.
-         */
-        if (index > 0 && nodes.lastIndexOf(node, index - 1) >= 0) {
-            nodes.splice(index, 1);
-            continue;
-        }
-
+    for (const node of members) {
         let ancestor = node.parent;
-        while (ancestor && !nodes.includes(ancestor)) {
+        while (ancestor && !members.has(ancestor) && !known.has(ancestor)) {
             ancestor = ancestor.parent;
         }
-        if (ancestor) nodes.splice(index, 1);
+        const isContained =
+            ancestor !== null &&
+            (members.has(ancestor) || known.get(ancestor) === true);
+        for (
+            let walked = node.parent;
+            walked && walked !== ancestor;
+            walked = walked.parent
+        ) {
+            known.set(walked, isContained);
+        }
+        if (!isContained) {
+            // Only write when the slot changes, so an unchanged input is never written to.
+            if (nodes[kept] !== node) nodes[kept] = node;
+            kept++;
+        }
     }
 
+    if (kept !== nodes.length) nodes.length = kept;
     return nodes;
 }
 /**
@@ -134,9 +137,12 @@ export function compareDocumentPosition(
  * @returns Collection of unique nodes, sorted in document order.
  */
 export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
-    nodes = nodes.filter(
-        (node, index, array) => !array.includes(node, index + 1),
-    );
+    // Keep the last occurrence of each node, as `includes(node, index + 1)` did; `filter` skips holes.
+    const lastIndex = new Map<T, number>();
+    for (let index = 0; index < nodes.length; index++) {
+        if (Reflect.has(nodes, index)) lastIndex.set(nodes[index], index);
+    }
+    nodes = nodes.filter((node, index) => lastIndex.get(node) === index);
 
     nodes.sort((a, b) => {
         const relative = compareDocumentPosition(a, b);

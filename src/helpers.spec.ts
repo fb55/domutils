@@ -1,4 +1,4 @@
-import type { Document, Element } from "domhandler";
+import { type Document, Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
@@ -7,10 +7,54 @@ import {
     uniqueSort,
 } from "./helpers.js";
 
+/**
+ * Counts array reads to detect repeated membership scans.
+ *
+ * @param nodes Nodes to instrument.
+ * @returns The instrumented array and its read count.
+ */
+function countReads(nodes: Element[]): [Element[], () => number] {
+    let reads = 0;
+    const proxy = new Proxy(nodes, {
+        get(target, property, receiver) {
+            reads++;
+            return Reflect.get(target, property, receiver);
+        },
+    });
+    return [proxy, () => reads];
+}
+
 describe("helpers", () => {
     describe("removeSubsets", () => {
+        it("does not repeatedly walk shared ancestors", () => {
+            let parent = new Element("div", {});
+            let reads = 0;
+            for (let depth = 0; depth < 1000; depth++) {
+                const ancestor = parent;
+                parent = new Element("div", {});
+                Object.defineProperty(parent, "parent", {
+                    get() {
+                        reads++;
+                        return ancestor;
+                    },
+                });
+            }
+            const leaves = Array.from({ length: 1000 }, () => {
+                const leaf = new Element("p", {});
+                leaf.parent = parent;
+                return leaf;
+            });
+            expect(removeSubsets([...leaves])).toStrictEqual(leaves);
+            expect(reads).toBeLessThan(3000);
+        });
+
         const dom = parseDocument("<div><p><span></span></p><p></p></div>")
             .children[0] as Element;
+
+        it("leaves an unchanged input untouched", () => {
+            const nodes = Object.freeze([dom.children[0], dom.children[1]]);
+            expect(removeSubsets(nodes as Element[])).toBe(nodes);
+        });
 
         it("removes identical trees", () =>
             expect(removeSubsets([dom, dom])).toHaveLength(1));
@@ -28,6 +72,16 @@ describe("helpers", () => {
             expect(
                 removeSubsets([dom.children[0], dom.children[1]]),
             ).toHaveLength(2));
+
+        it("Handles large arrays in linear time", () => {
+            const divs = parseDocument("<div><p></p></div>".repeat(500))
+                .children as Element[];
+            const ps = divs.map((div) => div.children[0] as Element);
+            const [nodes, reads] = countReads([...ps, ...divs, ...divs]);
+
+            expect(removeSubsets(nodes)).toStrictEqual(divs);
+            expect(reads()).toBeLessThan(10 * nodes.length);
+        });
     });
 
     describe("compareDocumentPosition", () => {
@@ -131,5 +185,26 @@ describe("helpers", () => {
                 span,
                 a,
             ]));
+
+        it("skips holes in sparse arrays", () => {
+            const nodes: Element[] = [];
+            nodes[0] = new Element("p", {});
+            nodes[2] = new Element("p", {});
+            expect(uniqueSort(nodes)).toHaveLength(2);
+        });
+
+        it("removes duplicates from large arrays in linear time", () => {
+            const detached = Array.from(
+                { length: 1000 },
+                () => new Element("p", {}),
+            );
+            const reversed = [...detached];
+            reversed.reverse();
+            const [nodes, reads] = countReads([...detached, ...reversed]);
+
+            // Detached nodes keep their order, and the last occurrence is kept.
+            expect(uniqueSort(nodes)).toStrictEqual(reversed);
+            expect(reads()).toBeLessThan(10 * nodes.length);
+        });
     });
 });
