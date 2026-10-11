@@ -20,7 +20,7 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
         while (ancestor && !members.has(ancestor) && !known.has(ancestor)) {
             ancestor = ancestor.parent;
         }
-        const contained =
+        const isContained =
             ancestor !== null &&
             (members.has(ancestor) || known.get(ancestor) === true);
         for (
@@ -28,9 +28,9 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
             walked && walked !== ancestor;
             walked = walked.parent
         ) {
-            known.set(walked, contained);
+            known.set(walked, isContained);
         }
-        if (!contained) {
+        if (!isContained) {
             // Only write when the slot changes, so an unchanged input is never written to.
             if (nodes[kept] !== node) nodes[kept] = node;
             kept++;
@@ -42,7 +42,7 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
 }
 /**
  * @category Helpers
- * @see {@link http://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
+ * @see {@link https://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
  */
 export const enum DocumentPosition {
     DISCONNECTED = 1,
@@ -68,26 +68,26 @@ export const enum DocumentPosition {
  * > relative order of attribute nodes is implementation-dependent.
  *
  * Source:
- * http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
+ * https://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
  *
  * @category Helpers
  * @param nodeA The first node to use in the comparison
  * @param nodeB The second node to use in the comparison
  * @returns A bitmask describing the input nodes' relative position.
  *
- * See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
+ * See https://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
  * a description of these values.
  */
 export function compareDocumentPosition(
     nodeA: AnyNode,
     nodeB: AnyNode,
 ): number {
-    const aParents: ParentNode[] = [];
-    const bParents: ParentNode[] = [];
-
     if (nodeA === nodeB) {
         return 0;
     }
+
+    const aParents: ParentNode[] = [];
+    const bParents: ParentNode[] = [];
 
     let current = hasChildren(nodeA) ? nodeA : nodeA.parent;
     while (current) {
@@ -140,7 +140,7 @@ export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
     // Keep the last occurrence of each node, as `includes(node, index + 1)` did; `filter` skips holes.
     const lastIndex = new Map<T, number>();
     for (let index = 0; index < nodes.length; index++) {
-        if (index in nodes) lastIndex.set(nodes[index], index);
+        if (Reflect.has(nodes, index)) lastIndex.set(nodes[index], index);
     }
     nodes = nodes.filter((node, index) => lastIndex.get(node) === index);
 
