@@ -76,13 +76,17 @@ function getAttribCheck(
  * Returns a function that returns `true` if either of the input functions
  * returns `true` for a node.
  *
- * @param isA First function to combine.
- * @param isB Second function to combine.
+ * @param isFirstMatch First function to combine.
+ * @param isSecondMatch Second function to combine.
  * @returns A function taking a node and returning `true` if either of the input
  *   functions returns `true` for the node.
  */
-function combineFuncs(isA: TestType, isB: TestType): TestType {
-    return (element: AnyNode) => isA(element) || isB(element);
+function combineFuncs(
+    isFirstMatch: TestType,
+    isSecondMatch: TestType,
+): TestType {
+    return (element: AnyNode) =>
+        isFirstMatch(element) || isSecondMatch(element);
 }
 
 /**

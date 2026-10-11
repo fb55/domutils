@@ -10,20 +10,20 @@ import {
  * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
  *
  * @category Querying
- * @param isTest Function to test nodes on.
+ * @param isMatch Function to test nodes on.
  * @param node Node to search. Will be included in the result set if it matches.
  * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `isTest`.
+ * @returns All nodes passing `isMatch`.
  */
 export function filter(
-    isTest: (element: AnyNode) => boolean,
+    isMatch: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
     return find(
-        isTest,
+        isMatch,
         Array.isArray(node) ? node : [node],
         shouldRecurse,
         limit,
@@ -34,14 +34,14 @@ export function filter(
  * Search an array of nodes and their children for nodes passing a test function.
  *
  * @category Querying
- * @param isTest Function to test nodes on.
+ * @param isMatch Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
- * @returns All nodes passing `isTest`.
+ * @returns All nodes passing `isMatch`.
  */
 export function find(
-    isTest: (element: AnyNode) => boolean,
+    isMatch: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
     shouldRecurse: boolean,
     limit: number,
@@ -70,7 +70,7 @@ export function find(
 
         const element = nodeStack[0][indexStack[0]++];
 
-        if (isTest(element)) {
+        if (isMatch(element)) {
             result.push(element);
             if (--limit <= 0) return result;
         }
@@ -94,23 +94,23 @@ export function find(
  * Finds one element in a tree that passes a test.
  *
  * @category Querying
- * @param isTest Function to test nodes on.
+ * @param isMatch Function to test nodes on.
  * @param nodes Node or array of nodes to search.
  * @param shouldRecurse Also consider child nodes.
- * @returns The first node that passes `isTest`.
+ * @returns The first node that passes `isMatch`.
  */
 export function findOne(
-    isTest: (element: Element) => boolean,
+    isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
     shouldRecurse = true,
 ): Element | null {
     const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
     for (const node of searchedNodes) {
-        if (isTag(node) && isTest(node)) {
+        if (isTag(node) && isMatch(node)) {
             return node;
         }
         if (shouldRecurse && hasChildren(node) && node.children.length > 0) {
-            const found = findOne(isTest, node.children, true);
+            const found = findOne(isMatch, node.children, true);
             if (found) return found;
         }
     }
@@ -122,19 +122,19 @@ export function findOne(
  * Checks if a tree of nodes contains at least one node passing a test.
  *
  * @category Querying
- * @param isTest Function to test nodes on.
+ * @param isMatch Function to test nodes on.
  * @param nodes Array of nodes to search.
  * @returns Whether a tree of nodes contains at least one node passing the test.
  */
 // eslint-disable-next-line unicorn/consistent-boolean-name -- Preserve the existing exported function name.
 export function existsOne(
-    isTest: (element: Element) => boolean,
+    isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): boolean {
     return (Array.isArray(nodes) ? nodes : [nodes]).some(
         (node) =>
-            (isTag(node) && isTest(node)) ||
-            (hasChildren(node) && existsOne(isTest, node.children)),
+            (isTag(node) && isMatch(node)) ||
+            (hasChildren(node) && existsOne(isMatch, node.children)),
     );
 }
 
@@ -144,12 +144,12 @@ export function existsOne(
  * Same as `find`, but limited to elements and with less options, leading to reduced complexity.
  *
  * @category Querying
- * @param isTest Function to test nodes on.
+ * @param isMatch Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @returns All nodes passing `isTest`.
+ * @returns All nodes passing `isMatch`.
  */
 export function findAll(
-    isTest: (element: Element) => boolean,
+    isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): Element[] {
     const result = [];
@@ -172,7 +172,7 @@ export function findAll(
 
         const element = nodeStack[0][indexStack[0]++];
 
-        if (isTag(element) && isTest(element)) result.push(element);
+        if (isTag(element) && isMatch(element)) result.push(element);
 
         if (hasChildren(element) && element.children.length > 0) {
             indexStack.unshift(0);
