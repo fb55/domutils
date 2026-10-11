@@ -123,18 +123,18 @@ export function testElement(options: TestElementOpts, node: AnyNode): boolean {
  * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param nodes Nodes to search through.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes that match `options`.
  */
 export function getElements(
     options: TestElementOpts,
     nodes: AnyNode | AnyNode[],
-    isRecurse: boolean,
+    shouldRecurse: boolean,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
     const test = compileTest(options);
-    return test ? filter(test, nodes, isRecurse, limit) : [];
+    return test ? filter(test, nodes, shouldRecurse, limit) : [];
 }
 
 /**
@@ -143,16 +143,16 @@ export function getElements(
  * @category Legacy Query Functions
  * @param id The unique ID attribute value to look for.
  * @param nodes Nodes to search through.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @returns The node with the supplied ID.
  */
 export function getElementById(
     id: string | ((id: string) => boolean),
     nodes: AnyNode | AnyNode[],
-    isRecurse = true,
+    shouldRecurse = true,
 ): Element | null {
     if (!Array.isArray(nodes)) nodes = [nodes];
-    return findOne(getAttribCheck("id", id), nodes, isRecurse);
+    return findOne(getAttribCheck("id", id), nodes, shouldRecurse);
 }
 
 /**
@@ -161,20 +161,20 @@ export function getElementById(
  * @category Legacy Query Functions
  * @param tagName Tag name to search for.
  * @param nodes Nodes to search through.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes with the supplied `tagName`.
  */
 export function getElementsByTagName(
     tagName: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
-    isRecurse = true,
+    shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
     return filter(
         Checks["tag_name"](tagName),
         nodes,
-        isRecurse,
+        shouldRecurse,
         limit,
     ) as Element[];
 }
@@ -185,20 +185,20 @@ export function getElementsByTagName(
  * @category Legacy Query Functions
  * @param className Class name to search for.
  * @param nodes Nodes to search through.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes with the supplied `className`.
  */
 export function getElementsByClassName(
     className: string | ((name: string) => boolean),
     nodes: AnyNode | AnyNode[],
-    isRecurse = true,
+    shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
     return filter(
         getAttribCheck("class", className),
         nodes,
-        isRecurse,
+        shouldRecurse,
         limit,
     ) as Element[];
 }
@@ -209,15 +209,20 @@ export function getElementsByClassName(
  * @category Legacy Query Functions
  * @param type Element type to look for.
  * @param nodes Nodes to search through.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes with the supplied `type`.
  */
 export function getElementsByTagType(
     type: ElementType | ((type: ElementType) => boolean),
     nodes: AnyNode | AnyNode[],
-    isRecurse = true,
+    shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
-    return filter(Checks["tag_type"](type as string), nodes, isRecurse, limit);
+    return filter(
+        Checks["tag_type"](type as string),
+        nodes,
+        shouldRecurse,
+        limit,
+    );
 }

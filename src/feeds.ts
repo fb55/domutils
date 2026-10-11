@@ -258,16 +258,16 @@ function getOneElement(
  *
  * @param tagName Tag name to look for.
  * @param where Node to search in.
- * @param isRecurse Whether to recurse into child nodes.
+ * @param shouldRecurse Whether to recurse into child nodes.
  * @returns The text content of the element.
  */
 function fetch(
     tagName: string,
     where: AnyNode | AnyNode[],
-    isRecurse = false,
+    shouldRecurse = false,
 ): string {
     return textContent(
-        getElementsByTagName(tagName, where, isRecurse, 1),
+        getElementsByTagName(tagName, where, shouldRecurse, 1),
     ).trim();
 }
 
@@ -278,16 +278,16 @@ function fetch(
  * @param property Property name.
  * @param tagName Tag name that contains the conditionally added property.
  * @param where Element to search for the property.
- * @param isRecurse Whether to recurse into child nodes.
+ * @param shouldRecurse Whether to recurse into child nodes.
  */
 function addConditionally<T>(
     object: T,
     property: keyof T,
     tagName: string,
     where: AnyNode[],
-    isRecurse = false,
+    shouldRecurse = false,
 ) {
-    const value = fetch(tagName, where, isRecurse);
+    const value = fetch(tagName, where, shouldRecurse);
     if (value) object[property] = value as unknown as T[keyof T];
 }
 

@@ -12,17 +12,22 @@ import {
  * @category Querying
  * @param isTest Function to test nodes on.
  * @param node Node to search. Will be included in the result set if it matches.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isTest`.
  */
 export function filter(
     isTest: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
-    isRecurse = true,
+    shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
-    return find(isTest, Array.isArray(node) ? node : [node], isRecurse, limit);
+    return find(
+        isTest,
+        Array.isArray(node) ? node : [node],
+        shouldRecurse,
+        limit,
+    );
 }
 
 /**
@@ -31,14 +36,14 @@ export function filter(
  * @category Querying
  * @param isTest Function to test nodes on.
  * @param nodes Array of nodes to search.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isTest`.
  */
 export function find(
     isTest: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
-    isRecurse: boolean,
+    shouldRecurse: boolean,
     limit: number,
 ): AnyNode[] {
     const result: AnyNode[] = [];
@@ -70,7 +75,11 @@ export function find(
             if (--limit <= 0) return result;
         }
 
-        if (isRecurse && hasChildren(element) && element.children.length > 0) {
+        if (
+            shouldRecurse &&
+            hasChildren(element) &&
+            element.children.length > 0
+        ) {
             /*
              * Add the children to the stack. We are depth-first, so this is
              * the next array we look at.
@@ -87,20 +96,20 @@ export function find(
  * @category Querying
  * @param isTest Function to test nodes on.
  * @param nodes Node or array of nodes to search.
- * @param isRecurse Also consider child nodes.
+ * @param shouldRecurse Also consider child nodes.
  * @returns The first node that passes `isTest`.
  */
 export function findOne(
     isTest: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
-    isRecurse = true,
+    shouldRecurse = true,
 ): Element | null {
     const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
     for (const node of searchedNodes) {
         if (isTag(node) && isTest(node)) {
             return node;
         }
-        if (isRecurse && hasChildren(node) && node.children.length > 0) {
+        if (shouldRecurse && hasChildren(node) && node.children.length > 0) {
             const found = findOne(isTest, node.children, true);
             if (found) return found;
         }
