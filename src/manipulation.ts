@@ -33,6 +33,9 @@ export function replaceElement(
     element: ChildNode,
     replacement: ChildNode,
 ): void {
+    if (element === replacement) return;
+    removeElement(replacement);
+
     replacement.prev = element.prev;
     if (replacement.prev) {
         replacement.prev.next = replacement;
@@ -54,6 +57,8 @@ export function replaceElement(
         children[elementIndex] = replacement;
         element.parent = null;
     }
+    element.prev = null;
+    element.next = null;
 }
 
 /**
