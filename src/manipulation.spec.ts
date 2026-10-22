@@ -211,6 +211,55 @@ describe("manipulation", () => {
         });
     });
     describe("replaceElement", () => {
+        it("moves an attached replacement out of its previous parent", () => {
+            const [destination, source] = parseDOM(
+                "<div><p></p></div><section><span></span></section>",
+            ) as Element[];
+            const old = destination.children[0];
+            const replacement = source.children[0];
+            replaceElement(old, replacement);
+            expect(source.children).toEqual([]);
+            expect(destination.children).toEqual([replacement]);
+            expect(replacement.parent).toBe(destination);
+        });
+
+        it.each([0, 2])(
+            "moves an adjacent sibling at index %i without duplicating it",
+            (index) => {
+                const parent = parseDOM(
+                    "<div><a></a><b></b><c></c></div>",
+                )[0] as Element;
+                const old = parent.children[1];
+                const replacement = parent.children[index];
+                replaceElement(old, replacement);
+                expect(parent.children).toHaveLength(2);
+                expect(parent.children[0].next).toBe(parent.children[1]);
+                expect(parent.children[1].prev).toBe(parent.children[0]);
+                expect(parent.children[0].prev).toBeNull();
+                expect(parent.children[1].next).toBeNull();
+            },
+        );
+
+        it("leaves self-replacement unchanged", () => {
+            const parent = parseDOM("<div><p></p></div>")[0] as Element;
+            const child = parent.children[0];
+            replaceElement(child, child);
+            expect(child.parent).toBe(parent);
+            expect(parent.children).toEqual([child]);
+        });
+
+        it("detaches the replaced node's sibling links", () => {
+            const parent = parseDOM(
+                "<div><a></a><b></b><c></c></div>",
+            )[0] as Element;
+            const old = parent.children[1];
+            const replacement = parseDOM("<span></span>")[0];
+            replaceElement(old, replacement);
+            removeElement(old);
+            expect(parent.children[0].next).toBe(replacement);
+            expect(parent.children[2].prev).toBe(replacement);
+        });
+
         it("should allow replaced elements to be appended later (#966)", () => {
             const div = parseDOM("<div><p>")[0] as Element;
             const template = parseDOM("<template></template>")[0] as Element;
