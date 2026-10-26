@@ -231,8 +231,16 @@ describe("manipulation", () => {
                 )[0] as Element;
                 const old = parent.children[1];
                 const replacement = parent.children[index];
+                const expected =
+                    index === 0
+                        ? [replacement, parent.children[2]]
+                        : [parent.children[0], replacement];
                 replaceElement(old, replacement);
                 expect(parent.children).toHaveLength(2);
+                expect(parent.children[0]).toBe(expected[0]);
+                expect(parent.children[1]).toBe(expected[1]);
+                expect(replacement.parent).toBe(parent);
+                expect(old.parent).toBeNull();
                 expect(parent.children[0].next).toBe(parent.children[1]);
                 expect(parent.children[1].prev).toBe(parent.children[0]);
                 expect(parent.children[0].prev).toBeNull();
