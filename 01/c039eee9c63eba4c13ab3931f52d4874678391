@@ -1,7 +1,10 @@
 src/traversal.ts
   s_173ca9ea90a33e::t_9f94b2175e32e2 51,54
+  s_3335ef16d16bcd::t_e35357b58129d5 51
+  s_6bbbbbc7cea8e7::t_005727b109a099 54
 src/querying.ts
   s_173ca9ea90a33e::t_9f94b2175e32e2 45-53,60-61,63,70-71,77,84,89-90,161-163,169-170,176,181-182
+  s_3335ef16d16bcd::t_c5b54fec6d60b1 45-53,60-61,63,70-71,77,84,89-90,161-163,169-170,176,181-182
 ---
 {
   "schema_version": "authorship/3.0.0",
@@ -14,6 +17,22 @@ src/querying.ts
         "tool": "claude",
         "id": "707c2ba5-c81c-46be-ad9b-127e1a683e6c",
         "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_3335ef16d16bcd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a103bb-2002-7613-bb70-fa08c256fda4",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_6bbbbbc7cea8e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "477ae3a9-56cd-4535-bf0f-8d24ed1686d9",
+        "model": "claude-fable-5-1"
       },
       "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
     }
