@@ -47,6 +47,8 @@ export function find(
     limit: number,
 ): AnyNode[] {
     const result: AnyNode[] = [];
+    if (limit <= 0) return result;
+
     /** Stack of the arrays we are looking at. */
     const nodeStack: AnyNode[][] = [Array.isArray(nodes) ? nodes : [nodes]];
     /** Stack of the indices within the arrays. */

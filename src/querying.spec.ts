@@ -12,6 +12,24 @@ describe("querying", () => {
         "<body><div><div></div></div><div><p></p></div></body>",
     );
 
+    it.each([
+        { name: "find", search: find },
+        { name: "filter", search: filter },
+    ])("$name should return no nodes for a zero limit", ({ search }) => {
+        let predicateCalls = 0;
+        const result = search(
+            () => {
+                predicateCalls++;
+                return true;
+            },
+            someDeepNodes,
+            true,
+            0,
+        );
+        expect(result).toEqual([]);
+        expect(predicateCalls).toBe(0);
+    });
+
     describe("find", () => {
         it("should accept many children without RangeError", () =>
             expect(
