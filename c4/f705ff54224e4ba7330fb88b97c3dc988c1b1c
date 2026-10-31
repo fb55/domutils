@@ -1,0 +1,23 @@
+src/feeds.ts
+  s_f0bea06376f3c7::t_7b8ae75d09fec5 1,104,161-173,241-263
+  s_f0bea06376f3c7::t_3893492dee06cf 264-265
+src/feeds.spec.ts
+  s_f0bea06376f3c7::t_fe97d61d96f5e9 26-27,31-37
+  s_f0bea06376f3c7::t_d55f846d90e23f 28-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c4f705ff54224e4ba7330fb88b97c3dc988c1b1c",
+  "prompts": {},
+  "sessions": {
+    "s_f0bea06376f3c7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5608812e-dcaf-4d70-8815-e6731b480204",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
