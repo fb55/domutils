@@ -236,6 +236,9 @@ describe("manipulation", () => {
             const div = document_.children[0] as Element;
 
             expect(() => appendChild(div, div)).toThrow("inclusive ancestor");
+            expect(div.parent).toBe(document_);
+            expect(div.prev).toBeNull();
+            expect(div.next).toBeNull();
             expect(div.children).toHaveLength(1);
             expect(getOuterHTML(document_)).toBe("<div><p>a</p></div>");
         });
@@ -245,9 +248,15 @@ describe("manipulation", () => {
                 "<div><section><p>x</p></section></div>",
             );
             const div = document_.children[0] as Element;
-            const p = (div.children[0] as Element).children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
 
             expect(() => appendChild(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
             expect(getOuterHTML(document_)).toBe(
                 "<div><section><p>x</p></section></div>",
             );
@@ -257,7 +266,11 @@ describe("manipulation", () => {
             const document_ = parseDocument("<div><p>a</p></div>");
             const div = document_.children[0] as Element;
 
-            expect(() => prependChild(div, div)).toThrow(/inclusive ancestor/u);
+            expect(() => prependChild(div, div)).toThrow("inclusive ancestor");
+            expect(div.parent).toBe(document_);
+            expect(div.prev).toBeNull();
+            expect(div.next).toBeNull();
+            expect(div.children).toHaveLength(1);
             expect(getOuterHTML(document_)).toBe("<div><p>a</p></div>");
         });
 
@@ -266,9 +279,15 @@ describe("manipulation", () => {
                 "<div><section><p>x</p></section></div>",
             );
             const div = document_.children[0] as Element;
-            const p = (div.children[0] as Element).children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
 
             expect(() => prependChild(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
             expect(getOuterHTML(document_)).toBe(
                 "<div><section><p>x</p></section></div>",
             );
@@ -291,9 +310,15 @@ describe("manipulation", () => {
                 "<div><section><p>x</p></section></div>",
             );
             const div = document_.children[0] as Element;
-            const p = (div.children[0] as Element).children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
 
             expect(() => append(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
             expect(getOuterHTML(document_)).toBe(
                 "<div><section><p>x</p></section></div>",
             );
@@ -316,9 +341,15 @@ describe("manipulation", () => {
                 "<div><section><p>x</p></section></div>",
             );
             const div = document_.children[0] as Element;
-            const p = (div.children[0] as Element).children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
 
             expect(() => prepend(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
             expect(getOuterHTML(document_)).toBe(
                 "<div><section><p>x</p></section></div>",
             );
