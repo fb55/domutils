@@ -213,7 +213,7 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
             medium: attribs["medium"] as unknown as
                 | FeedItemMediaMedium
                 | undefined,
-            isDefault: !!attribs["isDefault"],
+            isDefault: (attribs["isDefault"] || "").toLowerCase() === "true",
         };
 
         for (const attrib of MEDIA_KEYS_STRING) {
