@@ -1,4 +1,4 @@
-import type { Element } from "domhandler";
+import { Document, Element, type ParentNode, Text } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
 import {
@@ -13,6 +13,14 @@ import { getOuterHTML } from "./stringify.js";
 
 function parseDOM(markup: string) {
     return parseDocument(markup).children;
+}
+
+function chain(nodes: Element[]): void {
+    let parent: ParentNode = new Document([]);
+    for (const node of nodes) {
+        appendChild(parent, node);
+        parent = node;
+    }
 }
 
 describe("manipulation", () => {
@@ -257,6 +265,43 @@ describe("manipulation", () => {
             expect(section.parent).toBe(div);
             expect(p.parent).toBe(section);
             expect(getOuterHTML(document_)).toBe(html);
+        });
+
+        it.each([
+            { name: "appending to the deepest node", build: chain },
+            {
+                name: "wrapping every node",
+                build(nodes: Element[]) {
+                    chain(nodes);
+                    for (const node of nodes) {
+                        const wrapper = new Element("span", {});
+                        prepend(node, wrapper);
+                        appendChild(wrapper, node);
+                    }
+                },
+            },
+        ])("should stay linear when $name of a deep chain", ({ build }) => {
+            const length = 1000;
+            let reads = 0;
+            const nodes = Array.from({ length }, () => {
+                const node = new Element("div", {});
+                appendChild(node, new Text("x"));
+                let parent: ParentNode | null = null;
+                Object.defineProperty(node, "parent", {
+                    get() {
+                        reads++;
+                        return parent;
+                    },
+                    set(value: ParentNode | null) {
+                        parent = value;
+                    },
+                });
+                return node;
+            });
+
+            build(nodes);
+
+            expect(reads).toBeLessThan(20 * length);
         });
     });
 });

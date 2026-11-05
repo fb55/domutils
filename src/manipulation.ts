@@ -25,17 +25,40 @@ export function removeElement(element: ChildNode): void {
 /**
  * Check whether `node` is `target` itself or one of its ancestors.
  *
+ * The walk up from `target` stops at `node`'s parent, and after as many steps
+ * as `node` has descendants, so it is bounded by the smaller of the two.
+ *
  * @param node The potential ancestor.
  * @param target The node to start from.
  * @returns Whether `node` is `target` or one of its ancestors.
  */
 function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
+    if (!("children" in node)) return node === target;
+
+    // Steps through `node`'s descendants in document order, once per step up.
+    let descendant: ChildNode | null = node.children[0] ?? null;
+
     for (
         let current: ChildNode | null = target;
-        current !== null;
+        current !== null && current !== node.parent;
         current = current.parent
     ) {
         if (current === node) return true;
+        if (descendant === null) return false;
+
+        if ("children" in descendant && descendant.children.length > 0) {
+            descendant = descendant.children[0];
+        } else {
+            // Children passed to domhandler's constructors have no `parent`.
+            while (
+                descendant.next === null &&
+                descendant.parent !== node &&
+                descendant.parent !== null
+            ) {
+                descendant = descendant.parent;
+            }
+            descendant = descendant.next;
+        }
     }
 
     return false;
