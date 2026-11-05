@@ -52,6 +52,8 @@ export function replaceElement(
     element: ChildNode,
     replacement: ChildNode,
 ): void {
+    if (isInclusiveAncestor(replacement, element)) return;
+
     replacement.prev = element.prev;
     if (replacement.prev) {
         replacement.prev.next = replacement;

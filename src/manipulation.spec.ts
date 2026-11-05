@@ -240,6 +240,10 @@ describe("manipulation", () => {
                 name: "append",
                 move: (div: Element, p: Element) => append(p, div),
             },
+            {
+                name: "replaceElement",
+                move: (div: Element, p: Element) => replaceElement(p, div),
+            },
         ])("$name should skip moving a node into itself", ({ move }) => {
             const html = "<div><section><p>x</p></section></div>";
             const document_ = parseDocument(html);
