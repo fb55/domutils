@@ -23,35 +23,22 @@ export function removeElement(element: ChildNode): void {
 }
 
 /**
- * Check whether `node` is `parent` itself or one of its ancestors.
+ * Check whether `node` is `target` itself or one of its ancestors.
  *
- * The DOM Standard requires a `HierarchyRequestError` for such insertions
- * (see https://dom.spec.whatwg.org/#concept-tree-pre-insert-validity), as
- * they would create a cycle in the tree.
- *
- * @param node The node to be inserted.
- * @param parent The parent to insert into.
+ * @param node The potential ancestor.
+ * @param target The node to start from.
+ * @returns Whether `node` is `target` or one of its ancestors.
  */
-class HierarchyRequestError extends Error {
-    public constructor(message: string) {
-        super(message);
-        this.name = "HierarchyRequestError";
+function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
+    for (
+        let current: ChildNode | null = target;
+        current !== null;
+        current = current.parent
+    ) {
+        if (current === node) return true;
     }
-}
 
-function assertNotInclusiveAncestor(
-    node: ChildNode,
-    parent: ParentNode | null,
-): void {
-    let current = parent;
-    while (current) {
-        if (current === node) {
-            throw new HierarchyRequestError(
-                "The new child is an inclusive ancestor of the parent.",
-            );
-        }
-        current = current.parent;
-    }
+    return false;
 }
 
 /**
@@ -96,7 +83,7 @@ export function replaceElement(
  * @param child The element to be added as a child.
  */
 export function appendChild(parent: ParentNode, child: ChildNode): void {
-    assertNotInclusiveAncestor(child, parent);
+    if (isInclusiveAncestor(child, parent)) return;
     removeElement(child);
 
     child.next = null;
@@ -120,8 +107,7 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
  * @param next The element be added.
  */
 export function append(element: ChildNode, next: ChildNode): void {
-    if (next === element) return;
-    assertNotInclusiveAncestor(next, element.parent);
+    if (isInclusiveAncestor(next, element)) return;
     removeElement(next);
 
     const { parent } = element;
@@ -151,7 +137,7 @@ export function append(element: ChildNode, next: ChildNode): void {
  * @param child The element to be added as a child.
  */
 export function prependChild(parent: ParentNode, child: ChildNode): void {
-    assertNotInclusiveAncestor(child, parent);
+    if (isInclusiveAncestor(child, parent)) return;
     removeElement(child);
 
     child.parent = parent;
@@ -175,8 +161,7 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
  * @param previous The element to be added.
  */
 export function prepend(element: ChildNode, previous: ChildNode): void {
-    if (previous === element) return;
-    assertNotInclusiveAncestor(previous, element.parent);
+    if (isInclusiveAncestor(previous, element)) return;
     removeElement(previous);
 
     const { parent } = element;
