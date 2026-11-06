@@ -4,6 +4,7 @@ src/querying.ts
   s_3335ef16d16bcd::t_87799757c8a404 117,121,124
   s_6bbbbbc7cea8e7::t_09e89b34c0ab2f 189
   s_3335ef16d16bcd::t_bbe2348616bf4b 194-200,202-206,208-210,212-214,216
+  s_0a36f5044cfe90::t_9085ca18fb9bb8 118-120,193,201,207,211
 ---
 {
   "schema_version": "authorship/3.0.0",
@@ -11,6 +12,14 @@ src/querying.ts
   "base_commit_sha": "5b5f107df0b392c89a7a6ad25c0980a73ae2aa53",
   "prompts": {},
   "sessions": {
+    "s_0a36f5044cfe90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ed50342-935e-4e3b-ba01-488b98f1b29f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
     "s_3335ef16d16bcd": {
       "agent_id": {
         "tool": "codex",
