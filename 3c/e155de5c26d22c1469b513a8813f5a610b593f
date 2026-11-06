@@ -1,0 +1,21 @@
+eslint.config.mjs
+  s_ba14dd1ee262cd::t_0c98195b627346 91-98
+src/querying.ts
+  s_ba14dd1ee262cd::t_0c98195b627346 249
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3ce155de5c26d22c1469b513a8813f5a610b593f",
+  "prompts": {},
+  "sessions": {
+    "s_ba14dd1ee262cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9ae83534-f3b2-4a2c-8127-03c49a8d3176",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
