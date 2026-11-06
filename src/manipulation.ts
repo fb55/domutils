@@ -76,6 +76,7 @@ export function replaceElement(
     replacement: ChildNode,
 ): void {
     if (isInclusiveAncestor(replacement, element)) return;
+    removeElement(replacement);
 
     replacement.prev = element.prev;
     if (replacement.prev) {
@@ -98,6 +99,8 @@ export function replaceElement(
         children[elementIndex] = replacement;
         element.parent = null;
     }
+    element.prev = null;
+    element.next = null;
 }
 
 /**

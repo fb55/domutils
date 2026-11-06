@@ -1,7 +1,7 @@
 import { ElementType } from "domelementtype";
 import type { Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { existsOne, filter, find, findAll, findOne } from "./querying.js";
 
 describe("querying", () => {
@@ -13,6 +13,12 @@ describe("querying", () => {
     );
 
     describe("find", () => {
+        it("should return no nodes for a zero limit", () => {
+            const test = vi.fn(() => true);
+            expect(find(test, someDeepNodes, true, 0)).toEqual([]);
+            expect(test).not.toHaveBeenCalled();
+        });
+
         it("should accept many children without RangeError", () =>
             expect(
                 find(
