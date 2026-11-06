@@ -1,0 +1,70 @@
+src/helpers.ts
+  s_a4ecea344b5979::t_8cb0c4923325eb 194
+  s_da2888a5afc5d9::t_827f549571d2ed 171,173
+  s_0a36f5044cfe90::t_32a815f2b485a2 153,159,167,214-223,237
+  s_a78ca899955cf9::t_57731c7f352deb 243
+  s_a78ca899955cf9::t_f40c9ed2023442 143,149,151,164-166,177-193,200,202-213,225-233,235-236,238-239
+  s_a4ecea344b5979::t_5032a7bb37e49e 161,163,169,250-251
+  s_a4ecea344b5979::t_796cdfcb83e839 150,152,154-158,160,162,168,170,172,174-176,195-199,201,224,234,244-249,252-255
+  s_da2888a5afc5d9::t_6105fd1cdef8a5 240-242,256-257
+src/helpers.spec.ts
+  s_da2888a5afc5d9::t_3d019384be4d80 211-219,223-225,234-235
+  s_a78ca899955cf9::t_eab7d75f9f47b3 274-288,295-306,308-310,314-315,320-328,335-350,361-375
+  s_da2888a5afc5d9::t_82601414bd8c6d 220-222,226-233
+  s_a4ecea344b5979::t_4cd0730cfdb497 259-273
+  s_0a36f5044cfe90::t_32a815f2b485a2 307,311
+  s_a78ca899955cf9::t_3f5f68cbf0f83a 1,289-294,329-334
+  s_da2888a5afc5d9::t_c25296ba9aafa2 9
+  s_a78ca899955cf9::t_4296e956bb97b0 312-313,316-319
+  s_a4ecea344b5979::t_796cdfcb83e839 238-257
+  s_8abaa648bbb41c::t_af3e6f5e86424c 258
+  s_da2888a5afc5d9::t_0cdd57bf0cbfdd 210,236-237,351-360,376-400
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "22ae5705f7720e05ad8e8faf14749ba9a2ae97ed",
+  "prompts": {},
+  "sessions": {
+    "s_0a36f5044cfe90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ed50342-935e-4e3b-ba01-488b98f1b29f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    },
+    "s_8abaa648bbb41c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2e789cca-9448-491d-bcaa-a3488f4673b4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_a4ecea344b5979": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9540351-abc2-4452-96b3-1ddb7d2c48bf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    },
+    "s_a78ca899955cf9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5c7b4bfd-93a1-466a-adef-a45ebe52a884",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    },
+    "s_da2888a5afc5d9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "33271b2e-e8b0-43be-9f17-976e02ffc600",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
