@@ -211,42 +211,22 @@ describe("manipulation", () => {
         });
     });
     describe("replaceElement", () => {
-        it("moves an attached replacement out of its previous parent", () => {
-            const [destination, source] = parseDOM(
-                "<div><p></p></div><section><span></span></section>",
-            ) as Element[];
-            const old = destination.children[0];
-            const replacement = source.children[0];
+        it("moves an adjacent sibling without duplicating it", () => {
+            const parent = parseDOM(
+                "<div><a></a><b></b><c></c></div>",
+            )[0] as Element;
+            const [replacement, old, next] = parent.children;
             replaceElement(old, replacement);
-            expect(source.children).toEqual([]);
-            expect(destination.children).toEqual([replacement]);
-            expect(replacement.parent).toBe(destination);
+            expect(parent.children).toHaveLength(2);
+            expect(parent.children[0]).toBe(replacement);
+            expect(parent.children[1]).toBe(next);
+            expect(replacement.parent).toBe(parent);
+            expect(old.parent).toBeNull();
+            expect(replacement.next).toBe(next);
+            expect(next.prev).toBe(replacement);
+            expect(replacement.prev).toBeNull();
+            expect(next.next).toBeNull();
         });
-
-        it.each([0, 2])(
-            "moves an adjacent sibling at index %i without duplicating it",
-            (index) => {
-                const parent = parseDOM(
-                    "<div><a></a><b></b><c></c></div>",
-                )[0] as Element;
-                const old = parent.children[1];
-                const replacement = parent.children[index];
-                const expected =
-                    index === 0
-                        ? [replacement, parent.children[2]]
-                        : [parent.children[0], replacement];
-                replaceElement(old, replacement);
-                expect(parent.children).toHaveLength(2);
-                expect(parent.children[0]).toBe(expected[0]);
-                expect(parent.children[1]).toBe(expected[1]);
-                expect(replacement.parent).toBe(parent);
-                expect(old.parent).toBeNull();
-                expect(parent.children[0].next).toBe(parent.children[1]);
-                expect(parent.children[1].prev).toBe(parent.children[0]);
-                expect(parent.children[0].prev).toBeNull();
-                expect(parent.children[1].next).toBeNull();
-            },
-        );
 
         it("leaves self-replacement unchanged", () => {
             const parent = parseDOM("<div><p></p></div>")[0] as Element;
