@@ -1,0 +1,34 @@
+src/querying.spec.ts
+  s_0a36f5044cfe90::t_e6f91f9087a5f5 2,145-165
+src/querying.ts
+  s_0a36f5044cfe90::t_9adedbac703357 199,211,221-248,250-261
+  s_ba14dd1ee262cd::t_0c98195b627346 249
+src/traversal.ts
+  s_0a36f5044cfe90::t_7553a03f1d601e 48-51
+eslint.config.mjs
+  s_ba14dd1ee262cd::t_0c98195b627346 91-98
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2f206e6802125112ac7c35bd04dcb3363f1b6089",
+  "prompts": {},
+  "sessions": {
+    "s_0a36f5044cfe90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ed50342-935e-4e3b-ba01-488b98f1b29f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_ba14dd1ee262cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9ae83534-f3b2-4a2c-8127-03c49a8d3176",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
