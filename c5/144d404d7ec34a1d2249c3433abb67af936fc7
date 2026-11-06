@@ -1,0 +1,24 @@
+src/helpers.ts
+  s_ba14dd1ee262cd::t_011ac0961ed9df 145
+src/helpers.spec.ts
+  s_ba14dd1ee262cd::t_ac909e92a9ae7d 1
+  s_ba14dd1ee262cd::t_095acf86349467 239-249,266,269-275,280-285
+eslint.config.mjs
+  s_ba14dd1ee262cd::t_011ac0961ed9df 76-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c5144d404d7ec34a1d2249c3433abb67af936fc7",
+  "prompts": {},
+  "sessions": {
+    "s_ba14dd1ee262cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9ae83534-f3b2-4a2c-8127-03c49a8d3176",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
