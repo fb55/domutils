@@ -253,17 +253,27 @@ describe("manipulation", () => {
                 move: (div: Element, p: Element) => replaceElement(p, div),
             },
         ])("$name should skip moving a node into itself", ({ move }) => {
-            const html = "<div><section><p>x</p></section></div>";
+            const html =
+                "<h1></h1><div><section><b></b><p>x</p><em></em></section></div><h2></h2>";
             const document_ = parseDocument(html);
-            const div = document_.children[0] as Element;
+            const [h1, div, h2] = document_.children as Element[];
             const section = div.children[0] as Element;
-            const p = section.children[0] as Element;
+            const [b, p, em] = section.children as Element[];
 
             move(div, p);
 
             expect(div.parent).toBe(document_);
             expect(section.parent).toBe(div);
             expect(p.parent).toBe(section);
+            for (const [previous, node, next] of [
+                [h1, div, h2],
+                [b, p, em],
+            ]) {
+                expect(node.prev).toBe(previous);
+                expect(node.next).toBe(next);
+                expect(previous.next).toBe(node);
+                expect(next.prev).toBe(node);
+            }
             expect(getOuterHTML(document_)).toBe(html);
         });
 
