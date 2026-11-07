@@ -1,0 +1,61 @@
+src/helpers.spec.ts
+  s_a4ecea344b5979::t_796cdfcb83e839 239-258
+  s_da2888a5afc5d9::t_3d019384be4d80 212-220,224-226,235-236
+  s_a4ecea344b5979::t_4cd0730cfdb497 260-274
+  s_8abaa648bbb41c::t_af3e6f5e86424c 259
+  s_a78ca899955cf9::t_4296e956bb97b0 313-314,317-320
+  s_da2888a5afc5d9::t_c25296ba9aafa2 10
+  s_a78ca899955cf9::t_eab7d75f9f47b3 275-289,296-312,315-316,321-329,336-351,362-376
+  s_da2888a5afc5d9::t_0cdd57bf0cbfdd 211,237-238,352-361,377-401
+  s_da2888a5afc5d9::t_82601414bd8c6d 221-223,227-234
+  s_a78ca899955cf9::t_3f5f68cbf0f83a 1,290-295,330-335
+  s_a78ca899955cf9::t_46e4a9fd9d4d25 9
+src/helpers.ts
+  s_a4ecea344b5979::t_8cb0c4923325eb 194
+  s_a78ca899955cf9::t_f40c9ed2023442 143,149,151,164-166,177-193,200,202-214,216-220,222-230,232-236
+  s_a4ecea344b5979::t_796cdfcb83e839 150,152-160,162,167-168,170,172,174-176,195-199,201,221,231,241-246,249-252
+  s_a78ca899955cf9::t_57731c7f352deb 215,240
+  s_da2888a5afc5d9::t_6105fd1cdef8a5 237-239,253-254
+  s_da2888a5afc5d9::t_827f549571d2ed 171,173
+  s_a4ecea344b5979::t_5032a7bb37e49e 161,163,169,247-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "faf53a73a24b3a6be07d58a0396f71cc15d59355",
+  "prompts": {},
+  "sessions": {
+    "s_8abaa648bbb41c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2e789cca-9448-491d-bcaa-a3488f4673b4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_a4ecea344b5979": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9540351-abc2-4452-96b3-1ddb7d2c48bf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    },
+    "s_a78ca899955cf9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5c7b4bfd-93a1-466a-adef-a45ebe52a884",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    },
+    "s_da2888a5afc5d9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "33271b2e-e8b0-43be-9f17-976e02ffc600",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
