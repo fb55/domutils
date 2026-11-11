@@ -1,0 +1,16 @@
+src/traversal.spec.ts
+  h_c09f8bd1046292 3,34-48
+src/traversal.ts
+  h_c09f8bd1046292 48-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a40950cb0ff6f3674bc17c106b34e278887ff87d",
+  "prompts": {},
+  "humans": {
+    "h_c09f8bd1046292": {
+      "author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
