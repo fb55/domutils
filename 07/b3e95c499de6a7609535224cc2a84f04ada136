@@ -1,0 +1,21 @@
+src/querying.spec.ts
+  s_c3ffcbdac4ed43::t_0fdfdcba24c680 2,80-104
+src/querying.ts
+  s_c3ffcbdac4ed43::t_99deedae778dd6 117,125-178
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "07b3e95c499de6a7609535224cc2a84f04ada136",
+  "prompts": {},
+  "sessions": {
+    "s_c3ffcbdac4ed43": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c86a-faf7-72e3-962c-d999960e6363",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
