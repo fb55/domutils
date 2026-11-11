@@ -1,0 +1,16 @@
+src/querying.spec.ts
+  h_c09f8bd1046292 164-191
+src/querying.ts
+  h_c09f8bd1046292 194
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "24e283fc5cc017d28126cf11f22ef021a57826da",
+  "prompts": {},
+  "humans": {
+    "h_c09f8bd1046292": {
+      "author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
