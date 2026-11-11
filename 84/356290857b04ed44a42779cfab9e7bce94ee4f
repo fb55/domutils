@@ -1,0 +1,27 @@
+src/traversal.ts
+  s_0a36f5044cfe90::t_7553a03f1d601e 48-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "84356290857b04ed44a42779cfab9e7bce94ee4f",
+  "prompts": {},
+  "sessions": {
+    "s_0a36f5044cfe90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ed50342-935e-4e3b-ba01-488b98f1b29f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_ba14dd1ee262cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9ae83534-f3b2-4a2c-8127-03c49a8d3176",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
