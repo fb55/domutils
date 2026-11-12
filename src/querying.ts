@@ -125,6 +125,16 @@ export function find(
  * @param shouldRecurse Also consider child nodes.
  * @returns The first node that passes `isMatch`.
  */
+export function findOne<T extends Element>(
+    isMatch: (element: Element) => element is T,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse?: boolean,
+): T | null;
+export function findOne(
+    isMatch: (element: Element) => boolean,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse?: boolean,
+): Element | null;
 export function findOne(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
@@ -174,6 +184,14 @@ export function existsOne(
  * @param nodes Array of nodes to search.
  * @returns All nodes passing `isMatch`.
  */
+export function findAll<T extends Element>(
+    isMatch: (element: Element) => element is T,
+    nodes: AnyNode[] | ParentNode,
+): T[];
+export function findAll(
+    isMatch: (element: Element) => boolean,
+    nodes: AnyNode[] | ParentNode,
+): Element[];
 export function findAll(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,

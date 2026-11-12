@@ -51,6 +51,20 @@ describe("querying", () => {
             ]);
         });
 
+        it("should narrow element-only query results", () => {
+            type Div = Element & { name: "div" };
+            const isDiv = (element: Element): element is Div =>
+                element.name === "div";
+            const first = findOne(isDiv, document);
+            const all = findAll(isDiv, document);
+            expectTypeOf(first).toEqualTypeOf<Div | null>();
+            expectTypeOf(all).toEqualTypeOf<Div[]>();
+            expect(first?.name).toBe("div");
+            expect(all).toEqual([first]);
+            expect(findOne(isDiv, document, false)).toBeNull();
+            expect(findAll(isDiv, [])).toEqual([]);
+        });
+
         it("should preserve the general result for boolean predicates", () => {
             const isElement = (node: AnyNode): boolean => isTag(node);
             const filtered = filter(isElement, document);
