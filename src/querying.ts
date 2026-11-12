@@ -16,6 +16,18 @@ import {
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isMatch`.
  */
+export function filter<T extends AnyNode>(
+    isMatch: (element: AnyNode) => element is T,
+    node: AnyNode | AnyNode[],
+    shouldRecurse?: boolean,
+    limit?: number,
+): T[];
+export function filter(
+    isMatch: (element: AnyNode) => boolean,
+    node: AnyNode | AnyNode[],
+    shouldRecurse?: boolean,
+    limit?: number,
+): AnyNode[];
 export function filter(
     isMatch: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
@@ -40,6 +52,18 @@ export function filter(
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isMatch`.
  */
+export function find<T extends AnyNode>(
+    isMatch: (element: AnyNode) => element is T,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse: boolean,
+    limit: number,
+): T[];
+export function find(
+    isMatch: (element: AnyNode) => boolean,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse: boolean,
+    limit: number,
+): AnyNode[];
 export function find(
     isMatch: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
