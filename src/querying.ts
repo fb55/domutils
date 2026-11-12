@@ -16,6 +16,18 @@ import {
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isMatch`.
  */
+export function filter<T extends AnyNode>(
+    isMatch: (element: AnyNode) => element is T,
+    node: AnyNode | AnyNode[],
+    shouldRecurse?: boolean,
+    limit?: number,
+): T[];
+export function filter(
+    isMatch: (element: AnyNode) => boolean,
+    node: AnyNode | AnyNode[],
+    shouldRecurse?: boolean,
+    limit?: number,
+): AnyNode[];
 export function filter(
     isMatch: (element: AnyNode) => boolean,
     node: AnyNode | AnyNode[],
@@ -40,6 +52,18 @@ export function filter(
  * @param limit Maximum number of nodes to return.
  * @returns All nodes passing `isMatch`.
  */
+export function find<T extends AnyNode>(
+    isMatch: (element: AnyNode) => element is T,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse: boolean,
+    limit: number,
+): T[];
+export function find(
+    isMatch: (element: AnyNode) => boolean,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse: boolean,
+    limit: number,
+): AnyNode[];
 export function find(
     isMatch: (element: AnyNode) => boolean,
     nodes: AnyNode[] | ParentNode,
@@ -101,6 +125,16 @@ export function find(
  * @param shouldRecurse Also consider child nodes.
  * @returns The first node that passes `isMatch`.
  */
+export function findOne<T extends Element>(
+    isMatch: (element: Element) => element is T,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse?: boolean,
+): T | null;
+export function findOne(
+    isMatch: (element: Element) => boolean,
+    nodes: AnyNode[] | ParentNode,
+    shouldRecurse?: boolean,
+): Element | null;
 export function findOne(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
@@ -150,6 +184,14 @@ export function existsOne(
  * @param nodes Array of nodes to search.
  * @returns All nodes passing `isMatch`.
  */
+export function findAll<T extends Element>(
+    isMatch: (element: Element) => element is T,
+    nodes: AnyNode[] | ParentNode,
+): T[];
+export function findAll(
+    isMatch: (element: Element) => boolean,
+    nodes: AnyNode[] | ParentNode,
+): Element[];
 export function findAll(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
