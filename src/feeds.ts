@@ -188,15 +188,12 @@ function getRssFeed(feedRoot: Element) {
 }
 
 const MEDIA_KEYS_STRING = ["url", "type", "lang"] as const;
-const MEDIA_KEYS_INT = [
-    "fileSize",
+const MEDIA_KEYS_INT = ["fileSize", "channels", "height", "width"] as const;
+const MEDIA_KEYS_FLOAT = [
     "bitrate",
     "framerate",
     "samplingrate",
-    "channels",
     "duration",
-    "height",
-    "width",
 ] as const;
 
 /**
@@ -226,6 +223,14 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
             if (value) {
                 // eslint-disable-next-line unicorn/prefer-number-coercion -- Feed values intentionally allow numeric prefixes.
                 media[attrib] = Number.parseInt(value, 10);
+            }
+        }
+
+        for (const attrib of MEDIA_KEYS_FLOAT) {
+            const value = attribs[attrib];
+            if (value) {
+                // eslint-disable-next-line unicorn/prefer-number-coercion -- Feed values intentionally allow numeric prefixes.
+                media[attrib] = Number.parseFloat(value);
             }
         }
 
