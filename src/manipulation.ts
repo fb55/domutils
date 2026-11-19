@@ -23,6 +23,38 @@ export function removeElement(element: ChildNode): void {
 }
 
 /**
+ * Check whether `node` is `parent` itself or one of its ancestors.
+ *
+ * The DOM Standard requires a `HierarchyRequestError` for such insertions
+ * (see https://dom.spec.whatwg.org/#concept-tree-pre-insert-validity), as
+ * they would create a cycle in the tree.
+ *
+ * @param node The node to be inserted.
+ * @param parent The parent to insert into.
+ */
+class HierarchyRequestError extends Error {
+    public constructor(message: string) {
+        super(message);
+        this.name = "HierarchyRequestError";
+    }
+}
+
+function assertNotInclusiveAncestor(
+    node: ChildNode,
+    parent: ParentNode | null,
+): void {
+    let current = parent;
+    while (current) {
+        if (current === node) {
+            throw new HierarchyRequestError(
+                "The new child is an inclusive ancestor of the parent.",
+            );
+        }
+        current = current.parent;
+    }
+}
+
+/**
  * Replace an element in the dom
  *
  * @category Manipulation
@@ -69,6 +101,7 @@ export function replaceElement(
  * @param child The element to be added as a child.
  */
 export function appendChild(parent: ParentNode, child: ChildNode): void {
+    assertNotInclusiveAncestor(child, parent);
     removeElement(child);
 
     child.next = null;
@@ -92,6 +125,8 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
  * @param next The element be added.
  */
 export function append(element: ChildNode, next: ChildNode): void {
+    if (next === element) return;
+    assertNotInclusiveAncestor(next, element.parent);
     removeElement(next);
 
     const { parent } = element;
@@ -121,6 +156,7 @@ export function append(element: ChildNode, next: ChildNode): void {
  * @param child The element to be added as a child.
  */
 export function prependChild(parent: ParentNode, child: ChildNode): void {
+    assertNotInclusiveAncestor(child, parent);
     removeElement(child);
 
     child.parent = parent;
@@ -144,6 +180,8 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
  * @param previous The element to be added.
  */
 export function prepend(element: ChildNode, previous: ChildNode): void {
+    if (previous === element) return;
+    assertNotInclusiveAncestor(previous, element.parent);
     removeElement(previous);
 
     const { parent } = element;

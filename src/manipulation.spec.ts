@@ -9,6 +9,7 @@ import {
     removeElement,
     replaceElement,
 } from "./manipulation.js";
+import { getOuterHTML } from "./stringify.js";
 
 function parseDOM(markup: string) {
     return parseDocument(markup).children;
@@ -264,6 +265,143 @@ describe("manipulation", () => {
                   </template>
                 </div>
             `);
+        });
+    });
+    describe("cyclic insertion", () => {
+        it("appendChild should reject an element as its own child", () => {
+            const document_ = parseDocument("<div><p>a</p></div>");
+            const div = document_.children[0] as Element;
+
+            expect(() => appendChild(div, div)).toThrow("inclusive ancestor");
+            expect(div.parent).toBe(document_);
+            expect(div.prev).toBeNull();
+            expect(div.next).toBeNull();
+            expect(div.children).toHaveLength(1);
+            expect(getOuterHTML(document_)).toBe("<div><p>a</p></div>");
+        });
+
+        it("appendChild should reject an ancestor of the parent", () => {
+            const document_ = parseDocument(
+                "<div><section><p>x</p></section></div>",
+            );
+            const div = document_.children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
+
+            expect(() => appendChild(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
+            expect(getOuterHTML(document_)).toBe(
+                "<div><section><p>x</p></section></div>",
+            );
+        });
+
+        it("prependChild should reject an element as its own child", () => {
+            const document_ = parseDocument("<div><p>a</p></div>");
+            const div = document_.children[0] as Element;
+
+            expect(() => prependChild(div, div)).toThrow("inclusive ancestor");
+            expect(div.parent).toBe(document_);
+            expect(div.prev).toBeNull();
+            expect(div.next).toBeNull();
+            expect(div.children).toHaveLength(1);
+            expect(getOuterHTML(document_)).toBe("<div><p>a</p></div>");
+        });
+
+        it("prependChild should reject an ancestor of the parent", () => {
+            const document_ = parseDocument(
+                "<div><section><p>x</p></section></div>",
+            );
+            const div = document_.children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
+
+            expect(() => prependChild(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
+            expect(getOuterHTML(document_)).toBe(
+                "<div><section><p>x</p></section></div>",
+            );
+        });
+
+        it("append should ignore an element inserted after itself", () => {
+            const document_ = parseDocument("<div><p>a</p><p>b</p></div>");
+            const div = document_.children[0] as Element;
+            const [a, b] = div.children as Element[];
+
+            append(a, a);
+            expect(a.parent).toBe(div);
+            expect(a.prev).toBeNull();
+            expect(a.next).toBe(b);
+            expect(div.children).toHaveLength(2);
+        });
+
+        it("append should reject an ancestor of the element", () => {
+            const document_ = parseDocument(
+                "<div><section><p>x</p></section></div>",
+            );
+            const div = document_.children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
+
+            expect(() => append(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
+            expect(getOuterHTML(document_)).toBe(
+                "<div><section><p>x</p></section></div>",
+            );
+        });
+
+        it("prepend should ignore an element inserted before itself", () => {
+            const document_ = parseDocument("<div><p>a</p><p>b</p></div>");
+            const div = document_.children[0] as Element;
+            const [a, b] = div.children as Element[];
+
+            prepend(b, b);
+            expect(b.parent).toBe(div);
+            expect(b.prev).toBe(a);
+            expect(b.next).toBeNull();
+            expect(div.children).toHaveLength(2);
+        });
+
+        it("prepend should reject an ancestor of the element", () => {
+            const document_ = parseDocument(
+                "<div><section><p>x</p></section></div>",
+            );
+            const div = document_.children[0] as Element;
+            const section = div.children[0] as Element;
+            const p = section.children[0] as Element;
+
+            expect(() => prepend(p, div)).toThrow("inclusive ancestor");
+            expect(div.children[0]).toBe(section);
+            expect(section.parent).toBe(div);
+            expect(section.prev).toBeNull();
+            expect(section.next).toBeNull();
+            expect(p.parent).toBe(section);
+            expect(getOuterHTML(document_)).toBe(
+                "<div><section><p>x</p></section></div>",
+            );
+        });
+
+        it("should report a HierarchyRequestError", () => {
+            const document_ = parseDocument("<div><p>a</p></div>");
+            const div = document_.children[0] as Element;
+
+            try {
+                appendChild(div, div);
+                expect.unreachable();
+            } catch (error) {
+                expect((error as Error).name).toBe("HierarchyRequestError");
+            }
         });
     });
 });
