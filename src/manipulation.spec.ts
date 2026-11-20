@@ -282,8 +282,16 @@ describe("manipulation", () => {
                 move: (div: Element) => appendChild(div, div),
             },
             {
+                name: "prependChild",
+                move: (div: Element) => prependChild(div, div),
+            },
+            {
                 name: "append",
                 move: (div: Element, p: Element) => append(p, div),
+            },
+            {
+                name: "prepend",
+                move: (div: Element, p: Element) => prepend(p, div),
             },
             {
                 name: "replaceElement",
