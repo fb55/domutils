@@ -34,7 +34,7 @@ describe("querying", () => {
             ]);
         });
 
-        it("should narrow find results and respect recursion and limits", () => {
+        it("should distinguish type guards and boolean predicates", () => {
             const text = find(isText, document, true, 1);
             const directText = find(
                 isText,
@@ -49,6 +49,13 @@ describe("querying", () => {
                 "before",
                 "after",
             ]);
+
+            const isElement = (node: AnyNode): boolean => isTag(node);
+            const filtered = filter(isElement, document);
+            const found = find(isElement, document, true, 1);
+            expectTypeOf(filtered).toEqualTypeOf<AnyNode[]>();
+            expectTypeOf(found).toEqualTypeOf<AnyNode[]>();
+            expect(filtered).toEqual(found);
         });
 
         it("should narrow element-only query results", () => {
@@ -63,15 +70,6 @@ describe("querying", () => {
             expect(all).toEqual([first]);
             expect(findOne(isDiv, document, false)).toBeNull();
             expect(findAll(isDiv, [])).toEqual([]);
-        });
-
-        it("should preserve the general result for boolean predicates", () => {
-            const isElement = (node: AnyNode): boolean => isTag(node);
-            const filtered = filter(isElement, document);
-            const found = find(isElement, document, true, 1);
-            expectTypeOf(filtered).toEqualTypeOf<AnyNode[]>();
-            expectTypeOf(found).toEqualTypeOf<AnyNode[]>();
-            expect(filtered).toEqual(found);
         });
     });
 
