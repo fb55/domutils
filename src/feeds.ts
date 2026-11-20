@@ -1,4 +1,4 @@
-import type { AnyNode, Element } from "domhandler";
+import { type AnyNode, type Element, isTag } from "domhandler";
 import { getElementsByTagName } from "./legacy.js";
 import { textContent } from "./stringify.js";
 
@@ -253,19 +253,32 @@ function getOneElement(
     return getElementsByTagName(tagName, node, true, 1)[0];
 }
 
+// eslint-disable-next-line unicorn/prefer-https -- RFC 4287 spells this relation with HTTP.
+const ATOM_ALTERNATE = "http://www.iana.org/assignments/relation/alternate";
+
 /**
  * Get the page an Atom feed or entry points to: the first `alternate` link
- * (a link without `rel` is `alternate`), else the first link.
+ * (a link without `rel` is `alternate`, and RFC 4287 also writes it as an
+ * IANA URI), else the first link.
  *
  * @param nodes Children of the feed or entry.
  * @returns The link's `href`, if any.
  */
 function getAtomLink(nodes: AnyNode[]): string | undefined {
-    const links = getElementsByTagName("link", nodes, false);
-    const alternate = links.find(
-        ({ attribs }) => !attribs["rel"] || attribs["rel"] === "alternate",
-    );
-    return (alternate ?? links.at(0))?.attribs["href"];
+    let first: Element | undefined;
+    for (const node of nodes) {
+        if (!isTag(node) || node.name !== "link") continue;
+        const { rel: relation } = node.attribs;
+        if (
+            !relation ||
+            relation === "alternate" ||
+            relation === ATOM_ALTERNATE
+        ) {
+            return node.attribs["href"];
+        }
+        first ??= node;
+    }
+    return first?.attribs["href"];
 }
 
 /**
