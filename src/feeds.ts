@@ -106,7 +106,7 @@ function getAtomFeed(feedRoot: Element) {
             addConditionally(entry, "id", "id", children);
             addConditionally(entry, "title", "title", children);
 
-            const href = getOneElement("link", children)?.attribs["href"];
+            const href = getAtomLink(children);
             if (href) {
                 entry.link = href;
             }
@@ -128,7 +128,7 @@ function getAtomFeed(feedRoot: Element) {
 
     addConditionally(feed, "id", "id", childs);
     addConditionally(feed, "title", "title", childs);
-    const href = getOneElement("link", childs)?.attribs["href"];
+    const href = getAtomLink(childs);
     if (href) {
         feed.link = href;
     }
@@ -251,6 +251,21 @@ function getOneElement(
     node: AnyNode[],
 ): Element | null {
     return getElementsByTagName(tagName, node, true, 1)[0];
+}
+
+/**
+ * Get the page an Atom feed or entry points to: the first `alternate` link
+ * (a link without `rel` is `alternate`), else the first link.
+ *
+ * @param nodes Children of the feed or entry.
+ * @returns The link's `href`, if any.
+ */
+function getAtomLink(nodes: AnyNode[]): string | undefined {
+    const links = getElementsByTagName("link", nodes, false);
+    const alternate = links.find(
+        ({ attribs }) => !attribs["rel"] || attribs["rel"] === "alternate",
+    );
+    return (alternate ?? links.at(0))?.attribs["href"];
 }
 
 /**

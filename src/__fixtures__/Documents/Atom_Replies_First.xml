@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Example Blog</title>
+	<link rel="self" type="application/atom+xml" href="http://example.org/feeds/posts/default"/>
+	<link rel="alternate" type="text/html" href="http://example.org/"/>
+	<id>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6</id>
+	<updated>2003-12-13T18:30:02Z</updated>
+	<entry>
+		<title>A post</title>
+		<link rel="replies" type="application/atom+xml" href="http://example.org/feeds/1/comments/default"/>
+		<link rel="edit" type="application/atom+xml" href="http://example.org/feeds/posts/default/1"/>
+		<link rel="alternate" type="text/html" href="http://example.org/2003/12/a-post.html"/>
+		<id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
+		<updated>2003-12-13T18:30:02Z</updated>
+		<summary>Some text.</summary>
+	</entry>
+</feed>
