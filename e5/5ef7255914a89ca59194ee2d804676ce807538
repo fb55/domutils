@@ -1,0 +1,33 @@
+src/__fixtures__/Documents/Atom_Example.xml
+  s_100e40df458a1f::t_2e0dbe717518d4 17
+src/__snapshots__/feeds.spec.ts.snap
+  s_100e40df458a1f::t_17e337b1dfd094 12,21
+src/feeds.spec.ts
+  s_100e40df458a1f::t_04de48b771cc37 74-88
+src/feeds.ts
+  s_e7b71e22ed9ef4::t_3d773e61314cd5 134,156,277-304
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e55ef7255914a89ca59194ee2d804676ce807538",
+  "prompts": {},
+  "sessions": {
+    "s_100e40df458a1f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "91a1e0b5-0ff6-45d4-8b71-f7bfa4cc2c06",
+        "model": "claude-mythos-5-2"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_e7b71e22ed9ef4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e031c807-4791-404e-8158-3e1425f40404",
+        "model": "claude-mythos-5-2"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
