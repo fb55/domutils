@@ -188,12 +188,15 @@ function getRssFeed(feedRoot: Element) {
 }
 
 const MEDIA_KEYS_STRING = ["url", "type", "lang"] as const;
-const MEDIA_KEYS_INT = ["fileSize", "channels", "height", "width"] as const;
-const MEDIA_KEYS_FLOAT = [
-    "bitrate",
-    "framerate",
-    "samplingrate",
-    "duration",
+const MEDIA_NUMBERS = [
+    ["fileSize", Number.parseInt],
+    ["bitrate", Number.parseFloat],
+    ["framerate", Number.parseFloat],
+    ["samplingrate", Number.parseFloat],
+    ["channels", Number.parseInt],
+    ["duration", Number.parseFloat],
+    ["height", Number.parseInt],
+    ["width", Number.parseInt],
 ] as const;
 
 /**
@@ -218,20 +221,9 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
             if (value) media[attrib] = value;
         }
 
-        for (const attrib of MEDIA_KEYS_INT) {
+        for (const [attrib, parse] of MEDIA_NUMBERS) {
             const value = attribs[attrib];
-            if (value) {
-                // eslint-disable-next-line unicorn/prefer-number-coercion -- Feed values intentionally allow numeric prefixes.
-                media[attrib] = Number.parseInt(value, 10);
-            }
-        }
-
-        for (const attrib of MEDIA_KEYS_FLOAT) {
-            const value = attribs[attrib];
-            if (value) {
-                // eslint-disable-next-line unicorn/prefer-number-coercion -- Feed values intentionally allow numeric prefixes.
-                media[attrib] = Number.parseFloat(value);
-            }
+            if (value) media[attrib] = parse(value, 10);
         }
 
         if (attribs["expression"]) {
