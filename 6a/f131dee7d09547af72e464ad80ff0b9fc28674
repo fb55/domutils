@@ -1,0 +1,23 @@
+src/__fixtures__/Documents/Atom_Example.xml
+  s_58acf3262b74a7::t_787d2f93fc27e5 17
+src/__snapshots__/feeds.spec.ts.snap
+  s_58acf3262b74a7::t_91cb60817926ce 12,21
+src/feeds.spec.ts
+  s_58acf3262b74a7::t_12d39c0e072603 74-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6af131dee7d09547af72e464ad80ff0b9fc28674",
+  "prompts": {},
+  "sessions": {
+    "s_58acf3262b74a7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "da47e98f-d6db-4a87-b8a7-7282e39575a4",
+        "model": "claude-mythos-5-2"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
