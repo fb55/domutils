@@ -1,0 +1,31 @@
+src/querying.spec.ts
+  s_06c3c313c40c35::t_ae5efd32a48d71 2,32-41,90-124,166-212
+src/querying.ts
+  s_fefe28190b6cdf::t_2ebb5b53390486 52-62,68-70,72,79-80,86,93,98-99,120-181,185-188,209,230-233,239-240,246,251-252
+src/traversal.ts
+  s_06c3c313c40c35::t_5d12dc9bb03412 51,54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "99d25aeb9a2bc828328afb4388ce8ee589e7d1fb",
+  "prompts": {},
+  "sessions": {
+    "s_06c3c313c40c35": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1fd93-1d67-7cd2-8ca8-37ea5687b9a6",
+        "model": "gpt-6.2-astra"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    },
+    "s_fefe28190b6cdf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "020c1044-3fcf-402b-a174-5c8b251c997a",
+        "model": "claude-mythos-5-2"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
