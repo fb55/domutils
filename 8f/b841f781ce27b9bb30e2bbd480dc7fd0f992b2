@@ -1,0 +1,23 @@
+src/__fixtures__/Documents/Atom_Example.xml
+  s_3b239fdc6effb0::t_8fef037cec07d4 17
+src/__snapshots__/feeds.spec.ts.snap
+  s_3b239fdc6effb0::t_486cf73b5dd084 12,21
+src/feeds.spec.ts
+  s_3b239fdc6effb0::t_b2a07018188777 74-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8fb841f781ce27b9bb30e2bbd480dc7fd0f992b2",
+  "prompts": {},
+  "sessions": {
+    "s_3b239fdc6effb0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1fb79-4440-75a3-a319-f3e128ae00a1",
+        "model": "gpt-6.2-astra"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
