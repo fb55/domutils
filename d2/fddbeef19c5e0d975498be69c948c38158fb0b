@@ -1,0 +1,43 @@
+oxfmt.config.ts
+  s_b238ad3b17acee::t_2905fe68aa2f78 8
+oxlint.config.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 2,4
+  s_b238ad3b17acee::t_2905fe68aa2f78 302,306
+src/feeds.ts
+  s_b238ad3b17acee::t_2905fe68aa2f78 214-215,230-231,307-309,315
+  s_b238ad3b17acee::t_fed77b2abed5e3 2
+src/traversal.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 4
+src/legacy.ts
+  s_b238ad3b17acee::t_bceb20fce07b96 229
+  s_b238ad3b17acee::t_2905fe68aa2f78 28-32,179,204
+  s_b238ad3b17acee::t_fed77b2abed5e3 3
+src/manipulation.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 4
+src/helpers.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 4
+src/querying.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 11
+src/stringify.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 2
+src/legacy.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 4
+src/feeds.spec.ts
+  s_b238ad3b17acee::t_fed77b2abed5e3 5,8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2fddbeef19c5e0d975498be69c948c38158fb0b",
+  "prompts": {},
+  "sessions": {
+    "s_b238ad3b17acee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a204e0-463e-78e2-9d67-08586ebd7228",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
