@@ -1,14 +1,28 @@
 {
-    "type": "module",
     "name": "domutils",
     "version": "4.0.2",
     "description": "Utilities for working with htmlparser2's dom",
+    "keywords": [
+        "dom",
+        "htmlparser2"
+    ],
+    "license": "BSD-2-Clause",
     "author": "Felix Boehm <me@feedic.com>",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/fb55/domutils.git"
+    },
     "funding": {
         "type": "github",
         "url": "https://github.com/fb55/domutils?sponsor=1"
     },
-    "license": "BSD-2-Clause",
+    "files": [
+        "dist",
+        "src",
+        "!**/*.spec.ts",
+        "!**/__fixtures__/**"
+    ],
+    "type": "module",
     "sideEffects": false,
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -18,12 +32,6 @@
             "default": "./dist/index.js"
         }
     },
-    "files": [
-        "dist",
-        "src",
-        "!**/*.spec.ts",
-        "!**/__fixtures__/**"
-    ],
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "build:docs": "typedoc --tsconfig tsconfig.build.json src",
@@ -36,14 +44,6 @@
         "test": "npm run test:vi && npm run lint",
         "test:vi": "vitest run"
     },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/fb55/domutils.git"
-    },
-    "keywords": [
-        "dom",
-        "htmlparser2"
-    ],
     "dependencies": {
         "dom-serializer": "^3.0.0",
         "domelementtype": "^3.0.0",

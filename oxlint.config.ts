@@ -139,9 +139,7 @@ export default defineConfig({
             "no-nested-ternary",
             "unicorn/no-nested-ternary",
             "unicorn/no-array-reduce",
-            "no-await-in-loop",
             "promise/avoid-new",
-            "promise/prefer-await-to-then",
             "node/no-top-level-await",
             "node/no-sync",
             "import/no-nodejs-modules",
@@ -170,7 +168,7 @@ export default defineConfig({
         ),
         // Nullish equality is allowed by eqeqeq's smart mode.
         ...off("no-eq-null"),
-        // Keep the existing import and export order and module structure.
+        // Oxfmt orders imports. Leave export order and module structure to each file.
         ...off(
             "sort-imports",
             "import/consistent-type-specifier-style",
@@ -183,28 +181,17 @@ export default defineConfig({
         ),
         // The formatter writes hex digits in lowercase.
         ...off("unicorn/number-literal-case"),
-        // TypeScript has the types (and infers them for readonly values and assertions).
+        // TypeScript declares types for parameters, returns, yields, and throws.
         ...off(
             "jsdoc/require-param-type",
             "jsdoc/require-returns-type",
-            "jsdoc/require-returns",
             "jsdoc/require-yields-type",
             "jsdoc/require-throws-type",
-            "typescript/prefer-readonly-parameter-types",
-            "typescript/no-unsafe-type-assertion",
-            "typescript/no-non-null-assertion",
-            "typescript/promise-function-async",
         ),
-        // Method signatures, mapped types, `{}` and type aliases are chosen for how they check and infer.
-        ...off(
-            "typescript/method-signature-style",
-            "typescript/consistent-indexed-object-style",
-            "typescript/consistent-type-definitions",
-            "typescript/ban-types",
-            "no-redeclare",
-        ),
-        // Functions converting values declare the types they convert.
-        ...off("unicorn/prefer-native-coercion-functions"),
+        // Keep existing parameter types.
+        ...off("typescript/prefer-readonly-parameter-types"),
+        // Keep byte-identical build output for the existing feed and traversal casts.
+        ...off("typescript/no-unsafe-type-assertion"),
         // Keep Vitest's default timeouts, explicit imports, and direct assertions.
         ...off(
             "vitest/require-test-timeout",
@@ -212,11 +199,10 @@ export default defineConfig({
             "vitest/no-importing-vitest-globals",
             "vitest/prefer-describe-function-title",
         ),
-        // Existing suites share setup and use structural and truthiness assertions.
+        // Existing suites share setup and use structural assertions.
         ...off(
             "vitest/no-hooks",
             "vitest/prefer-strict-equal",
-            "vitest/prefer-strict-boolean-matchers",
             "vitest/max-expects",
             "vitest/prefer-to-be-truthy",
             "vitest/prefer-to-be-falsy",

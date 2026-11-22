@@ -5,8 +5,9 @@ export default defineConfig({
     tabWidth: 4,
     singleQuote: false,
     trailingComma: "all",
-    sortImports: false,
-    sortPackageJson: false,
+    // Keep source-map line numbers stable when sorting the existing imports.
+    sortImports: { newlinesBetween: false },
+    sortPackageJson: true,
     // Preserve the existing hidden-path exclusions, including .github.
     ignorePatterns: [".*"],
 });
