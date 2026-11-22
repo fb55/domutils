@@ -52,6 +52,7 @@
     },
     "devDependencies": {
         "@types/node": "^26.6.6",
+        "globby": "^16.2.4",
         "htmlparser2": "~12.0.0",
         "jsonc-parser": "^3.3.1",
         "oxfmt": "^0.79.0",

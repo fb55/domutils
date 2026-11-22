@@ -7,5 +7,6 @@ export default defineConfig({
     trailingComma: "all",
     sortImports: false,
     sortPackageJson: false,
+    // Preserve the existing hidden-path exclusions, including .github.
     ignorePatterns: [".*"],
 });

@@ -8,14 +8,26 @@ const dependencyGroups: {
     optionalDependencies?: Record<string, string>;
     peerDependencies?: Record<string, string>;
 } = manifest;
-const declaredPackages = [
-    manifest.name,
-    ...Object.keys({
-        ...dependencyGroups.dependencies,
-        ...dependencyGroups.devDependencies,
-        ...dependencyGroups.optionalDependencies,
-        ...dependencyGroups.peerDependencies,
-    }),
+const publishedImports = [
+    "**",
+    "!./**",
+    "!../**",
+    ...[
+        manifest.name,
+        ...Object.keys({
+            ...dependencyGroups.dependencies,
+            ...dependencyGroups.optionalDependencies,
+            ...dependencyGroups.peerDependencies,
+        }),
+    ].map((name) => `!${name}{,/**}`),
+];
+const toolingImports = [
+    ...publishedImports,
+    "!node:*{,/**}",
+    ...[
+        ...builtinModules,
+        ...Object.keys(dependencyGroups.devDependencies ?? {}),
+    ].map((name) => `!${name}{,/**}`),
 ];
 
 /**
@@ -39,6 +51,7 @@ export default defineConfig({
         "promise",
         "vitest",
     ],
+    // Oxlint has no built-in check for function-local regex allocation.
     // Enable all stable rule categories.
     categories: {
         correctness: "error",
@@ -55,14 +68,7 @@ export default defineConfig({
             {
                 patterns: [
                     {
-                        group: [
-                            "**",
-                            "!./**",
-                            "!../**",
-                            "!node:*{,/**}",
-                            ...builtinModules.map((name) => `!${name}{,/**}`),
-                            ...declaredPackages.map((name) => `!${name}{,/**}`),
-                        ],
+                        group: toolingImports,
                         message:
                             "Declare tooling dependencies in package.json before importing them.",
                     },
@@ -141,8 +147,9 @@ export default defineConfig({
             "import/no-nodejs-modules",
             "unicorn/import-style",
         ),
-        // Async functions without `await` return their values and errors as promises.
-        ...off("require-await", "typescript/require-await"),
+        // Use the type-aware rule so returning an existing promise also counts.
+        "require-await": "off",
+        "typescript/require-await": "error",
         // Sizes, and orders that do not follow the code's structure.
         ...off(
             "max-params",
@@ -220,7 +227,21 @@ export default defineConfig({
             // The published DOM utilities also run in browsers.
             files: ["src/**/*.ts"],
             excludeFiles: ["**/*.spec.ts", "src/__fixtures__/**"],
-            rules: { "import/no-nodejs-modules": "error" },
+            rules: {
+                "import/no-nodejs-modules": "error",
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        patterns: [
+                            {
+                                group: publishedImports,
+                                message:
+                                    "Published source may only import runtime dependencies.",
+                            },
+                        ],
+                    },
+                ],
+            },
         },
         {
             // These functions reuse their local parameter bindings during traversal.

@@ -1,12 +1,13 @@
 import { readFileSync } from "node:fs";
+import { globbySync } from "globby";
 import { visit } from "jsonc-parser";
 
-for (const path of [
-    "package.json",
-    "tsconfig.json",
-    "tsconfig.build.json",
-    "typedoc.json",
-]) {
+const paths = globbySync("**/*.json", {
+    gitignore: true,
+    ignore: ["**/node_modules/**", "**/package-lock.json"],
+});
+
+for (const path of paths) {
     const objects: Set<string>[] = [];
 
     visit(readFileSync(path, "utf8"), {
