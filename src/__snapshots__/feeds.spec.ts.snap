@@ -9,7 +9,7 @@ exports[`getFeed > Atom_Example.xml 1`] = `
     {
       "description": "Some content.",
       "id": "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a",
-      "link": "http://example.org/2003/12/13/atom03",
+      "link": "http://example.org/2003/12/13/atom03.html",
       "media": [],
       "pubDate": 2003-12-13T18:30:02.000Z,
       "title": "Atom-Powered Robots Run Amok",
@@ -18,7 +18,7 @@ exports[`getFeed > Atom_Example.xml 1`] = `
       "media": [],
     },
   ],
-  "link": "http://example.org/feed/",
+  "link": "http://example.org/",
   "title": "Example Feed",
   "type": "atom",
   "updated": 2003-12-13T18:30:02.000Z,
