@@ -52,6 +52,11 @@ export default defineConfig([
     },
     rules: {
       ...commonTypeScriptRules,
+      // Biome's useWhile writes endless loops as `while (true)`.
+      "@typescript-eslint/no-unnecessary-condition": [
+        2,
+        { allowConstantLoopConditions: "only-allowed-literals" },
+      ],
       "@typescript-eslint/prefer-nullish-coalescing": 0,
       "n/no-unsupported-features/es-builtins": 0,
       "unicorn/no-array-callback-reference": 0,
