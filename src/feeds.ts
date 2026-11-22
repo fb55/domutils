@@ -1,4 +1,4 @@
-import type { AnyNode, Element } from "domhandler";
+import { type AnyNode, type Element, isTag } from "domhandler";
 import { getElementsByTagName } from "./legacy.js";
 import { textContent } from "./stringify.js";
 
@@ -106,7 +106,7 @@ function getAtomFeed(feedRoot: Element) {
             addConditionally(entry, "id", "id", children);
             addConditionally(entry, "title", "title", children);
 
-            const href = getOneElement("link", children)?.attribs["href"];
+            const href = getAtomLink(children);
             if (href) {
                 entry.link = href;
             }
@@ -128,7 +128,7 @@ function getAtomFeed(feedRoot: Element) {
 
     addConditionally(feed, "id", "id", childs);
     addConditionally(feed, "title", "title", childs);
-    const href = getOneElement("link", childs)?.attribs["href"];
+    const href = getAtomLink(childs);
     if (href) {
         feed.link = href;
     }
@@ -248,6 +248,34 @@ function getOneElement(
     node: AnyNode[],
 ): Element | null {
     return getElementsByTagName(tagName, node, true, 1)[0];
+}
+
+// eslint-disable-next-line unicorn/prefer-https -- RFC 4287 spells this relation with HTTP.
+const ATOM_ALTERNATE = "http://www.iana.org/assignments/relation/alternate";
+
+/**
+ * Get the page an Atom feed or entry points to: the first `alternate` link
+ * (a link without `rel` is `alternate`, and RFC 4287 also writes it as an
+ * IANA URI), else the first link.
+ *
+ * @param nodes Children of the feed or entry.
+ * @returns The link's `href`, if any.
+ */
+function getAtomLink(nodes: AnyNode[]): string | undefined {
+    let first: Element | undefined;
+    for (const node of nodes) {
+        if (!isTag(node) || node.name !== "link") continue;
+        const { rel: relation } = node.attribs;
+        if (
+            !relation ||
+            relation === "alternate" ||
+            relation === ATOM_ALTERNATE
+        ) {
+            return node.attribs["href"];
+        }
+        first ??= node;
+    }
+    return first?.attribs["href"];
 }
 
 /**
