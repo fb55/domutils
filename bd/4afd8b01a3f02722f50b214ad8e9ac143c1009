@@ -1,15 +1,23 @@
 src/__fixtures__/Documents/Atom_Example.xml
   s_173ca9ea90a33e::t_68003dd07b4223 17
+  s_173ca9ea90a33e::t_9c7ab5c6ed30d7 17
 src/__snapshots__/feeds.spec.ts.snap
   s_173ca9ea90a33e::t_88188c0a75a1e7 12,21
+  s_173ca9ea90a33e::t_7633dde36e3096 12,21
 src/feeds.spec.ts
   s_173ca9ea90a33e::t_8d9d66f2c698d4 28-42
+  s_173ca9ea90a33e::t_e759ab91e2ca14 28-42
 src/feeds.ts
   s_173ca9ea90a33e::t_78e58549129edd 1,109,131,253-280
+  s_173ca9ea90a33e::t_9c7ab5c6ed30d7 1,109,131,253-278
+  s_173ca9ea90a33e::t_5f17aaf49a457c 279-280
 src/querying.spec.ts
   s_173ca9ea90a33e::t_21a3b1b93cd7ac 2-8,10,21-75
+  s_173ca9ea90a33e::t_9c7ab5c6ed30d7 2-8,10,21-74
+  s_173ca9ea90a33e::t_447650f83f2966 75
 src/querying.ts
   s_173ca9ea90a33e::t_6d92fdf7bb544d 19-30,55-66,128-137,187-194
+  s_173ca9ea90a33e::t_9c7ab5c6ed30d7 19-30,55-66,128-137,187-194
 ---
 {
   "schema_version": "authorship/3.0.0",
