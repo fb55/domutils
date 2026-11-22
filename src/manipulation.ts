@@ -35,8 +35,13 @@ export function removeElement(element: ChildNode): void {
 function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
     if (!("children" in node)) return node === target;
 
-    // Steps through `node`'s descendants in document order, once per step up.
-    let descendant: ChildNode | null = node.children[0] ?? null;
+    /*
+     * Steps through `node`'s descendants in document order, once per step up.
+     * It reads the `children` arrays, as children passed to domhandler's
+     * constructors have no `parent` or sibling links.
+     */
+    const lists = [node.children];
+    const indices = [0];
 
     for (
         let current: ChildNode | null = target;
@@ -44,20 +49,17 @@ function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
         current = current.parent
     ) {
         if (current === node) return true;
-        if (descendant === null) return false;
 
+        while (indices[indices.length - 1] >= lists[lists.length - 1].length) {
+            lists.pop();
+            indices.pop();
+            if (lists.length === 0) return false;
+        }
+        const descendant =
+            lists[lists.length - 1][indices[indices.length - 1]++];
         if ("children" in descendant && descendant.children.length > 0) {
-            descendant = descendant.children[0];
-        } else {
-            // Children passed to domhandler's constructors have no `parent`.
-            while (
-                descendant.next === null &&
-                descendant.parent !== node &&
-                descendant.parent !== null
-            ) {
-                descendant = descendant.parent;
-            }
-            descendant = descendant.next;
+            lists.push(descendant.children);
+            indices.push(0);
         }
     }
 

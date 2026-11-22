@@ -322,8 +322,29 @@ describe("manipulation", () => {
             expect(getOuterHTML(document_)).toBe(html);
         });
 
+        it("should skip moving a node with constructor children into itself", () => {
+            const node = new Element("a", {}, [
+                new Element("x", {}),
+                new Element("y", {}),
+            ]);
+            const b = new Element("b", {});
+            appendChild(node, b);
+            const c = new Element("c", {});
+            appendChild(b, c);
+
+            appendChild(c, node);
+
+            expect(c.children).toHaveLength(0);
+            expect(node.parent).toBeNull();
+        });
+
         it.each([
             { name: "appending to the deepest node", build: chain },
+            {
+                name: "appending nodes with constructor children",
+                build: chain,
+                constructed: true,
+            },
             {
                 name: "wrapping every node",
                 build(nodes: Element[]) {
@@ -335,28 +356,33 @@ describe("manipulation", () => {
                     }
                 },
             },
-        ])("should stay linear when $name of a deep chain", ({ build }) => {
-            const length = 1000;
-            let reads = 0;
-            const nodes = Array.from({ length }, () => {
-                const node = new Element("div", {});
-                appendChild(node, new Text("x"));
-                let parent: ParentNode | null = null;
-                Object.defineProperty(node, "parent", {
-                    get() {
-                        reads++;
-                        return parent;
-                    },
-                    set(value: ParentNode | null) {
-                        parent = value;
-                    },
+        ])(
+            "should stay linear when $name of a deep chain",
+            ({ build, constructed }) => {
+                const length = 1000;
+                let reads = 0;
+                const nodes = Array.from({ length }, () => {
+                    const node = constructed
+                        ? new Element("div", {}, [new Text("x")])
+                        : new Element("div", {});
+                    if (!constructed) appendChild(node, new Text("x"));
+                    let parent: ParentNode | null = null;
+                    Object.defineProperty(node, "parent", {
+                        get() {
+                            reads++;
+                            return parent;
+                        },
+                        set(value: ParentNode | null) {
+                            parent = value;
+                        },
+                    });
+                    return node;
                 });
-                return node;
-            });
 
-            build(nodes);
+                build(nodes);
 
-            expect(reads).toBeLessThan(20 * length);
-        });
+                expect(reads).toBeLessThan(20 * length);
+            },
+        );
     });
 });
