@@ -1,4 +1,5 @@
 import { type AnyNode, type Element, isTag } from "domhandler";
+
 import { getElementsByTagName } from "./legacy.js";
 import { textContent } from "./stringify.js";
 
@@ -210,9 +211,8 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         const { attribs } = element;
 
         const media: FeedItemMedia = {
-            medium: attribs["medium"] as unknown as
-                | FeedItemMediaMedium
-                | undefined,
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve unrecognized medium values from feeds.
+            medium: attribs["medium"] as FeedItemMediaMedium | undefined,
             isDefault: !!attribs["isDefault"],
         };
 
@@ -227,9 +227,8 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         }
 
         if (attribs["expression"]) {
-            media.expression = attribs[
-                "expression"
-            ] as unknown as FeedItemMediaExpression;
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve unrecognized expression values from feeds.
+            media.expression = attribs["expression"] as FeedItemMediaExpression;
         }
 
         return media;
@@ -305,15 +304,15 @@ function fetch(
  * @param where Element to search for the property.
  * @param shouldRecurse Whether to recurse into child nodes.
  */
-function addConditionally<T>(
-    object: T,
-    property: keyof T,
+function addConditionally<Key extends PropertyKey>(
+    object: Partial<Record<Key, string>>,
+    property: Key,
     tagName: string,
     where: AnyNode[],
     shouldRecurse = false,
 ) {
     const value = fetch(tagName, where, shouldRecurse);
-    if (value) object[property] = value as unknown as T[keyof T];
+    if (value) object[property] = value;
 }
 
 /**

@@ -1,6 +1,7 @@
 import { ElementType } from "domelementtype";
 import type { AnyNode, Element } from "domhandler";
 import { beforeAll, describe, expect, it } from "vitest";
+
 import fixture from "./__fixtures__/fixture.js";
 import {
     getElementById,

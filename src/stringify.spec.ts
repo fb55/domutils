@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import fixture from "./__fixtures__/fixture.js";
 import {
     getInnerHTML,

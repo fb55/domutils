@@ -8,6 +8,7 @@ import {
 } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, expectTypeOf, it, vi } from "vitest";
+
 import { existsOne, filter, find, findAll, findOne } from "./querying.js";
 
 describe("querying", () => {

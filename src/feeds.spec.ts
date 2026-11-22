@@ -2,8 +2,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
+
 import { parseDocument } from "htmlparser2";
 import { describe, expect, test } from "vitest";
+
 import { getFeed } from "./feeds.js";
 
 const documents = path.join(import.meta.dirname, "__fixtures__", "Documents");

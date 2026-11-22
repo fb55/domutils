@@ -1,5 +1,7 @@
 import { builtinModules } from "node:module";
+
 import { defineConfig } from "oxlint";
+
 import manifest from "./package.json" with { type: "json" };
 
 const dependencyGroups: {
@@ -190,8 +192,6 @@ export default defineConfig({
         ),
         // Keep existing parameter types.
         ...off("typescript/prefer-readonly-parameter-types"),
-        // Keep byte-identical build output for the existing feed and traversal casts.
-        ...off("typescript/no-unsafe-type-assertion"),
         // Keep Vitest's default timeouts, explicit imports, and direct assertions.
         ...off(
             "vitest/require-test-timeout",
@@ -299,10 +299,11 @@ export default defineConfig({
             },
         },
         {
-            // Test helpers use inferred return types, mock types, and local type guards.
+            // Test helpers use inferred return types, mock types, and fixture casts.
             files: ["**/*.spec.ts"],
             rules: off(
                 "typescript/explicit-function-return-type",
+                "typescript/no-unsafe-type-assertion",
                 "vitest/require-mock-type-parameters",
                 "unicorn/consistent-function-scoping",
             ),
