@@ -16,7 +16,7 @@ import {
 function countReads(nodes: Element[]): [Element[], () => number] {
     let reads = 0;
     const proxy = new Proxy(nodes, {
-        get(target, property, receiver) {
+        get(target, property, receiver): unknown {
             reads++;
             return Reflect.get(target, property, receiver);
         },
@@ -28,13 +28,13 @@ describe("helpers", () => {
     describe("removeSubsets", () => {
         it("does not repeatedly walk shared ancestors", () => {
             let parent = new Element("div", {});
-            let reads = 0;
+            const counter = { reads: 0 };
             for (let depth = 0; depth < 1000; depth++) {
                 const ancestor = parent;
                 parent = new Element("div", {});
                 Object.defineProperty(parent, "parent", {
                     get() {
-                        reads++;
+                        counter.reads++;
                         return ancestor;
                     },
                 });
@@ -45,7 +45,7 @@ describe("helpers", () => {
                 return leaf;
             });
             expect(removeSubsets([...leaves])).toStrictEqual(leaves);
-            expect(reads).toBeLessThan(3000);
+            expect(counter.reads).toBeLessThan(3000);
         });
 
         const dom = parseDocument("<div><p><span></span></p><p></p></div>")
@@ -114,26 +114,27 @@ describe("helpers", () => {
             expect(compareDocumentPosition(span, span)).toBe(0));
 
         it("does not end up in infinite loop (#109)", () => {
-            const dom = parseDocument("<div><span>1</span><span>2</span></div>")
-                .children[0] as Element;
+            const siblings = parseDocument(
+                "<div><span>1</span><span>2</span></div>",
+            ).children[0] as Element;
 
             expect(
                 compareDocumentPosition(
-                    dom.children[0],
-                    (dom.children[0] as Element).children[0],
+                    siblings.children[0],
+                    (siblings.children[0] as Element).children[0],
                 ),
             ).toBe(10);
         });
 
         it("reports the correct order when a sibling is a comment", () => {
-            const dom = parseDocument("<div><p></p><!--c--><a></a></div>")
+            const siblings = parseDocument("<div><p></p><!--c--><a></a></div>")
                 .children[0] as Element;
-            const [p, comment, a] = dom.children;
+            const [paragraph, comment, anchor] = siblings.children;
 
-            expect(compareDocumentPosition(p, comment)).toBe(2);
-            expect(compareDocumentPosition(comment, p)).toBe(4);
-            expect(compareDocumentPosition(comment, a)).toBe(2);
-            expect(compareDocumentPosition(a, comment)).toBe(4);
+            expect(compareDocumentPosition(paragraph, comment)).toBe(2);
+            expect(compareDocumentPosition(comment, paragraph)).toBe(4);
+            expect(compareDocumentPosition(comment, anchor)).toBe(2);
+            expect(compareDocumentPosition(anchor, comment)).toBe(4);
         });
     });
 

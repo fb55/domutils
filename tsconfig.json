@@ -8,8 +8,9 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "outDir": "dist",
-        "rootDir": "./src",
+        "noEmit": true,
+        "types": ["node"],
+        "skipLibCheck": true,
 
         /* Strict Type-Checking Options */
         "strict": true,
@@ -18,7 +19,6 @@
         "exactOptionalPropertyTypes": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
-        "isolatedDeclarations": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
@@ -29,11 +29,5 @@
         /* Module Resolution Options */
         "resolveJsonModule": true
     },
-    "include": ["src"],
-    "exclude": [
-        "**/*.spec.ts",
-        "**/__fixtures__/*",
-        "**/__tests__/*",
-        "**/__snapshots__/*"
-    ]
+    "include": ["src", "scripts", "*.config.ts"]
 }

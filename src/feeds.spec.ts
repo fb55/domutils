@@ -2,13 +2,11 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, test } from "vitest";
 import { getFeed } from "./feeds.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const documents = path.join(__dirname, "__fixtures__", "Documents");
+const documents = path.join(import.meta.dirname, "__fixtures__", "Documents");
 
 describe("getFeed", () => {
     for (const name of fs.readdirSync(documents)) {
@@ -27,7 +25,7 @@ describe("getFeed", () => {
 
 describe("getFeed Atom link", () => {
     test("takes the first alternate link in either spelling", () => {
-        // eslint-disable-next-line unicorn/prefer-https -- RFC 4287 spells this relation with HTTP.
+        // RFC 4287 spells this relation with HTTP.
         const xml = `<feed><link rel="http://www.iana.org/assignments/relation/alternate" href="a"/><link rel="alternate" href="b"/></feed>`;
         const feed = getFeed(parseDocument(xml, { xmlMode: true }).children);
         expect(feed?.link).toBe("a");

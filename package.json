@@ -25,15 +25,14 @@
         "!**/__fixtures__/**"
     ],
     "scripts": {
-        "build": "tsc",
-        "build:docs": "typedoc src",
-        "format": "npm run format:es && npm run format:biome",
-        "format:biome": "biome check --write .",
-        "format:es": "npm run lint:es -- --fix",
-        "lint": "npm run lint:es && npm run lint:ts && npm run lint:biome",
-        "lint:biome": "biome check .",
-        "lint:es": "eslint .",
-        "lint:ts": "tsc --noEmit -p tsconfig.eslint.json",
+        "build": "tsc -p tsconfig.build.json",
+        "build:docs": "typedoc --tsconfig tsconfig.build.json src",
+        "format": "npm run lint:ox -- --fix && npm run format:ox",
+        "format:ox": "node --import=tsx node_modules/oxfmt/bin/oxfmt \"**/*.{ts,md,json,yml}\"",
+        "lint": "npm run lint:ox && npm run lint:ts && npm run format:ox -- --check && npm run lint:json",
+        "lint:json": "node --import=tsx scripts/check-json.ts",
+        "lint:ox": "node --import=tsx node_modules/oxlint/bin/oxlint",
+        "lint:ts": "tsc",
         "prepublishOnly": "npm run build",
         "test": "npm run test:vi && npm run lint",
         "test:vi": "vitest run"
@@ -52,16 +51,15 @@
         "domhandler": "^6.0.0"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.6.8",
-        "@eslint/compat": "^2.1.1",
-        "@feedic/eslint-config": "^0.5.0",
         "@types/node": "^26.6.6",
-        "eslint": "^10.15.0",
-        "eslint-config-biome": "^2.1.3",
         "htmlparser2": "~12.0.0",
+        "jsonc-parser": "^3.3.1",
+        "oxfmt": "^0.79.0",
+        "oxlint": "^1.94.0",
+        "oxlint-tsgolint": "^7.0.2008",
+        "tsx": "^4.23.15",
         "typedoc": "^0.28.20",
         "typescript": "^6.0.2",
-        "typescript-eslint": "^8.74.0",
         "vitest": "^5.1.1"
     },
     "engines": {

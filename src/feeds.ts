@@ -250,7 +250,7 @@ function getOneElement(
     return getElementsByTagName(tagName, node, true, 1)[0];
 }
 
-// eslint-disable-next-line unicorn/prefer-https -- RFC 4287 spells this relation with HTTP.
+// RFC 4287 spells this relation with HTTP.
 const ATOM_ALTERNATE = "http://www.iana.org/assignments/relation/alternate";
 
 /**

@@ -115,7 +115,7 @@ function compileTest(options: TestElementOpts): TestType | null {
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
  */
-// eslint-disable-next-line unicorn/consistent-boolean-name -- Preserve the existing exported function name.
+// Preserve the existing exported function name.
 export function testElement(options: TestElementOpts, node: AnyNode): boolean {
     const test = compileTest(options);
     return test ? test(node) : true;

@@ -162,7 +162,7 @@ export function findOne(
  * @param nodes Array of nodes to search.
  * @returns Whether a tree of nodes contains at least one node passing the test.
  */
-// eslint-disable-next-line unicorn/consistent-boolean-name -- Preserve the existing exported function name.
+// Preserve the existing exported function name.
 export function existsOne(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
