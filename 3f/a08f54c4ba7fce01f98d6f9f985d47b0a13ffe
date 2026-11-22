@@ -1,0 +1,22 @@
+src/manipulation.spec.ts
+  s_173ca9ea90a33e::t_89688107260188 325-340
+src/manipulation.ts
+  s_173ca9ea90a33e::t_13548f918d66ea 52,54-59
+  s_173ca9ea90a33e::t_952ae85ad19610 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3fa08f54c4ba7fce01f98d6f9f985d47b0a13ffe",
+  "prompts": {},
+  "sessions": {
+    "s_173ca9ea90a33e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "707c2ba5-c81c-46be-ad9b-127e1a683e6c",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
