@@ -25,8 +25,8 @@ export function removeElement(element: ChildNode): void {
 /**
  * Check whether `node` is `target` itself or one of its ancestors.
  *
- * The walk up from `target` stops at `node`'s parent, and after as many steps
- * as `node` has descendants, so it is bounded by the smaller of the two.
+ * Walks up from `target` and through `node`'s descendants in step, so the
+ * check is bounded by the number of descendants `node` has.
  *
  * @param node The potential ancestor.
  * @param target The node to start from.
@@ -36,19 +36,20 @@ function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
     if (!("children" in node)) return node === target;
 
     /*
-     * Steps through `node`'s descendants in document order, once per step up.
-     * It reads the `children` arrays, as children passed to domhandler's
-     * constructors have no `parent` or sibling links.
+     * The descendants are read from the `children` arrays: children passed to
+     * domhandler's constructors have no `parent` or sibling links, so `target`
+     * may be one of them even when the walk up ends before reaching `node`.
      */
     const lists = [node.children];
     const indices = [0];
+    let current: ChildNode | null = target;
 
-    for (
-        let current: ChildNode | null = target;
-        current !== null && current !== node.parent;
-        current = current.parent
-    ) {
+    while (true) {
         if (current === node) return true;
+        if (current !== null) {
+            if (current === node.parent) return false;
+            current = current.parent;
+        }
 
         while (indices[indices.length - 1] >= lists[lists.length - 1].length) {
             lists.pop();
@@ -57,13 +58,12 @@ function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
         }
         const descendant =
             lists[lists.length - 1][indices[indices.length - 1]++];
+        if (descendant === target) return true;
         if ("children" in descendant && descendant.children.length > 0) {
             lists.push(descendant.children);
             indices.push(0);
         }
     }
-
-    return false;
 }
 
 /**

@@ -338,6 +338,22 @@ describe("manipulation", () => {
             expect(node.parent).toBeNull();
         });
 
+        it("should skip moving a node into its constructor children", () => {
+            const child = new Element("child", {});
+            const root = new Element("root", {}, [child]);
+            const deep = new Element("deep", {});
+            const tree = new Element("tree", {}, [
+                new Element("a", {}, [new Element("b", {})]),
+                new Element("c", {}, [deep]),
+            ]);
+
+            appendChild(child, root);
+            appendChild(deep, tree);
+
+            expect([child.children, deep.children]).toEqual([[], []]);
+            expect([root.parent, tree.parent]).toEqual([null, null]);
+        });
+
         it.each([
             { name: "appending to the deepest node", build: chain },
             {
