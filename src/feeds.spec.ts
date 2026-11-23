@@ -11,7 +11,9 @@ import { getFeed } from "./feeds.js";
 const documents = path.join(import.meta.dirname, "__fixtures__", "Documents");
 
 describe("getFeed", () => {
+    // oxlint-disable-next-line vitest/prefer-each -- Discover the feed fixtures from disk.
     for (const name of fs.readdirSync(documents)) {
+        // oxlint-disable-next-line vitest/consistent-test-it, vitest/valid-title -- Use test throughout the feed suite and keep the fixture filename as its snapshot title.
         test(name, async () => {
             const file = await fs.promises.readFile(
                 path.join(documents, name),
@@ -26,6 +28,7 @@ describe("getFeed", () => {
 });
 
 describe("getFeed Atom link", () => {
+    // oxlint-disable-next-line vitest/consistent-test-it -- Use the same test function as the fixture cases.
     test("takes the first alternate link in either spelling", () => {
         // RFC 4287 spells this relation with HTTP.
         const xml = `<feed><link rel="http://www.iana.org/assignments/relation/alternate" href="a"/><link rel="alternate" href="b"/></feed>`;
@@ -33,6 +36,7 @@ describe("getFeed Atom link", () => {
         expect(feed?.link).toBe("a");
     });
 
+    // oxlint-disable-next-line vitest/consistent-test-it -- Use the same test function as the fixture cases.
     test("falls back to the first direct link", () => {
         const xml = `<feed><entry><link rel="alternate" href="b"/></entry><link rel="self" href="a"/><link rel="edit" href="c"/></feed>`;
         const feed = getFeed(parseDocument(xml, { xmlMode: true }).children);
@@ -41,6 +45,7 @@ describe("getFeed Atom link", () => {
 });
 
 describe("getFeed media content", () => {
+    // oxlint-disable-next-line vitest/consistent-test-it -- Use the same test function as the fixture cases.
     test("preserves fractional rates and durations", () => {
         const xml = `<rss><channel><item><media:content bitrate="128.5" framerate="29.97" samplingrate="44.1" duration="185.25" fileSize="12345" channels="2" height="720" width="1280"/></item></channel></rss>`;
 
@@ -48,6 +53,7 @@ describe("getFeed media content", () => {
             ?.items[0].media[0];
 
         // Entries, so that the property order is checked too.
+        // oxlint-disable-next-line vitest/no-conditional-in-test -- A missing media entry produces an empty array for the comparison.
         expect(Object.entries(media ?? {})).toEqual(
             Object.entries({
                 medium: undefined,

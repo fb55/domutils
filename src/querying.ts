@@ -98,6 +98,7 @@ export function find(
 
         if (isMatch(element)) {
             result.push(element);
+            // oxlint-disable-next-line no-param-reassign -- Use the limit parameter as the remaining match count.
             if (--limit <= 0) return result;
         }
 

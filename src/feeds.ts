@@ -95,6 +95,7 @@ export function getFeed(document: AnyNode[]): Feed | null {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
+// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the return type from the typed feed object.
 function getAtomFeed(feedRoot: Element) {
     const childs = feedRoot.children;
 
@@ -108,6 +109,7 @@ function getAtomFeed(feedRoot: Element) {
             addConditionally(entry, "title", "title", children);
 
             const href = getAtomLink(children);
+            // oxlint-disable-next-line typescript/strict-boolean-expressions -- Treat empty link URLs as absent.
             if (href) {
                 entry.link = href;
             }
@@ -130,6 +132,7 @@ function getAtomFeed(feedRoot: Element) {
     addConditionally(feed, "id", "id", childs);
     addConditionally(feed, "title", "title", childs);
     const href = getAtomLink(childs);
+    // oxlint-disable-next-line typescript/strict-boolean-expressions -- Treat empty link URLs as absent.
     if (href) {
         feed.link = href;
     }
@@ -151,10 +154,12 @@ function getAtomFeed(feedRoot: Element) {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
+// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the return type from the typed feed object.
 function getRssFeed(feedRoot: Element) {
     const childs = getOneElement("channel", feedRoot.children)?.children ?? [];
 
     const feed: Feed = {
+        // oxlint-disable-next-line unicorn/prefer-string-slice, typescript/no-deprecated -- Keep the existing feed type extraction.
         type: feedRoot.name.substr(0, 3),
         id: "",
         items: getElementsByTagName("item", feedRoot.children).map(
@@ -213,6 +218,7 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         const media: FeedItemMedia = {
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve unrecognized medium values from feeds.
             medium: attribs["medium"] as FeedItemMediaMedium | undefined,
+            // oxlint-disable-next-line no-implicit-coercion -- Preserve truthiness for the isDefault attribute.
             isDefault: !!attribs["isDefault"],
         };
 
@@ -304,6 +310,7 @@ function fetch(
  * @param where Element to search for the property.
  * @param shouldRecurse Whether to recurse into child nodes.
  */
+// oxlint-disable-next-line typescript/explicit-function-return-type -- This helper only updates the target object.
 function addConditionally<Key extends PropertyKey>(
     object: Partial<Record<Key, string>>,
     property: Key,
@@ -321,6 +328,7 @@ function addConditionally<Key extends PropertyKey>(
  * @param value The name of the element to check.
  * @returns Whether an element is a feed root node.
  */
+// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the boolean result from the membership check.
 function isValidFeed(value: string) {
     return ["rss", "feed", "rdf:RDF"].includes(value);
 }

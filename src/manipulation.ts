@@ -76,6 +76,7 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
 
     parent.children.push(child);
     if (parent.children.length > 1) {
+        // oxlint-disable-next-line unicorn/prefer-at -- Use the existing indexed read for the previous sibling.
         const sibling = parent.children[parent.children.length - 2];
         sibling.next = child;
         child.prev = sibling;

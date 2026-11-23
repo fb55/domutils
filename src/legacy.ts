@@ -156,6 +156,7 @@ export function getElementById(
     nodes: AnyNode | AnyNode[],
     shouldRecurse = true,
 ): Element | null {
+    // oxlint-disable-next-line no-param-reassign -- Normalize the input to an array for the search.
     if (!Array.isArray(nodes)) nodes = [nodes];
     return findOne(getAttribCheck("id", id), nodes, shouldRecurse);
 }

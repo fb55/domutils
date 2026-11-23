@@ -230,75 +230,6 @@ export default defineConfig({
             },
         },
         {
-            // These functions reuse their local parameter bindings during traversal.
-            files: ["src/helpers.ts", "src/legacy.ts", "src/querying.ts"],
-            rules: off("no-param-reassign"),
-        },
-        {
-            // Keep const enum position flags inlined.
-            files: ["src/helpers.ts"],
-            rules: off("oxc/no-const-enum", "no-bitwise"),
-        },
-        {
-            // Preserve the existing indexed reads and empty-list fallback.
-            files: ["src/manipulation.ts", "src/traversal.ts"],
-            rules: off(
-                "unicorn/prefer-at",
-                "typescript/prefer-nullish-coalescing",
-            ),
-        },
-        {
-            // Feed parsing treats empty strings as absent and keeps its existing coercions.
-            files: ["src/feeds.ts"],
-            rules: {
-                "no-implicit-coercion": ["error", { allow: ["!!"] }],
-                "typescript/strict-boolean-expressions": [
-                    "error",
-                    { allowNullableString: true },
-                ],
-                "typescript/explicit-function-return-type": [
-                    "error",
-                    {
-                        allowExpressions: true,
-                        allowedNames: [
-                            "getAtomFeed",
-                            "getRssFeed",
-                            "addConditionally",
-                            "isValidFeed",
-                        ],
-                    },
-                ],
-                ...off("unicorn/prefer-string-slice"),
-                "typescript/no-deprecated": [
-                    "error",
-                    { allow: [{ from: "lib", name: "substr" }] },
-                ],
-            },
-        },
-        {
-            // Legacy serializers still call each other and have direct regression tests.
-            files: ["src/stringify.ts", "src/stringify.spec.ts"],
-            rules: {
-                "no-shadow": ["error", { allow: ["node"] }],
-                ...off("curly"),
-                "typescript/no-deprecated": [
-                    "error",
-                    {
-                        allow: [
-                            {
-                                from: "file",
-                                name: [
-                                    "getOuterHTML",
-                                    "getInnerHTML",
-                                    "getText",
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-        },
-        {
             // Test helpers use inferred return types, mock types, and fixture casts.
             files: ["**/*.spec.ts"],
             rules: off(
@@ -307,18 +238,6 @@ export default defineConfig({
                 "vitest/require-mock-type-parameters",
                 "unicorn/consistent-function-scoping",
             ),
-        },
-        {
-            // Names come from fixture files and identify existing snapshots.
-            files: ["src/feeds.spec.ts"],
-            rules: {
-                ...off(
-                    "vitest/prefer-each",
-                    "vitest/valid-title",
-                    "vitest/no-conditional-in-test",
-                ),
-                "vitest/consistent-test-it": ["error", { fn: "test" }],
-            },
         },
     ],
 });
