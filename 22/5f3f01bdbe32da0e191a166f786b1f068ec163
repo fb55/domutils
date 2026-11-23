@@ -1,0 +1,37 @@
+src/manipulation.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 78-79
+src/feeds.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 98,154,158,214,216,230,313,324
+src/traversal.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 30
+src/querying.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 75,102
+src/helpers.ts
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 47,121,127,148-150,152,154,158,165
+src/legacy.ts
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 159-160
+  s_c2ddf42d5165b1::t_dc4406d3189184 179,204
+oxlint.config.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 118-122
+src/feeds.spec.ts
+  s_c2ddf42d5165b1::t_036e3961421b78 15-20,22
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 7,14,23,27,34,42,47,50
+src/stringify.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 38,51-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "225f3f01bdbe32da0e191a166f786b1f068ec163",
+  "prompts": {},
+  "sessions": {
+    "s_c2ddf42d5165b1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20627-48ab-7332-b09a-9fc79504aebd",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
