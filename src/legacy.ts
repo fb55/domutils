@@ -156,9 +156,8 @@ export function getElementById(
     nodes: AnyNode | AnyNode[],
     shouldRecurse = true,
 ): Element | null {
-    // oxlint-disable-next-line no-param-reassign -- Normalize the input to an array for the search.
-    if (!Array.isArray(nodes)) nodes = [nodes];
-    return findOne(getAttribCheck("id", id), nodes, shouldRecurse);
+    const nodeList = Array.isArray(nodes) ? nodes : [nodes];
+    return findOne(getAttribCheck("id", id), nodeList, shouldRecurse);
 }
 
 /**
@@ -177,7 +176,7 @@ export function getElementsByTagName(
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The tag-name check matches only elements.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The boolean callback only accepts nodes that pass isTag, but can also reject elements by name.
     return filter(
         Checks["tag_name"](tagName),
         nodes,
@@ -202,7 +201,7 @@ export function getElementsByClassName(
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The attribute check matches only elements.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The boolean callback only accepts nodes that pass isTag, but can also reject elements by class.
     return filter(
         getAttribCheck("class", className),
         nodes,

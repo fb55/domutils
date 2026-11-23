@@ -1,4 +1,3 @@
-/* oxlint-disable no-bitwise -- Combine and test document position flags. */
 import { type AnyNode, hasChildren, type ParentNode } from "domhandler";
 
 /**
@@ -45,7 +44,7 @@ export function removeSubsets(nodes: AnyNode[]): AnyNode[] {
  * @category Helpers
  * @see {@link https://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
  */
-// oxlint-disable-next-line oxc/no-const-enum -- Keep const enum position flags inlined.
+// oxlint-disable-next-line oxc/no-const-enum -- Preserve the published const enum declaration for TypeScript consumers.
 export const enum DocumentPosition {
     DISCONNECTED = 1,
     PRECEDING = 2,
@@ -144,10 +143,11 @@ export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
     for (let index = 0; index < nodes.length; index++) {
         if (Reflect.has(nodes, index)) lastIndex.set(nodes[index], index);
     }
-    // oxlint-disable-next-line no-param-reassign -- Reuse the parameter binding for the deduplicated nodes.
-    nodes = nodes.filter((node, index) => lastIndex.get(node) === index);
+    const uniqueNodes = nodes.filter(
+        (node, index) => lastIndex.get(node) === index,
+    );
 
-    nodes.sort((a, b) => {
+    uniqueNodes.sort((a, b) => {
         const relative = compareDocumentPosition(a, b);
         if (relative & DocumentPosition.PRECEDING) {
             return -1;
@@ -158,5 +158,5 @@ export function uniqueSort<T extends AnyNode>(nodes: T[]): T[] {
         return 0;
     });
 
-    return nodes;
+    return uniqueNodes;
 }

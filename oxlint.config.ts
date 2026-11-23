@@ -91,6 +91,8 @@ export default defineConfig({
         ],
         yoda: ["error", "never"],
         curly: ["error", "multi-line"],
+        // Combine and test the document position flags as a bitmask.
+        "no-bitwise": ["error", { allow: ["&", "|"] }],
         "no-unused-vars": [
             "error",
             { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
@@ -114,6 +116,11 @@ export default defineConfig({
         "typescript/no-unnecessary-condition": [
             "error",
             { allowConstantLoopConditions: "only-allowed-literals" },
+        ],
+        // Feed and DOM attribute checks intentionally treat empty and missing strings alike.
+        "typescript/strict-boolean-expressions": [
+            "error",
+            { allowNullableString: true },
         ],
         "typescript/switch-exhaustiveness-check": [
             "error",

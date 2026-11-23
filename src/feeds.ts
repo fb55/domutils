@@ -95,8 +95,7 @@ export function getFeed(document: AnyNode[]): Feed | null {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
-// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the return type from the typed feed object.
-function getAtomFeed(feedRoot: Element) {
+function getAtomFeed(feedRoot: Element): Feed {
     const childs = feedRoot.children;
 
     const feed: Feed = {
@@ -109,7 +108,6 @@ function getAtomFeed(feedRoot: Element) {
             addConditionally(entry, "title", "title", children);
 
             const href = getAtomLink(children);
-            // oxlint-disable-next-line typescript/strict-boolean-expressions -- Treat empty link URLs as absent.
             if (href) {
                 entry.link = href;
             }
@@ -132,7 +130,6 @@ function getAtomFeed(feedRoot: Element) {
     addConditionally(feed, "id", "id", childs);
     addConditionally(feed, "title", "title", childs);
     const href = getAtomLink(childs);
-    // oxlint-disable-next-line typescript/strict-boolean-expressions -- Treat empty link URLs as absent.
     if (href) {
         feed.link = href;
     }
@@ -154,13 +151,11 @@ function getAtomFeed(feedRoot: Element) {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
-// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the return type from the typed feed object.
-function getRssFeed(feedRoot: Element) {
+function getRssFeed(feedRoot: Element): Feed {
     const childs = getOneElement("channel", feedRoot.children)?.children ?? [];
 
     const feed: Feed = {
-        // oxlint-disable-next-line unicorn/prefer-string-slice, typescript/no-deprecated -- Keep the existing feed type extraction.
-        type: feedRoot.name.substr(0, 3),
+        type: feedRoot.name.slice(0, 3),
         id: "",
         items: getElementsByTagName("item", feedRoot.children).map(
             (item: Element) => {
@@ -216,10 +211,9 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         const { attribs } = element;
 
         const media: FeedItemMedia = {
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve unrecognized medium values from feeds.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Legacy feed results pass through unknown media values while the public type lists the standard values.
             medium: attribs["medium"] as FeedItemMediaMedium | undefined,
-            // oxlint-disable-next-line no-implicit-coercion -- Preserve truthiness for the isDefault attribute.
-            isDefault: !!attribs["isDefault"],
+            isDefault: Boolean(attribs["isDefault"]),
         };
 
         for (const attrib of MEDIA_KEYS_STRING) {
@@ -233,7 +227,7 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         }
 
         if (attribs["expression"]) {
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve unrecognized expression values from feeds.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Legacy feed results pass through unknown expressions while the public type lists the standard values.
             media.expression = attribs["expression"] as FeedItemMediaExpression;
         }
 
@@ -310,14 +304,13 @@ function fetch(
  * @param where Element to search for the property.
  * @param shouldRecurse Whether to recurse into child nodes.
  */
-// oxlint-disable-next-line typescript/explicit-function-return-type -- This helper only updates the target object.
 function addConditionally<Key extends PropertyKey>(
     object: Partial<Record<Key, string>>,
     property: Key,
     tagName: string,
     where: AnyNode[],
     shouldRecurse = false,
-) {
+): void {
     const value = fetch(tagName, where, shouldRecurse);
     if (value) object[property] = value;
 }
@@ -328,7 +321,6 @@ function addConditionally<Key extends PropertyKey>(
  * @param value The name of the element to check.
  * @returns Whether an element is a feed root node.
  */
-// oxlint-disable-next-line typescript/explicit-function-return-type -- Infer the boolean result from the membership check.
-function isValidFeed(value: string) {
+function isValidFeed(value: string): boolean {
     return ["rss", "feed", "rdf:RDF"].includes(value);
 }

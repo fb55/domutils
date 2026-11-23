@@ -72,6 +72,7 @@ export function find(
 ): AnyNode[] {
     const result: AnyNode[] = [];
     if (limit <= 0) return result;
+    let remaining = limit;
 
     /** Stack of the arrays we are looking at. */
     const nodeStack: AnyNode[][] = [Array.isArray(nodes) ? nodes : [nodes]];
@@ -98,8 +99,7 @@ export function find(
 
         if (isMatch(element)) {
             result.push(element);
-            // oxlint-disable-next-line no-param-reassign -- Use the limit parameter as the remaining match count.
-            if (--limit <= 0) return result;
+            if (--remaining <= 0) return result;
         }
 
         if (

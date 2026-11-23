@@ -35,8 +35,7 @@ export function getInnerHTML(
     options?: DomSerializerOptions,
 ): string {
     return hasChildren(node)
-        ? // oxlint-disable-next-line no-shadow, typescript/no-deprecated -- Keep the legacy serializer call and its child parameter.
-          node.children.map((node) => getOuterHTML(node, options)).join("")
+        ? node.children.map((child) => renderHTML(child, options)).join("")
         : "";
 }
 
@@ -49,13 +48,21 @@ export function getInnerHTML(
  * @returns `node`'s inner text.
  */
 export function getText(node: AnyNode | AnyNode[]): string {
-    // oxlint-disable-next-line typescript/no-deprecated -- Recurse through the legacy text serializer.
-    if (Array.isArray(node)) return node.map(getText).join("");
-    if (isTag(node))
-        // oxlint-disable-next-line curly, typescript/no-deprecated -- Keep the single-statement branch and legacy recursion.
-        return node.name === "br" ? "\n" : node.children.map(getText).join("");
-    // oxlint-disable-next-line typescript/no-deprecated -- Recurse through the legacy text serializer.
-    if (isCDATA(node)) return node.children.map(getText).join("");
+    return getTextWithBreaks(node);
+}
+
+/**
+ * @param node Node to get the text of.
+ * @returns Text with a newline for each `<br>`.
+ */
+function getTextWithBreaks(node: AnyNode | AnyNode[]): string {
+    if (Array.isArray(node)) return node.map(getTextWithBreaks).join("");
+    if (isTag(node)) {
+        return node.name === "br"
+            ? "\n"
+            : node.children.map(getTextWithBreaks).join("");
+    }
+    if (isCDATA(node)) return node.children.map(getTextWithBreaks).join("");
     if (isText(node)) return node.data;
     return "";
 }

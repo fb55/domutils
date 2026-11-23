@@ -27,8 +27,7 @@ export function getChildren(element: AnyNode): ChildNode[] {
  */
 export function getParent(element: AnyNode): ParentNode | null;
 export function getParent(element: AnyNode): ParentNode | null {
-    // oxlint-disable-next-line typescript/prefer-nullish-coalescing -- Preserve the existing fallback for falsy parent values.
-    return element.parent || null;
+    return element.parent ?? null;
 }
 
 /**

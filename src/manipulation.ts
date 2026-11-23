@@ -76,7 +76,7 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
 
     parent.children.push(child);
     if (parent.children.length > 1) {
-        // oxlint-disable-next-line unicorn/prefer-at -- Use the existing indexed read for the previous sibling.
+        // oxlint-disable-next-line unicorn/prefer-at -- Guarding the possibly undefined .at() result skips the existing error for sparse children and slowed appends in the Node 20 benchmark.
         const sibling = parent.children[parent.children.length - 2];
         sibling.next = child;
         child.prev = sibling;
