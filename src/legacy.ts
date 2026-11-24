@@ -1,6 +1,7 @@
 import type { ElementType } from "domelementtype";
 import { type AnyNode, type Element, isTag, isText } from "domhandler";
 import { filter, findOne } from "./querying.js";
+import { getAttributeValue } from "./traversal.js";
 
 type TestType = (element: AnyNode) => boolean;
 
@@ -66,10 +67,11 @@ function getAttribCheck(
 ): TestType {
     if (typeof value === "function") {
         return (element: AnyNode) =>
-            isTag(element) && value(element.attribs[attrib]);
+            isTag(element) &&
+            value(getAttributeValue(element, attrib) as string);
     }
     return (element: AnyNode) =>
-        isTag(element) && element.attribs[attrib] === value;
+        isTag(element) && getAttributeValue(element, attrib) === value;
 }
 
 /**
