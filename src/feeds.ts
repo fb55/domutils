@@ -99,7 +99,7 @@ function getAtomFeed(feedRoot: Element) {
 
     const feed: Feed = {
         type: "atom",
-        items: getElementsByTagName("entry", childs).map((item) => {
+        items: getElementsByTagName("entry", childs, false).map((item) => {
             const { children } = item;
             const entry: FeedItem = { media: getMediaElements(children) };
 
@@ -152,11 +152,13 @@ function getAtomFeed(feedRoot: Element) {
  */
 function getRssFeed(feedRoot: Element) {
     const childs = getOneElement("channel", feedRoot.children)?.children ?? [];
+    const itemChildren =
+        feedRoot.name === "rdf:RDF" ? feedRoot.children : childs;
 
     const feed: Feed = {
         type: feedRoot.name.substr(0, 3),
         id: "",
-        items: getElementsByTagName("item", feedRoot.children).map(
+        items: getElementsByTagName("item", itemChildren, false).map(
             (item: Element) => {
                 const { children } = item;
                 const entry: FeedItem = { media: getMediaElements(children) };
