@@ -151,7 +151,10 @@ export function findOne(
             continue;
         }
 
-        const node = nodeStack[depth][indexStack[depth]++];
+        const index = indexStack[depth]++;
+        // Preserve the sparse-array behavior of existsOne's former `some` traversal.
+        if (!Reflect.has(nodeStack[depth], index)) continue;
+        const node = nodeStack[depth][index];
         if (isTag(node) && isMatch(node)) {
             return node;
         }

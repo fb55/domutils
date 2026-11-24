@@ -230,6 +230,15 @@ describe("querying", () => {
     });
 
     describe("existsOne", () => {
+        it("skips holes in a sparse array of nodes", () => {
+            const nodes: AnyNode[] = [];
+            nodes[1] = someDeepNodes;
+            expect(existsOne((element) => element.name === "p", nodes)).toBe(
+                true,
+            );
+            expect(existsOne(() => false, nodes)).toBe(false);
+        });
+
         it.each([false, true])(
             "searches a deeply nested tree without RangeError (array: %s)",
             (useArray) => {
