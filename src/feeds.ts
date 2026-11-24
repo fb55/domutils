@@ -139,7 +139,12 @@ function getAtomFeed(feedRoot: Element) {
         feed.updated = new Date(updated);
     }
 
-    addConditionally(feed, "author", "email", childs, true);
+    const authorChildren = getElementsByTagName(
+        "author",
+        childs,
+        false,
+    ).flatMap((author) => author.children);
+    addConditionally(feed, "author", "email", authorChildren);
 
     return feed;
 }

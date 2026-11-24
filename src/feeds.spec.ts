@@ -10,6 +10,11 @@ import { getFeed } from "./feeds.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const documents = path.join(__dirname, "__fixtures__", "Documents");
 
+function parseAtom(contents: string) {
+    const xml = `<feed xmlns="http://www.w3.org/2005/Atom"><id>urn:example:feed</id><title>Feed</title><updated>2026-01-01T00:00:00Z</updated>${contents}</feed>`;
+    return getFeed(parseDocument(xml, { xmlMode: true }).children);
+}
+
 describe("getFeed", () => {
     for (const name of fs.readdirSync(documents)) {
         test(name, async () => {
@@ -37,6 +42,47 @@ describe("getFeed Atom link", () => {
         const xml = `<feed><entry><link rel="alternate" href="b"/></entry><link rel="self" href="a"/><link rel="edit" href="c"/></feed>`;
         const feed = getFeed(parseDocument(xml, { xmlMode: true }).children);
         expect(feed?.link).toBe("a");
+    });
+});
+
+describe("getFeed Atom author", () => {
+    const contributor =
+        "<contributor><name>Contributor</name><email>contributor@example.com</email></contributor>";
+    const entry =
+        "<entry><id>urn:example:entry</id><title>Entry</title><updated>2026-01-01T00:00:00Z</updated><author><name>Entry author</name><email>entry@example.com</email></author></entry>";
+
+    test.each([
+        ["contributor", contributor],
+        ["entry author", entry],
+    ])("does not use an earlier %s as the feed author", (_name, contents) => {
+        const feed = parseAtom(
+            `${contents}<author><name>Feed author</name><email> feed@example.com </email></author>`,
+        );
+        expect(feed?.author).toBe("feed@example.com");
+    });
+
+    test.each([
+        ["contributor", contributor],
+        ["entry author", entry],
+    ])(
+        "does not borrow %s email when the feed author has none",
+        (_name, contents) => {
+            const feed = parseAtom(
+                `${contents}<author><name>Feed author</name></author>`,
+            );
+            expect(feed).not.toHaveProperty("author");
+        },
+    );
+
+    test("does not promote an entry author when the feed has no author", () => {
+        expect(parseAtom(entry)).not.toHaveProperty("author");
+    });
+
+    test("takes the first email among direct feed authors", () => {
+        const feed = parseAtom(
+            "<author><name>No email</name></author><author><name>First</name><email>first@example.com</email></author><author><name>Second</name><email>second@example.com</email></author>",
+        );
+        expect(feed?.author).toBe("first@example.com");
     });
 });
 
