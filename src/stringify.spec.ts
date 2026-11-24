@@ -1,3 +1,4 @@
+import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
 import fixture from "./__fixtures__/fixture.js";
 import {
@@ -29,6 +30,16 @@ describe("stringify", () => {
         it("Correctly renders the text content", () => {
             expect(getText(fixture[1])).toBe(" text   text ");
         });
+
+        it("extracts text and line breaks from a document node", () => {
+            const document = parseDocument(
+                "before<br>after<!--ignored--><script>script</script><style>style</style>",
+            );
+
+            expect(getText(document)).toBe("before\nafterscriptstyle");
+            expect(getText([document])).toBe(getText(document.children));
+            expect(getText(parseDocument(""))).toBe("");
+        });
     });
 
     describe("textContent", () => {
@@ -40,6 +51,16 @@ describe("stringify", () => {
     describe("innerText", () => {
         it("Correctly renders the text content", () => {
             expect(innerText(fixture[1])).toBe("    text ");
+        });
+
+        it("extracts document text while ignoring scripts, styles, and comments", () => {
+            const document = parseDocument(
+                "before<br>after<!--ignored--><script>script</script><style>style</style>",
+            );
+
+            expect(innerText(document)).toBe("beforeafter");
+            expect(innerText([document])).toBe(innerText(document.children));
+            expect(innerText(parseDocument(""))).toBe("");
         });
     });
 });

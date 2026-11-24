@@ -51,7 +51,8 @@ export function getText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(getText).join("");
     if (isTag(node))
         return node.name === "br" ? "\n" : node.children.map(getText).join("");
-    if (isCDATA(node)) return node.children.map(getText).join("");
+    if (isCDATA(node) || node.type === ElementType.Root)
+        return node.children.map(getText).join("");
     if (isText(node)) return node.data;
     return "";
 }
@@ -83,7 +84,12 @@ export function textContent(node: AnyNode | AnyNode[]): string {
  */
 export function innerText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(innerText).join("");
-    if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
+    if (
+        hasChildren(node) &&
+        (node.type === ElementType.Tag ||
+            node.type === ElementType.Root ||
+            isCDATA(node))
+    ) {
         return node.children.map(innerText).join("");
     }
     if (isText(node)) return node.data;
