@@ -31,6 +31,7 @@ exports[`getFeed > RDF_Example.xml 1`] = `
   "items": [
     {
       "description": "Great test content<br>A link: <a href="http://github.com">Github</a>",
+      "id": "http://somefakesite/path/to/something.html",
       "link": "http://somefakesite/path/to/something.html",
       "media": [],
       "pubDate": 2011-11-04T16:35:17.000Z,
@@ -38,6 +39,7 @@ exports[`getFeed > RDF_Example.xml 1`] = `
     },
     {
       "description": "The early bird gets the worm",
+      "id": "http://somefakesite/path/to/something-else.html",
       "link": "http://somefakesite/path/to/something-else.html",
       "media": [],
       "pubDate": 2011-11-04T16:34:54.000Z,
