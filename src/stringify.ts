@@ -48,12 +48,11 @@ export function getInnerHTML(
  * @returns `node`'s inner text.
  */
 export function getText(node: AnyNode | AnyNode[]): string {
-    if (Array.isArray(node)) return node.map(getText).join("");
-    if (isTag(node))
-        return node.name === "br" ? "\n" : node.children.map(getText).join("");
-    if (isCDATA(node)) return node.children.map(getText).join("");
-    if (isText(node)) return node.data;
-    return "";
+    return collectText(node, (node) => {
+        if (isTag(node)) return node.name === "br" ? "\n" : node.children;
+        if (isCDATA(node)) return node.children;
+        return isText(node) ? node.data : "";
+    });
 }
 
 /**
@@ -65,12 +64,10 @@ export function getText(node: AnyNode | AnyNode[]): string {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent}
  */
 export function textContent(node: AnyNode | AnyNode[]): string {
-    if (Array.isArray(node)) return node.map(textContent).join("");
-    if (hasChildren(node) && !isComment(node)) {
-        return node.children.map(textContent).join("");
-    }
-    if (isText(node)) return node.data;
-    return "";
+    return collectText(node, (node) => {
+        if (hasChildren(node) && !isComment(node)) return node.children;
+        return isText(node) ? node.data : "";
+    });
 }
 
 /**
@@ -82,10 +79,48 @@ export function textContent(node: AnyNode | AnyNode[]): string {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText}
  */
 export function innerText(node: AnyNode | AnyNode[]): string {
-    if (Array.isArray(node)) return node.map(innerText).join("");
-    if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
-        return node.children.map(innerText).join("");
+    return collectText(node, (node) => {
+        if (
+            hasChildren(node) &&
+            (node.type === ElementType.Tag || isCDATA(node))
+        ) {
+            return node.children;
+        }
+        return isText(node) ? node.data : "";
+    });
+}
+
+/**
+ * Collect text with traversal state on the heap instead of the call stack.
+ *
+ * @param node Node or nodes to visit.
+ * @param content Text or children selected by the public helper.
+ * @returns The selected text in document order.
+ */
+function collectText(
+    node: AnyNode | AnyNode[],
+    content: (node: AnyNode) => string | AnyNode[],
+): string {
+    const stack = [{ nodes: Array.isArray(node) ? node : [node], index: 0 }];
+    const result: string[] = [];
+
+    while (stack.length > 0) {
+        const frame = stack[stack.length - 1];
+        if (frame.index >= frame.nodes.length) {
+            stack.pop();
+            continue;
+        }
+
+        const index = frame.index++;
+        // Array#map skips holes, while still visiting inherited indices.
+        if (!Reflect.has(frame.nodes, index)) continue;
+        const value = content(frame.nodes[index]);
+        if (typeof value === "string") {
+            if (value.length > 0) result.push(value);
+        } else if (value.length > 0) {
+            stack.push({ nodes: value, index: 0 });
+        }
     }
-    if (isText(node)) return node.data;
-    return "";
+
+    return result.join("");
 }
