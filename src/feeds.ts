@@ -117,7 +117,8 @@ function getAtomFeed(feedRoot: Element) {
                 entry.description = description;
             }
 
-            const pubDate = fetch("updated", children);
+            const pubDate =
+                fetch("published", children) || fetch("updated", children);
             if (pubDate) {
                 entry.pubDate = new Date(pubDate);
             }
