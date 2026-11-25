@@ -1,6 +1,7 @@
 import { parseDocument } from "htmlparser2";
 import { describe, expect, test } from "vitest";
 import { getFeed } from "./feeds.js";
+import { getElementsByTagName } from "./legacy.js";
 
 // RFC 4287 defines this exact namespace URI.
 const ATOM_NAMESPACE = "http://www.w3.org/2005/Atom";
@@ -146,6 +147,98 @@ describe("Atom namespaces", () => {
             title: "RSS",
             items: [],
         });
+    });
+
+    test("excludes explicitly foreign children of a legacy feed", () => {
+        const xml = `<feed>
+            <title xmlns="urn:example:extension">Foreign title</title>
+            <title>Legacy title</title>
+            <entry xmlns="urn:example:extension"><title>Foreign entry</title></entry>
+            <entry><title>Legacy entry</title></entry>
+        </feed>`;
+        expect(readFeed(xml)).toEqual({
+            type: "atom",
+            title: "Legacy title",
+            items: [{ title: "Legacy entry", media: [] }],
+        });
+    });
+
+    test.each(["", "a", "media"])(
+        "distinguishes Atom content from Media RSS with the %j Atom prefix",
+        (prefix) => {
+            const tag = prefix ? `${prefix}:` : "";
+            const declaration = prefix ? `xmlns:${prefix}` : "xmlns";
+            const xml = `<${tag}feed ${declaration}="${ATOM_NAMESPACE}">
+                <${tag}entry>
+                    <${tag}content type="text">Entry body</${tag}content>
+                    <m:content xmlns:m="http://search.yahoo.com/mrss/"
+                        url="https://example.test/image.jpg" medium="image"/>
+                    <media:content xmlns:media="urn:example:extension" url="foreign"/>
+                </${tag}entry>
+            </${tag}feed>`;
+            expect(readFeed(xml)?.items).toEqual([
+                {
+                    description: "Entry body",
+                    media: [
+                        {
+                            url: "https://example.test/image.jpg",
+                            medium: "image",
+                            isDefault: false,
+                        },
+                    ],
+                },
+            ]);
+        },
+    );
+
+    test("preserves unbound media content in legacy Atom feeds", () => {
+        const xml = `<feed><entry>
+            <media:content url="https://example.test/image.jpg" medium="image"/>
+        </entry></feed>`;
+        expect(readFeed(xml)?.items[0].media).toEqual([
+            {
+                url: "https://example.test/image.jpg",
+                medium: "image",
+                isDefault: false,
+            },
+        ]);
+    });
+
+    test("resolves namespaces again after the caller mutates the DOM", () => {
+        const document = parseDocument(
+            `<feed xmlns="${ATOM_NAMESPACE}"><title>Atom title</title></feed>`,
+            { xmlMode: true },
+        );
+        const root = getElementsByTagName("feed", document.children)[0];
+        expect(getFeed(document.children)?.title).toBe("Atom title");
+
+        root.attribs["xmlns"] = "urn:example:extension";
+        expect(getFeed(document.children)).toBeNull();
+
+        root.attribs["xmlns"] = "";
+        expect(getFeed(document.children)?.title).toBe("Atom title");
+    });
+
+    test("bounds namespace lookups while rejecting nested foreign feeds", () => {
+        const depth = 1000;
+        const document = parseDocument(
+            '<feed xmlns="urn:example:extension">' +
+                "<feed>".repeat(depth) +
+                "</feed>".repeat(depth + 1),
+            { xmlMode: true },
+        );
+        let attributeInspections = 0;
+        for (const element of getElementsByTagName("*", document.children)) {
+            element.attribs = new Proxy(element.attribs, {
+                getOwnPropertyDescriptor(target, property) {
+                    attributeInspections += 1;
+                    return Reflect.getOwnPropertyDescriptor(target, property);
+                },
+            });
+        }
+
+        expect(getFeed(document.children)).toBeNull();
+        expect(attributeInspections).toBeLessThan(depth * 10);
     });
 
     test("preserves iterative feed discovery in a deeply nested document", () => {

@@ -82,11 +82,15 @@ export interface Feed {
  * @returns The feed.
  */
 export function getFeed(document: AnyNode[]): Feed | null {
-    const feedRoot = getOneElement(isValidFeed, document);
+    const getNamespace = createNamespaceResolver();
+    const feedRoot = getOneElement(
+        (element) => isValidFeed(element, getNamespace),
+        document,
+    );
 
     if (!feedRoot) return null;
-    if (isAtomFeed(feedRoot)) {
-        return getAtomFeed(feedRoot);
+    if (isAtomFeed(feedRoot, getNamespace)) {
+        return getAtomFeed(feedRoot, getNamespace);
     }
     return getRssFeed(feedRoot);
 }
@@ -95,19 +99,34 @@ export function getFeed(document: AnyNode[]): Feed | null {
  * Parse an Atom feed.
  *
  * @param feedRoot The root of the feed.
+ * @param getNamespace Resolve an element's namespace within this extraction.
  * @returns The parsed feed.
  */
-function getAtomFeed(feedRoot: Element) {
+function getAtomFeed(feedRoot: Element, getNamespace: NamespaceResolver) {
     const childs = feedRoot.children;
-    const isNamespaceAware = isAtomElement(feedRoot, "feed");
+    const isNamespaceAware = isAtomElement(feedRoot, "feed", getNamespace);
     const atomTag = (name: string) => (element: Element) =>
-        isNamespaceAware ? isAtomElement(element, name) : element.name === name;
+        isAtomElement(element, name, getNamespace) ||
+        (!isNamespaceAware && element.name === name && !getNamespace(element));
+    const mediaTag = (element: Element) => {
+        const colon = element.name.indexOf(":");
+        if (element.name.slice(colon + 1) !== "content") return false;
+        const namespace = getNamespace(element);
+        return (
+            namespace === MEDIA_NAMESPACE ||
+            (!isNamespaceAware &&
+                element.name === "media:content" &&
+                !namespace)
+        );
+    };
 
     const feed: Feed = {
         type: "atom",
         items: findAll(atomTag("entry"), childs).map((item) => {
             const { children } = item;
-            const entry: FeedItem = { media: getMediaElements(children) };
+            const entry: FeedItem = {
+                media: getMediaElements(children, mediaTag),
+            };
 
             addConditionally(entry, "id", atomTag("id"), children);
             addConditionally(entry, "title", atomTag("title"), children);
@@ -210,10 +229,17 @@ const MEDIA_NUMBERS = [
  * Get all media elements of a feed item.
  *
  * @param where Nodes to search in.
+ * @param isMedia Optional namespace-aware predicate for Atom media elements.
  * @returns Media elements.
  */
-function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
-    return getElementsByTagName("media:content", where).map((element) => {
+function getMediaElements(
+    where: AnyNode[],
+    isMedia?: (element: Element) => boolean,
+): FeedItemMedia[] {
+    const elements = isMedia
+        ? findAll(isMedia, where)
+        : getElementsByTagName("media:content", where);
+    return elements.map((element) => {
         const { attribs } = element;
 
         const media: FeedItemMedia = {
@@ -344,24 +370,36 @@ function addConditionally<T>(
  * Checks if an element is a feed root node.
  *
  * @param element The element to check.
+ * @param getNamespace Resolve an element's namespace within this extraction.
  * @returns Whether an element is a feed root node.
  */
-function isValidFeed(element: Element) {
-    return ["rss", "rdf:RDF"].includes(element.name) || isAtomFeed(element);
+function isValidFeed(element: Element, getNamespace: NamespaceResolver) {
+    return (
+        ["rss", "rdf:RDF"].includes(element.name) ||
+        isAtomFeed(element, getNamespace)
+    );
 }
 
 // RFC 4287 defines this exact namespace URI.
 const ATOM_NAMESPACE = "http://www.w3.org/2005/Atom";
+// eslint-disable-next-line unicorn/prefer-https -- Media RSS defines this exact namespace URI.
+const MEDIA_NAMESPACE = "http://search.yahoo.com/mrss/";
+
+type NamespaceResolver = (element: Element) => string | undefined;
 
 /**
  * Accept an Atom root, retaining support for truly unnamespaced legacy feeds.
  *
  * @param element The element to check.
+ * @param getNamespace Resolve an element's namespace within this extraction.
  * @returns Whether the element is an Atom or legacy feed root.
  */
-function isAtomFeed(element: Element): boolean {
+function isAtomFeed(
+    element: Element,
+    getNamespace: NamespaceResolver,
+): boolean {
     return (
-        isAtomElement(element, "feed") ||
+        isAtomElement(element, "feed", getNamespace) ||
         (element.name === "feed" && !getNamespace(element))
     );
 }
@@ -371,9 +409,14 @@ function isAtomFeed(element: Element): boolean {
  *
  * @param element The element to check.
  * @param name The local name to match.
+ * @param getNamespace Resolve an element's namespace within this extraction.
  * @returns Whether the element belongs to the Atom namespace.
  */
-function isAtomElement(element: Element, name: string): boolean {
+function isAtomElement(
+    element: Element,
+    name: string,
+    getNamespace: NamespaceResolver,
+): boolean {
     const colon = element.name.indexOf(":");
     return (
         element.name.slice(colon + 1) === name &&
@@ -382,19 +425,36 @@ function isAtomElement(element: Element, name: string): boolean {
 }
 
 /**
- * Read the nearest namespace binding, including an empty default reset.
+ * Cache inherited bindings for one extraction, including empty namespace resets.
  *
- * @param element The element whose namespace to resolve.
- * @returns The declared namespace URI, or undefined if none is in scope.
+ * @returns A resolver that visits each ancestor once per namespace prefix.
  */
-function getNamespace(element: Element): string | undefined {
-    const colon = element.name.indexOf(":");
-    const declaration =
-        colon === -1 ? "xmlns" : `xmlns:${element.name.slice(0, colon)}`;
-    for (let node: AnyNode | null = element; node; node = node.parent) {
-        if (isTag(node) && Object.hasOwn(node.attribs, declaration)) {
-            return node.attribs[declaration];
+function createNamespaceResolver(): NamespaceResolver {
+    const namespaces = new Map<string, WeakMap<AnyNode, string | undefined>>();
+    return (element) => {
+        const colon = element.name.indexOf(":");
+        const declaration =
+            colon === -1 ? "xmlns" : `xmlns:${element.name.slice(0, colon)}`;
+        let bindings = namespaces.get(declaration);
+        if (!bindings) {
+            bindings = new WeakMap();
+            namespaces.set(declaration, bindings);
         }
-    }
-    return undefined;
+
+        const ancestors: AnyNode[] = [];
+        let namespace: string | undefined;
+        for (let node: AnyNode | null = element; node; node = node.parent) {
+            if (bindings.has(node)) {
+                namespace = bindings.get(node);
+                break;
+            }
+            ancestors.push(node);
+            if (isTag(node) && Object.hasOwn(node.attribs, declaration)) {
+                namespace = node.attribs[declaration];
+                break;
+            }
+        }
+        for (const node of ancestors) bindings.set(node, namespace);
+        return namespace;
+    };
 }
