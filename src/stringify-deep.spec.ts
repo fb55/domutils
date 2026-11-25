@@ -27,6 +27,22 @@ describe("deep text extraction", () => {
             expect(nodes).toHaveLength(3);
             expect(1 in nodes).toBe(false);
         });
+
+        it(`${extract.name} ignores nodes appended during traversal`, () => {
+            for (const isNested of [false, true]) {
+                const nodes: AnyNode[] = [];
+                Object.defineProperty(nodes, 0, {
+                    get() {
+                        nodes.push(new Text("late"));
+                        return new Text("early");
+                    },
+                });
+
+                const input = isNested ? new Element("span", {}, nodes) : nodes;
+                expect(extract(input)).toBe("early");
+                expect(nodes).toHaveLength(2);
+            }
+        });
     }
 
     it("preserves each helper's handling of breaks, comments and raw text", () => {

@@ -101,12 +101,13 @@ function collectText(
     node: AnyNode | AnyNode[],
     content: (node: AnyNode) => string | AnyNode[],
 ): string {
-    const stack = [{ nodes: Array.isArray(node) ? node : [node], index: 0 }];
+    const nodes = Array.isArray(node) ? node : [node];
+    const stack = [{ nodes, index: 0, length: nodes.length }];
     const result: string[] = [];
 
     while (stack.length > 0) {
         const frame = stack[stack.length - 1];
-        if (frame.index >= frame.nodes.length) {
+        if (frame.index >= frame.length) {
             stack.pop();
             continue;
         }
@@ -117,8 +118,9 @@ function collectText(
         const value = content(frame.nodes[index]);
         if (typeof value === "string") {
             if (value.length > 0) result.push(value);
-        } else if (value.length > 0) {
-            stack.push({ nodes: value, index: 0 });
+        } else {
+            const { length } = value;
+            if (length > 0) stack.push({ nodes: value, index: 0, length });
         }
     }
 
