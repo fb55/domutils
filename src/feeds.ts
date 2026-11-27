@@ -161,6 +161,10 @@ function getRssFeed(feedRoot: Element) {
                 const { children } = item;
                 const entry: FeedItem = { media: getMediaElements(children) };
                 addConditionally(entry, "id", "guid", children);
+                if (!entry.id && feedRoot.name === "rdf:RDF") {
+                    const about = item.attribs["rdf:about"];
+                    if (about) entry.id = about;
+                }
                 addConditionally(entry, "title", "title", children);
                 addConditionally(entry, "link", "link", children);
                 addConditionally(entry, "description", "description", children);
