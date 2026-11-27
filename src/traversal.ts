@@ -73,7 +73,9 @@ export function getAttributeValue(
     const { attribs } = element as {
         attribs?: Record<string, string | undefined>;
     };
-    return attribs?.[name];
+    return attribs != null && Object.hasOwn(attribs, name)
+        ? attribs[name]
+        : undefined;
 }
 
 /**
