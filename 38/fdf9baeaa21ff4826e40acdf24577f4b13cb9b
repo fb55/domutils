@@ -1,0 +1,27 @@
+oxfmt.config.ts
+  s_7639512743c926::t_126318e415331b 10
+oxlint.config.ts
+  s_7639512743c926::t_126318e415331b 11-30,54,71,150-152,230-244
+scripts/check-json.ts
+  s_7639512743c926::t_126318e415331b 2,5-10
+package.json
+  s_7639512743c926::t_126318e415331b 55
+package-lock.json
+  s_7639512743c926::t_c683fbf30cbbb7 18,521-558,1711-1723,1854-1866,2037-2063,2082-2094,2110-2144,2168-2223,2601-2637,2891-2922,2959-2995,3061-3073,3145-3157
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "38fdf9baeaa21ff4826e40acdf24577f4b13cb9b",
+  "prompts": {},
+  "sessions": {
+    "s_7639512743c926": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20471-f2d3-7bf3-aeab-71ff18fb9e17",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}

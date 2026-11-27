@@ -1,0 +1,39 @@
+oxlint.config.ts
+  s_c2ddf42d5165b1::t_7fae28fdf7d3a0 94-95
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 120-124
+src/helpers.ts
+  s_c2ddf42d5165b1::t_7fae28fdf7d3a0 47
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 146-148,150,161
+src/feeds.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 98,154,158,214,216,230,313,324
+src/feeds.spec.ts
+  s_c2ddf42d5165b1::t_036e3961421b78 15-20,22
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 7,14,23,27,34,42,47,50
+src/legacy.ts
+  s_c2ddf42d5165b1::t_9cbea81ad3b636 159-160
+  s_c2ddf42d5165b1::t_dc4406d3189184 179,204
+src/traversal.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 30
+src/stringify.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 38,51-65
+src/querying.ts
+  s_c2ddf42d5165b1::t_4c71a5e9a230ea 75,102
+src/manipulation.ts
+  s_c2ddf42d5165b1::t_ed4c1288900ff3 79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e32ab61f1e9093b320a0363d8d66325222d416dd",
+  "prompts": {},
+  "sessions": {
+    "s_c2ddf42d5165b1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20627-48ab-7332-b09a-9fc79504aebd",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": null
+    }
+  }
+}
