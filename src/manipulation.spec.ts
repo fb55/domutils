@@ -1,4 +1,4 @@
-import type { Element } from "domhandler";
+import { Document, Element, type ParentNode, Text } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
 import {
@@ -9,9 +9,18 @@ import {
     removeElement,
     replaceElement,
 } from "./manipulation.js";
+import { getOuterHTML } from "./stringify.js";
 
 function parseDOM(markup: string) {
     return parseDocument(markup).children;
+}
+
+function chain(nodes: Element[]): void {
+    let parent: ParentNode = new Document([]);
+    for (const node of nodes) {
+        appendChild(parent, node);
+        parent = node;
+    }
 }
 
 describe("manipulation", () => {
@@ -265,5 +274,131 @@ describe("manipulation", () => {
                 </div>
             `);
         });
+    });
+    describe("cyclic insertion", () => {
+        it.each([
+            {
+                name: "appendChild",
+                move: (div: Element) => appendChild(div, div),
+            },
+            {
+                name: "prependChild",
+                move: (div: Element) => prependChild(div, div),
+            },
+            {
+                name: "append",
+                move: (div: Element, p: Element) => append(p, div),
+            },
+            {
+                name: "prepend",
+                move: (div: Element, p: Element) => prepend(p, div),
+            },
+            {
+                name: "replaceElement",
+                move: (div: Element, p: Element) => replaceElement(p, div),
+            },
+        ])("$name should skip moving a node into itself", ({ move }) => {
+            const html =
+                "<h1></h1><div><section><b></b><p>x</p><em></em></section></div><h2></h2>";
+            const document_ = parseDocument(html);
+            const [h1, div, h2] = document_.children as Element[];
+            const section = div.children[0] as Element;
+            const [b, p, em] = section.children as Element[];
+
+            move(div, p);
+
+            expect(div.parent).toBe(document_);
+            expect(section.parent).toBe(div);
+            expect(p.parent).toBe(section);
+            for (const [previous, node, next] of [
+                [h1, div, h2],
+                [b, p, em],
+            ]) {
+                expect(node.prev).toBe(previous);
+                expect(node.next).toBe(next);
+                expect(previous.next).toBe(node);
+                expect(next.prev).toBe(node);
+            }
+            expect(getOuterHTML(document_)).toBe(html);
+        });
+
+        it("should skip moving a node with constructor children into itself", () => {
+            const node = new Element("a", {}, [
+                new Element("x", {}),
+                new Element("y", {}),
+            ]);
+            const b = new Element("b", {});
+            appendChild(node, b);
+            const c = new Element("c", {});
+            appendChild(b, c);
+
+            appendChild(c, node);
+
+            expect(c.children).toHaveLength(0);
+            expect(node.parent).toBeNull();
+        });
+
+        it("should skip moving a node into its constructor children", () => {
+            const child = new Element("child", {});
+            const root = new Element("root", {}, [child]);
+            const deep = new Element("deep", {});
+            const tree = new Element("tree", {}, [
+                new Element("a", {}, [new Element("b", {})]),
+                new Element("c", {}, [deep]),
+            ]);
+
+            appendChild(child, root);
+            appendChild(deep, tree);
+
+            expect([child.children, deep.children]).toEqual([[], []]);
+            expect([root.parent, tree.parent]).toEqual([null, null]);
+        });
+
+        it.each([
+            { name: "appending to the deepest node", build: chain },
+            {
+                name: "appending nodes with constructor children",
+                build: chain,
+                constructed: true,
+            },
+            {
+                name: "wrapping every node",
+                build(nodes: Element[]) {
+                    chain(nodes);
+                    for (const node of nodes) {
+                        const wrapper = new Element("span", {});
+                        prepend(node, wrapper);
+                        appendChild(wrapper, node);
+                    }
+                },
+            },
+        ])(
+            "should stay linear when $name of a deep chain",
+            ({ build, constructed }) => {
+                const length = 1000;
+                let reads = 0;
+                const nodes = Array.from({ length }, () => {
+                    const node = constructed
+                        ? new Element("div", {}, [new Text("x")])
+                        : new Element("div", {});
+                    if (!constructed) appendChild(node, new Text("x"));
+                    let parent: ParentNode | null = null;
+                    Object.defineProperty(node, "parent", {
+                        get() {
+                            reads++;
+                            return parent;
+                        },
+                        set(value: ParentNode | null) {
+                            parent = value;
+                        },
+                    });
+                    return node;
+                });
+
+                build(nodes);
+
+                expect(reads).toBeLessThan(20 * length);
+            },
+        );
     });
 });

@@ -23,6 +23,50 @@ export function removeElement(element: ChildNode): void {
 }
 
 /**
+ * Check whether `node` is `target` itself or one of its ancestors.
+ *
+ * Walks up from `target` and through `node`'s descendants in step, so the
+ * check is bounded by the number of descendants `node` has.
+ *
+ * @param node The potential ancestor.
+ * @param target The node to start from.
+ * @returns Whether `node` is `target` or one of its ancestors.
+ */
+function isInclusiveAncestor(node: ChildNode, target: ChildNode): boolean {
+    if (!("children" in node)) return node === target;
+
+    /*
+     * The descendants are read from the `children` arrays: children passed to
+     * domhandler's constructors have no `parent` or sibling links, so `target`
+     * may be one of them even when the walk up ends before reaching `node`.
+     */
+    const lists = [node.children];
+    const indices = [0];
+    let current: ChildNode | null = target;
+
+    while (true) {
+        if (current === node) return true;
+        if (current !== null) {
+            if (current === node.parent) return false;
+            current = current.parent;
+        }
+
+        while (indices[indices.length - 1] >= lists[lists.length - 1].length) {
+            lists.pop();
+            indices.pop();
+            if (lists.length === 0) return false;
+        }
+        const descendant =
+            lists[lists.length - 1][indices[indices.length - 1]++];
+        if (descendant === target) return true;
+        if ("children" in descendant && descendant.children.length > 0) {
+            lists.push(descendant.children);
+            indices.push(0);
+        }
+    }
+}
+
+/**
  * Replace an element in the dom
  *
  * @category Manipulation
@@ -33,7 +77,7 @@ export function replaceElement(
     element: ChildNode,
     replacement: ChildNode,
 ): void {
-    if (element === replacement) return;
+    if (isInclusiveAncestor(replacement, element)) return;
     removeElement(replacement);
 
     replacement.prev = element.prev;
@@ -69,6 +113,7 @@ export function replaceElement(
  * @param child The element to be added as a child.
  */
 export function appendChild(parent: ParentNode, child: ChildNode): void {
+    if (isInclusiveAncestor(child, parent)) return;
     removeElement(child);
 
     child.next = null;
@@ -92,6 +137,7 @@ export function appendChild(parent: ParentNode, child: ChildNode): void {
  * @param next The element be added.
  */
 export function append(element: ChildNode, next: ChildNode): void {
+    if (isInclusiveAncestor(next, element)) return;
     removeElement(next);
 
     const { parent } = element;
@@ -121,6 +167,7 @@ export function append(element: ChildNode, next: ChildNode): void {
  * @param child The element to be added as a child.
  */
 export function prependChild(parent: ParentNode, child: ChildNode): void {
+    if (isInclusiveAncestor(child, parent)) return;
     removeElement(child);
 
     child.parent = parent;
@@ -144,6 +191,7 @@ export function prependChild(parent: ParentNode, child: ChildNode): void {
  * @param previous The element to be added.
  */
 export function prepend(element: ChildNode, previous: ChildNode): void {
+    if (isInclusiveAncestor(previous, element)) return;
     removeElement(previous);
 
     const { parent } = element;
