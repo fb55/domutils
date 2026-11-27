@@ -140,14 +140,27 @@ export function findOne(
     nodes: AnyNode[] | ParentNode,
     shouldRecurse = true,
 ): Element | null {
-    const searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
-    for (const node of searchedNodes) {
+    const nodeStack = [Array.isArray(nodes) ? nodes : [nodes]];
+    const indexStack = [0];
+
+    while (nodeStack.length > 0) {
+        const depth = nodeStack.length - 1;
+        if (indexStack[depth] >= nodeStack[depth].length) {
+            nodeStack.pop();
+            indexStack.pop();
+            continue;
+        }
+
+        const index = indexStack[depth]++;
+        // Preserve the sparse-array behavior of existsOne's former `some` traversal.
+        if (!Reflect.has(nodeStack[depth], index)) continue;
+        const node = nodeStack[depth][index];
         if (isTag(node) && isMatch(node)) {
             return node;
         }
         if (shouldRecurse && hasChildren(node) && node.children.length > 0) {
-            const found = findOne(isMatch, node.children, true);
-            if (found) return found;
+            nodeStack.push(node.children);
+            indexStack.push(0);
         }
     }
 
@@ -167,11 +180,7 @@ export function existsOne(
     isMatch: (element: Element) => boolean,
     nodes: AnyNode[] | ParentNode,
 ): boolean {
-    return (Array.isArray(nodes) ? nodes : [nodes]).some(
-        (node) =>
-            (isTag(node) && isMatch(node)) ||
-            (hasChildren(node) && existsOne(isMatch, node.children)),
-    );
+    return findOne(isMatch, nodes) !== null;
 }
 
 /**

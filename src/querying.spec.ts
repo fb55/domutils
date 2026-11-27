@@ -17,6 +17,31 @@ describe("querying", () => {
     const someDeepNodes = parseDocument(
         "<body><div><div></div></div><div><p></p></div></body>",
     );
+    const manyNodesDeep = parseDocument(
+        `${"<div>".repeat(20_000)}<target/>${"</div>".repeat(20_000)}`,
+        { xmlMode: true },
+    );
+
+    describe.each([
+        ["findOne", findOne],
+        ["existsOne", existsOne],
+    ] as const)("%s traversal", (_name, query) => {
+        it("visits only elements in depth-first order and stops at the first match", () => {
+            const document = parseDocument(
+                "text<first><!--comment--><target/></first><last/>",
+                { xmlMode: true },
+            );
+            const isMatch = vi.fn(
+                (element: Element) => element.name === "target",
+            );
+
+            query(isMatch, document);
+
+            expect(isMatch.mock.calls.map(([element]) => element.name)).toEqual(
+                ["first", "target"],
+            );
+        });
+    });
 
     describe("type guards", () => {
         const document = parseDocument("before<div>inside</div>after");
@@ -138,6 +163,32 @@ describe("querying", () => {
     });
 
     describe("findOne", () => {
+        it.each([false, true])(
+            "searches a deeply nested tree without RangeError (array: %s)",
+            (useArray) => {
+                const nodes = useArray ? manyNodesDeep.children : manyNodesDeep;
+                expect(
+                    findOne((element) => element.name === "target", nodes)
+                        ?.name,
+                ).toBe("target");
+                expect(findOne(() => false, nodes)).toBeNull();
+            },
+        );
+
+        it("checks later siblings without descending when recursion is disabled", () => {
+            const document = parseDocument(
+                '<branch><target id="deep"/></branch><target id="top"/>',
+                { xmlMode: true },
+            );
+            expect(
+                findOne(
+                    (element) => element.name === "target",
+                    document.children,
+                    false,
+                )?.attribs["id"],
+            ).toBe("top");
+        });
+
         it("should find elements", () =>
             expect(
                 findOne(
@@ -179,6 +230,26 @@ describe("querying", () => {
     });
 
     describe("existsOne", () => {
+        it("skips holes in a sparse array of nodes", () => {
+            const nodes: AnyNode[] = [];
+            nodes[1] = someDeepNodes;
+            expect(existsOne((element) => element.name === "p", nodes)).toBe(
+                true,
+            );
+            expect(existsOne(() => false, nodes)).toBe(false);
+        });
+
+        it.each([false, true])(
+            "searches a deeply nested tree without RangeError (array: %s)",
+            (useArray) => {
+                const nodes = useArray ? manyNodesDeep.children : manyNodesDeep;
+                expect(
+                    existsOne((element) => element.name === "target", nodes),
+                ).toBe(true);
+                expect(existsOne(() => false, nodes)).toBe(false);
+            },
+        );
+
         it("should find elements", () =>
             expect(
                 existsOne((element) => element.name === "body", manyNodesWide),
