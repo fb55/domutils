@@ -1,0 +1,21 @@
+src/feeds.spec.ts
+  s_33e917120f26eb::t_ea68f1623ff8ea 81,83,87-109
+src/feeds.ts
+  s_33e917120f26eb::t_1ad9294b0d5969 3,143-146,151-183
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "130427fbb22d6a36232b32340d2cb7f2f1894785",
+  "prompts": {},
+  "sessions": {
+    "s_33e917120f26eb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d5fc0fc7-656e-4156-a792-58dfe75b0978",
+        "model": "claude-mythos-5-2"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
