@@ -1,0 +1,21 @@
+src/stringify.ts
+  s_02536abd0ed61b::t_d8ef6dd7d9917b 54,76-83,94-96,98
+src/stringify.spec.ts
+  s_02536abd0ed61b::t_d8ef6dd7d9917b 1,47,55-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ff8a1fef8b9702dca40ce802e09ce4c30c12b3b3",
+  "prompts": {},
+  "sessions": {
+    "s_02536abd0ed61b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e7318cbd-3b58-40ab-87e9-4ab3456d2236",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Felix Boehm <188768+fb55@users.noreply.github.com>"
+    }
+  }
+}
