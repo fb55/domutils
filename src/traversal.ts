@@ -27,7 +27,7 @@ export function getChildren(element: AnyNode): ChildNode[] {
  */
 export function getParent(element: AnyNode): ParentNode | null;
 export function getParent(element: AnyNode): ParentNode | null {
-    return element.parent || null;
+    return element.parent ?? null;
 }
 
 /**

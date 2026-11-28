@@ -35,7 +35,7 @@ export function getInnerHTML(
     options?: DomSerializerOptions,
 ): string {
     return hasChildren(node)
-        ? node.children.map((node) => getOuterHTML(node, options)).join("")
+        ? node.children.map((child) => renderHTML(child, options)).join("")
         : "";
 }
 
@@ -48,10 +48,21 @@ export function getInnerHTML(
  * @returns `node`'s inner text.
  */
 export function getText(node: AnyNode | AnyNode[]): string {
-    if (Array.isArray(node)) return node.map(getText).join("");
-    if (isTag(node))
-        return node.name === "br" ? "\n" : node.children.map(getText).join("");
-    if (isCDATA(node)) return node.children.map(getText).join("");
+    return getTextWithBreaks(node);
+}
+
+/**
+ * @param node Node to get the text of.
+ * @returns Text with a newline for each `<br>`.
+ */
+function getTextWithBreaks(node: AnyNode | AnyNode[]): string {
+    if (Array.isArray(node)) return node.map(getTextWithBreaks).join("");
+    if (isTag(node)) {
+        return node.name === "br"
+            ? "\n"
+            : node.children.map(getTextWithBreaks).join("");
+    }
+    if (isCDATA(node)) return node.children.map(getTextWithBreaks).join("");
     if (isText(node)) return node.data;
     return "";
 }

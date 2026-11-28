@@ -8,6 +8,7 @@ import {
 } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, expectTypeOf, it, vi } from "vitest";
+
 import { existsOne, filter, find, findAll, findOne } from "./querying.js";
 
 describe("querying", () => {
@@ -163,7 +164,7 @@ describe("querying", () => {
                     someDeepNodes.children,
                     true,
                 ),
-            ).toBeTruthy());
+            ).toHaveProperty("name", "p"));
 
         it("should not find elements in children if recurse is false", () =>
             expect(
@@ -182,7 +183,7 @@ describe("querying", () => {
         it("should find elements", () =>
             expect(
                 existsOne((element) => element.name === "body", manyNodesWide),
-            ).toBeTruthy());
+            ).toBe(true));
 
         it("should find elements in children", () =>
             expect(
@@ -190,9 +191,9 @@ describe("querying", () => {
                     (element) => element.name === "div",
                     manyNodesWide.children,
                 ),
-            ).toBeTruthy());
+            ).toBe(true));
 
         it("should return `false` if nothing is found", () =>
-            expect(existsOne(() => false, manyNodesWide)).toBeFalsy());
+            expect(existsOne(() => false, manyNodesWide)).toBe(false));
     });
 });

@@ -1,5 +1,6 @@
 import type { ElementType } from "domelementtype";
 import { type AnyNode, type Element, isTag, isText } from "domhandler";
+
 import { filter, findOne } from "./querying.js";
 
 type TestType = (element: AnyNode) => boolean;
@@ -24,10 +25,11 @@ export interface TestElementOpts {
 /**
  * A map of functions to check nodes against.
  */
-const Checks: Record<
-    string,
-    (value: string | undefined | ((inputString: string) => boolean)) => TestType
-> = {
+const Checks: Record<string, (value: TestElementOpts[string]) => TestType> & {
+    tag_type: (
+        value: string | undefined | ((type: ElementType) => boolean),
+    ) => TestType;
+} = {
     tag_name(name) {
         if (typeof name === "function") {
             return (element: AnyNode) => isTag(element) && name(element.name);
@@ -115,7 +117,6 @@ function compileTest(options: TestElementOpts): TestType | null {
  * @param node The element to test.
  * @returns Whether the element matches the description in `options`.
  */
-// eslint-disable-next-line unicorn/consistent-boolean-name -- Preserve the existing exported function name.
 export function testElement(options: TestElementOpts, node: AnyNode): boolean {
     const test = compileTest(options);
     return test ? test(node) : true;
@@ -155,8 +156,8 @@ export function getElementById(
     nodes: AnyNode | AnyNode[],
     shouldRecurse = true,
 ): Element | null {
-    if (!Array.isArray(nodes)) nodes = [nodes];
-    return findOne(getAttribCheck("id", id), nodes, shouldRecurse);
+    const nodeList = Array.isArray(nodes) ? nodes : [nodes];
+    return findOne(getAttribCheck("id", id), nodeList, shouldRecurse);
 }
 
 /**
@@ -175,6 +176,7 @@ export function getElementsByTagName(
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The boolean callback only accepts nodes that pass isTag, but can also reject elements by name.
     return filter(
         Checks["tag_name"](tagName),
         nodes,
@@ -199,6 +201,7 @@ export function getElementsByClassName(
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): Element[] {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The boolean callback only accepts nodes that pass isTag, but can also reject elements by class.
     return filter(
         getAttribCheck("class", className),
         nodes,
@@ -223,10 +226,5 @@ export function getElementsByTagType(
     shouldRecurse = true,
     limit: number = Number.POSITIVE_INFINITY,
 ): AnyNode[] {
-    return filter(
-        Checks["tag_type"](type as string),
-        nodes,
-        shouldRecurse,
-        limit,
-    );
+    return filter(Checks.tag_type(type), nodes, shouldRecurse, limit);
 }

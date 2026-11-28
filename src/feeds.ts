@@ -1,4 +1,5 @@
 import { type AnyNode, type Element, isTag } from "domhandler";
+
 import { getElementsByTagName } from "./legacy.js";
 import { textContent } from "./stringify.js";
 
@@ -94,7 +95,7 @@ export function getFeed(document: AnyNode[]): Feed | null {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
-function getAtomFeed(feedRoot: Element) {
+function getAtomFeed(feedRoot: Element): Feed {
     const childs = feedRoot.children;
 
     const feed: Feed = {
@@ -150,11 +151,11 @@ function getAtomFeed(feedRoot: Element) {
  * @param feedRoot The root of the feed.
  * @returns The parsed feed.
  */
-function getRssFeed(feedRoot: Element) {
+function getRssFeed(feedRoot: Element): Feed {
     const childs = getOneElement("channel", feedRoot.children)?.children ?? [];
 
     const feed: Feed = {
-        type: feedRoot.name.substr(0, 3),
+        type: feedRoot.name.slice(0, 3),
         id: "",
         items: getElementsByTagName("item", feedRoot.children).map(
             (item: Element) => {
@@ -210,10 +211,9 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         const { attribs } = element;
 
         const media: FeedItemMedia = {
-            medium: attribs["medium"] as unknown as
-                | FeedItemMediaMedium
-                | undefined,
-            isDefault: !!attribs["isDefault"],
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Legacy feed results pass through unknown media values while the public type lists the standard values.
+            medium: attribs["medium"] as FeedItemMediaMedium | undefined,
+            isDefault: Boolean(attribs["isDefault"]),
         };
 
         for (const attrib of MEDIA_KEYS_STRING) {
@@ -227,9 +227,8 @@ function getMediaElements(where: AnyNode[]): FeedItemMedia[] {
         }
 
         if (attribs["expression"]) {
-            media.expression = attribs[
-                "expression"
-            ] as unknown as FeedItemMediaExpression;
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Legacy feed results pass through unknown expressions while the public type lists the standard values.
+            media.expression = attribs["expression"] as FeedItemMediaExpression;
         }
 
         return media;
@@ -250,7 +249,7 @@ function getOneElement(
     return getElementsByTagName(tagName, node, true, 1)[0];
 }
 
-// eslint-disable-next-line unicorn/prefer-https -- RFC 4287 spells this relation with HTTP.
+// RFC 4287 spells this relation with HTTP.
 const ATOM_ALTERNATE = "http://www.iana.org/assignments/relation/alternate";
 
 /**
@@ -305,15 +304,15 @@ function fetch(
  * @param where Element to search for the property.
  * @param shouldRecurse Whether to recurse into child nodes.
  */
-function addConditionally<T>(
-    object: T,
-    property: keyof T,
+function addConditionally<Key extends PropertyKey>(
+    object: Partial<Record<Key, string>>,
+    property: Key,
     tagName: string,
     where: AnyNode[],
     shouldRecurse = false,
-) {
+): void {
     const value = fetch(tagName, where, shouldRecurse);
-    if (value) object[property] = value as unknown as T[keyof T];
+    if (value) object[property] = value;
 }
 
 /**
@@ -322,6 +321,6 @@ function addConditionally<T>(
  * @param value The name of the element to check.
  * @returns Whether an element is a feed root node.
  */
-function isValidFeed(value: string) {
+function isValidFeed(value: string): boolean {
     return ["rss", "feed", "rdf:RDF"].includes(value);
 }

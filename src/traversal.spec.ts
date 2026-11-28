@@ -1,6 +1,7 @@
 import type { Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
+
 import {
     getAttributeValue,
     getName,
@@ -45,16 +46,16 @@ describe("traversal", () => {
                     parseDOM("<div><h1></h1>test<p></p></div>")[0] as Element,
                     "constructor",
                 ),
-            ).toBeFalsy());
+            ).toBe(false));
 
         it('should return `false` for "null" values', () => {
             const div = parseDOM("<div class=test>")[0] as Element;
 
-            expect(hasAttrib(div, "class")).toBeTruthy();
+            expect(hasAttrib(div, "class")).toBe(true);
 
             div.attribs["class"] = null as never;
 
-            expect(hasAttrib(div, "class")).toBeFalsy();
+            expect(hasAttrib(div, "class")).toBe(false);
         });
     });
 

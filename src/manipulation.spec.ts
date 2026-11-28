@@ -1,6 +1,7 @@
 import type { Element } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
+
 import {
     append,
     appendChild,
