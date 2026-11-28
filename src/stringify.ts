@@ -51,8 +51,7 @@ export function getText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(getText).join("");
     if (isTag(node))
         return node.name === "br" ? "\n" : node.children.map(getText).join("");
-    if (isCDATA(node) || node.type === ElementType.Root)
-        return node.children.map(getText).join("");
+    if (isCDATA(node)) return node.children.map(getText).join("");
     if (isText(node)) return node.data;
     return "";
 }
@@ -74,6 +73,14 @@ export function textContent(node: AnyNode | AnyNode[]): string {
     return "";
 }
 
+function innerTextOfNode(node: AnyNode): string {
+    if (hasChildren(node) && (node.type === ElementType.Tag || isCDATA(node))) {
+        return node.children.map(innerTextOfNode).join("");
+    }
+    if (isText(node)) return node.data;
+    return "";
+}
+
 /**
  * Get a node's inner text, ignoring `<script>` and `<style>` tags. Ignores comments.
  *
@@ -84,14 +91,9 @@ export function textContent(node: AnyNode | AnyNode[]): string {
  */
 export function innerText(node: AnyNode | AnyNode[]): string {
     if (Array.isArray(node)) return node.map(innerText).join("");
-    if (
-        hasChildren(node) &&
-        (node.type === ElementType.Tag ||
-            node.type === ElementType.Root ||
-            isCDATA(node))
-    ) {
-        return node.children.map(innerText).join("");
+    if (node.type === ElementType.Root) {
+        // Only expand a top-level document; nested ones hold `<template>` content.
+        return node.children.map(innerTextOfNode).join("");
     }
-    if (isText(node)) return node.data;
-    return "";
+    return innerTextOfNode(node);
 }

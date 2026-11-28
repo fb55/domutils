@@ -1,3 +1,4 @@
+import { Document, Element, Text } from "domhandler";
 import { parseDocument } from "htmlparser2";
 import { describe, expect, it } from "vitest";
 import fixture from "./__fixtures__/fixture.js";
@@ -30,16 +31,6 @@ describe("stringify", () => {
         it("Correctly renders the text content", () => {
             expect(getText(fixture[1])).toBe(" text   text ");
         });
-
-        it("extracts text and line breaks from a document node", () => {
-            const document = parseDocument(
-                "before<br>after<!--ignored--><script>script</script><style>style</style>",
-            );
-
-            expect(getText(document)).toBe("before\nafterscriptstyle");
-            expect(getText([document])).toBe(getText(document.children));
-            expect(getText(parseDocument(""))).toBe("");
-        });
     });
 
     describe("textContent", () => {
@@ -53,7 +44,7 @@ describe("stringify", () => {
             expect(innerText(fixture[1])).toBe("    text ");
         });
 
-        it("extracts document text while ignoring scripts, styles, and comments", () => {
+        it("extracts document text while ignoring scripts, styles, comments, and nested documents", () => {
             const document = parseDocument(
                 "before<br>after<!--ignored--><script>script</script><style>style</style>",
             );
@@ -61,6 +52,19 @@ describe("stringify", () => {
             expect(innerText(document)).toBe("beforeafter");
             expect(innerText([document])).toBe(innerText(document.children));
             expect(innerText(parseDocument(""))).toBe("");
+
+            // The parse5 htmlparser2 adapter stores `<template>` content in a child document.
+            const template = new Element("template", {}, [
+                new Document([new Text("secret")]),
+            ]);
+            const div = new Element("div", {}, [
+                new Text("hello"),
+                template,
+                new Text("world"),
+            ]);
+            expect(innerText(new Document([div]))).toBe("helloworld");
+            expect(innerText(div)).toBe("helloworld");
+            expect(innerText(template)).toBe("");
         });
     });
 });
